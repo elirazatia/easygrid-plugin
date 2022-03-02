@@ -1,0 +1,8 @@
+{
+  "name": "(easy)grid",
+  "id": "1023805574372075411",
+  "api": "1.0.0",
+  "editorType": ["figma"],
+  "main": "code.js",
+  "ui": "ui.html"
+}

@@ -1,0 +1,978 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<style>html {
+    width: 100vw;
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    user-select: none;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+
+    font-weight: 300;
+    font-size: 32px;
+}
+
+
+header {
+    display: flex;
+    column-gap: 6px;
+    align-items: center;
+    justify-content: center;
+    
+    padding-bottom: 16px;
+    padding-right: 12px;
+}
+
+header #logo {
+    width: 130px;
+    height: auto;
+}
+
+
+
+input {
+    user-select: all !important;
+    width: 30%;
+    
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+
+    color: #0f71a9;
+    border-bottom: 1px solid rgb(11 53 76 / 8%);
+    border-radius: 4px;
+    padding: 8px 6px;
+
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: right;
+
+    height: 100%;
+}
+
+input.wide-input { width: 50%; }
+
+input[type="checkbox"] { width: 18px; height: 18px; }
+
+span { font-size: 14px; }
+
+img, svg { width: 22px; height: 22px; }
+
+.input-row {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    height: 38px;
+}
+
+
+
+.grid-parent {
+    user-select: none;
+
+    position: relative;
+    width: calc(100% + 24px);
+    left: -12px;
+
+    margin-bottom: 8px;
+    background-color: #f9f9f9;
+    padding: 14px;
+    box-sizing: border-box;
+    padding-bottom: 18px;
+}
+
+.grid-parent .grid-container {
+    position: relative;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.grid-container .display-container {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.grid-container .merge-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+
+
+.body-container {
+    height: 100vh;
+
+    display: grid;
+    grid-template-rows: 1fr 72px;
+}
+
+.body-content {
+    padding: 0 12px;
+    padding-bottom: 22px;
+    overflow-y: scroll;
+}
+
+
+
+.align {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 6px;
+}
+
+.fill {
+    flex-grow: 100;
+}
+
+.vertical {
+    flex-direction: row;
+}
+
+.button-container-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: 64px;
+    padding: 6px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.button-container-hover {
+    padding: 6px;
+    height: 64px;
+    box-sizing: border-box;
+}
+
+.button-container {
+    box-sizing: border-box;
+    
+    width: 100%;
+    height: 100%;
+    /* background-color: orange; */
+    display: flex;
+    border-radius: 6px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    /* grid-template-columns: 4fr 6fr; */
+}
+
+.button {
+    cursor: pointer;
+    justify-content: center;
+    flex-grow: 50;
+    transition: flex-grow 0.2s ease-out;
+    background-color: black;
+    color: white;
+}
+
+/* .button-container:hover .button span {
+    display: none;
+} */
+
+/* .button:hover { */
+    /* flex-grow: 80; */
+    /* display: flex; */
+/* } */
+
+/* .button:hover span {
+    display: block !important;
+} */
+
+.colour {
+    background-color: #3496F0;
+    color: white;
+}
+
+.faded {
+    background-color: #F9F9F9;
+}
+
+.app-help-container svg {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+    height: 24px;
+    width: 24px;
+    opacity: 0.8;
+}
+
+#app-description {
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.8;
+    opacity: 0.45;
+    margin-top: 22px;
+}
+
+.border {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(0,0,0,0.04);
+    margin-top: 22px;
+    margin-bottom: 22px;
+}
+
+#clear-merge { min-width: fit-content; }
+
+#clear-merge:hover { text-decoration: underline; }
+
+#help-icon {
+    display: block;
+    width: 22px;
+    height: 22px;
+    background-color: orange;
+    margin: 0 auto;
+}
+
+.help-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 38px;
+    column-gap: 8px;
+    cursor: help;
+    color: #0f71a9;
+}
+
+.help-button:hover {
+    text-decoration: underline;
+}
+
+
+.help-screen {
+    /* padding-top: 32px; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    z-index: 999;
+
+    /* padding-left: 22px; */
+    box-sizing: border-box;
+    overflow-y: scroll;
+
+    visibility: hidden;
+    /* transform: translateY(100vh); */
+    /* opacity: 0; */
+    /* pointer-events: none; */
+}
+
+.help-screen .inner-content {
+    padding-bottom: 86px;
+}
+
+.help-screen h3,h4,h5 {
+    margin: 0;
+    padding: 0; 
+    display: block;
+}
+
+.help-screen .top-row {
+    opacity: 0.6;
+    margin-bottom: 4px;
+}
+
+.help-screen .grid-parent {
+    z-index: -99;
+}
+
+.help-screen .help-top-section {
+    margin-top: 4px;
+    border-top: 1px solid rgba(0,0,0,0.04);
+    padding: 0 22px;
+    padding-top: 48px;
+    padding-bottom: 52px;
+    text-align: center;
+}
+
+.help-screen.opening {
+    visibility: visible;
+    animation-name: opening;
+    animation-timing-function: ease-out;
+    animation-duration: 0.15s;
+
+    /* transform: translateY(0); */
+    opacity: 1;
+    /* animation-fill-mode: forwards; */
+}
+
+.help-screen.closing {
+    visibility: visible;
+    animation-name: closing;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in;
+}
+
+@keyframes opening {
+    from {
+        transform: translateY(50vh);
+        opacity: 0;
+    } to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes closing {
+    from {
+        transform: translateY(0);    
+        opacity: 1;
+    } to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+.help-items h4 { margin-top: 26px; }
+
+.help-items h5 { margin-top: 16px; }
+
+.help-items {
+    padding: 22px;
+    margin-top: -76px;
+}
+
+/* .help-items .help-row { */
+    /* margin-bottom: 22px; */
+/* } */
+
+.help-items svg {
+    width: 100%;
+    height: 200px;
+    /* background-color: orange; */
+}
+
+.help-items p {
+    margin: 0;
+    margin-top: 8px;
+    display: block;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+
+#select-saved select {
+    padding: 0;
+    border: none;
+    appearance: auto;
+    background-color: transparent;
+    color: #093a58;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    opacity: 0.5;
+    font-family: inherit;
+
+    text-align: right;
+    width: 90px;
+}
+
+
+
+
+
+.input-overlay.opening {
+    visibility: visible;
+    animation-name: overlay-opening;
+    animation-timing-function: ease-out;
+    animation-duration: 0.3s;
+
+    /* transform: translateY(0); */
+    opacity: 1;
+    /* animation-fill-mode: forwards; */
+}
+
+.input-overlay.closing {
+    visibility: visible;
+    animation-name: overlay-closing;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in;
+}
+
+@keyframes overlay-opening {
+    from {
+        padding-top: 440px;
+        opacity: 0;
+    } to {
+        padding: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes overlay-closing {
+    from {
+        padding-top: 0px;
+        opacity: 1;
+    } to {
+        padding-top: 440px;
+        opacity: 0;
+    }
+}
+
+.input-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000d9;
+    z-index: 999;
+
+    display: grid;
+    /* flex-direction: column; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* row-gap: 6px; */
+}
+
+.input-overlay.equally-divided {
+    grid-template-rows: 1fr 1fr;
+}
+
+.input-overlay.flex {
+    grid-template-rows: 4fr 1fr;
+}
+
+.input-overlay.flex .top-container {
+    flex-grow: 100;
+    padding-top: 46px;
+}
+
+.input-overlay #confirm-button {
+    padding: 18px 46px;
+    background-color: orange;
+    border-radius: 500px;
+
+    color: white;
+    cursor: pointer;
+}
+
+.input-overlay #cancel-button {
+    padding: 14px;
+    background-color: rgba(255,255,255,0.15);
+    border-radius: 500px;
+
+    color: white;
+    cursor: pointer;
+}
+
+.input-overlay .top-container, .bottom-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+    row-gap: 12px;
+}
+
+.input-overlay .bottom-container {
+    padding-bottom: 44px;
+}
+
+/* .input-overlay  {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+    row-gap: 6px;
+} */
+
+.input-overlay .title {
+    /* width: 80%; */
+    width: 198px;
+    font-size: 18px;
+    color: white;
+    text-align: center;
+}
+
+.input-overlay input {
+    background-color: white;
+    padding: 12px;
+    padding-bottom: 11px;
+    height: 46px;
+    width: 198px;
+
+    color: black;
+
+    font-size: 14px;
+    text-align: left;
+}
+
+
+.new-feature-card:hover { transform: translateY(-10px) rotate(2deg); }
+.new-feature-card {
+    position: relative;
+
+    padding: 12px;
+    background-color: #e4dace;
+    border-radius: 6px;
+
+    transition: transform 0.2s;
+}
+
+.new-feature-card .card-close {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.new-feature-card .card-close:hover {
+    background-color: rgba(0,0,0,0.25);
+}
+
+.new-feature-card .card-close svg {
+    /* background-color: black; */
+    width: 18px;
+    height: 18px;
+}
+
+.new-feature-card .card-content .card-title {
+    display: block;
+    font-size: 16px;
+    margin-top: 6px;
+    margin-bottom: 2px;
+}
+
+.new-feature-card .card-content ul {
+    padding-left: 16px;
+}
+
+.new-feature-card .card-content li {
+    line-height: 1.6;
+    font-size: 14px;
+    color: rgba(0,0,0,0.8);
+}
+
+.new-feature-card .card-content b {
+    line-height: 1.6;
+    color: black;
+}
+
+
+
+/* .help-screen .help-top-section .l  {
+    flex-grow: 100;
+}
+
+.help-screen .help-top-section .r {
+    width: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+/* .help-screen .help-top-section .r img {
+    width: 22px;
+    height: 22px;
+    background-color: black;
+    border-radius: 44px;
+}
+
+.help-screen .section {
+    margin-top: 44px;
+    background-color: red;
+
+    display: grid;
+    grid-template-columns: 54px 1fr;
+}
+
+.help-screen .section .l {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.help-screen .section .l img {
+    width: 24px;
+    height: 24px;
+    background-color: orange;
+} */</style>
+
+	<div class="help-screen">
+		<div class="inner-content">
+			<div class="grid-parent">
+				<header>
+					<img id="logo" src="https://assetbucket-a492924.s3.eu-west-2.amazonaws.com/logo.svg" alt="">
+					<!-- <img id="logo" src="https://assetbucket-a492924.s3.eu-west-2.amazonaws.com/logo.svg" alt=""> -->
+				</header>
+				<div class="help-top-section">
+					<h5 class="top-row">Help Section</h5>
+					<h3>Learn To Use (Easy)grid</h3>
+				</div>
+			</div>
+			
+			<div class="help-items">
+				<svg width="325" height="200" viewBox="0 0 325 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="325" height="200" fill="#F8F8F8"/>
+<rect x="90" y="27" width="68.5" height="68.5" fill="url(#paint0_linear_227_70)" fill-opacity="0.6"/>
+<rect x="90" y="103.5" width="30.25" height="68.5" fill="url(#paint1_linear_227_70)" fill-opacity="0.6"/>
+<rect x="128.25" y="103.5" width="68.5" height="30.25" fill="url(#paint2_linear_227_70)" fill-opacity="0.6"/>
+<rect x="128.25" y="141.75" width="68.5" height="30.25" fill="url(#paint3_linear_227_70)" fill-opacity="0.6"/>
+<rect x="166.5" y="27" width="68.5" height="68.5" fill="url(#paint4_linear_227_70)" fill-opacity="0.6"/>
+<rect x="204.75" y="103.5" width="30.25" height="68.5" fill="url(#paint5_linear_227_70)" fill-opacity="0.6"/>
+<defs>
+<linearGradient id="paint0_linear_227_70" x1="124.25" y1="27" x2="124.25" y2="95.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E4E4E4"/>
+<stop offset="1" stop-color="#E7E7E7"/>
+</linearGradient>
+<linearGradient id="paint1_linear_227_70" x1="105.125" y1="103.5" x2="105.125" y2="172" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E4E4E4"/>
+<stop offset="1" stop-color="#E7E7E7"/>
+</linearGradient>
+<linearGradient id="paint2_linear_227_70" x1="162.5" y1="103.5" x2="162.5" y2="133.75" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E4E4E4"/>
+<stop offset="1" stop-color="#E7E7E7"/>
+</linearGradient>
+<linearGradient id="paint3_linear_227_70" x1="162.5" y1="141.75" x2="162.5" y2="172" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E4E4E4"/>
+<stop offset="1" stop-color="#E7E7E7"/>
+</linearGradient>
+<linearGradient id="paint4_linear_227_70" x1="200.75" y1="27" x2="200.75" y2="95.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E4E4E4"/>
+<stop offset="1" stop-color="#E7E7E7"/>
+</linearGradient>
+<linearGradient id="paint5_linear_227_70" x1="219.875" y1="103.5" x2="219.875" y2="172" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E4E4E4"/>
+<stop offset="1" stop-color="#E7E7E7"/>
+</linearGradient>
+</defs>
+</svg>
+
+				<h4>Basic Grids</h4>
+				<p>To create a grid, set the columns, rows, column gap, and row gap. These options determine how the grid will look, and can be previewed before adding to project in the preview area at the top of the screen. </p>
+
+				<h5>Values</h5>
+				<p>Column / row values are written as their cell sizes in whole numbers (with a pt suffix), or out of a total fraction, with the denominator of that fraction being all the numerators written added up. All cell values must be separated by a space. The value entered can also be a single number to create x amount of equally sized cells.
+
+					Column / row gaps are written as a whole number</p>
+
+				<h5>Examples</h5>
+				<p>Try the following in the column/row inputs to see how they change the grid:
+					<b><br>1 2 3 4 5<br>40pt 1<br>20pt 1 20pt<br>30pt*3 2*2 1</p></b>
+
+				<h4>Adding Grid To Project</h4>
+				<p>Once you are happy with your grid layout, you can add it into your Figma document. To do so, select the layer you want to apply the grid to, if not already selected, and click the “Apply Grid To Selected” button, you should see the grid over the selected layer, filled with the colour chosen in the “Cell Fill Colour”</p>
+
+				<h4>Merging Cells</h4>
+				<p>To create more complicated grids, you can build a custom layout by clicking on the cells (in the preview) that you want. Clicking on “Apply Grid To Selected” now would only import the cells that have been selected. You can deselect a cell by right clicking on it, and you can merge multiple cells together to create a larger tile by holding on a cell and dragging it the appropriate size.</p>
+				
+				<!-- <h4>Q&A</h4>
+				<p>Im not getting a…
+					Im getting an error…</p> -->
+				<h4>More Help</h4>
+				<p>For more information and help, visit our website at <a target="_blank" href="https://easygrid-app.web.app/">easygrid-app.web.app</a>. Additionally, we answer all questions posted in the figma plugin comments area.</p>
+				
+				<!-- 
+				<div class="help-row">
+					<img src="" alt="">
+					<p>This help section would discuss the basics of a grid (example by telling user what to enter and see) Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea nesciunt odit earum eum placeat magni quis qui dsdsd dwdfw efrn urviurvinimv iarciw</p>
+				</div>
+				<div class="help-row">
+					<img src="" alt="">
+					<p>Creating more complicated grids (entering px, and fractions)</p>
+				</div>
+				<div class="help-row">
+					<img src="" alt="">
+					<p>Explain how merging cells work</p>
+				</div>
+				<div class="help-row">
+					<img src="" alt="">
+					<p>Link to the website</p>
+				</div> -->
+			</div>	
+		</div>
+
+		<div class="button-container-bottom" style="background-color: unset; height: 80px; padding-bottom: 16px;">
+			<div class="button-container" style="width: 60px; margin: 0 auto;">
+				<div id="close-help-button" class="button align horizontal">
+					<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M90 90L423 423" stroke="white" stroke-width="52" stroke-linecap="round"/>
+<path d="M423 90L90 423" stroke="white" stroke-width="52" stroke-linecap="round"/>
+</svg>
+
+					<!-- <span>Close Help Section</span> -->
+				</div>
+			</div>
+		</div>
+
+		<!-- <div class="help-top-section">
+			<div class="l">
+				
+			</div>
+			<div class="r">
+				<img src="" alt="">
+			</div>
+		</div> -->
+
+		<!-- <div class="section">
+			<div class="l">
+				<img src="" alt="">
+			</div>
+			<div class="r">
+				<h4>How To Create A Simple Grid</h4>
+				<span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae molestiae suscipit facilis distinctio reiciendis tenetur, est ipsa excepturi nam aliquid magnam non eligendi obcaecati fugiat ipsum sint quia provident tempora.</span>
+			</div>
+		</div>
+
+		<div class="section">
+			<div class="l">
+				<img src="" alt="">
+			</div>
+			<div class="r">
+				<h4>How To Create A Simple Grid</h4>
+				<span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae molestiae suscipit facilis distinctio reiciendis tenetur, est ipsa excepturi nam aliquid magnam non eligendi obcaecati fugiat ipsum sint quia provident tempora.</span>
+			</div>
+		</div> -->
+	</div>
+	
+	<div class="body-container">
+		<div class="body-content">
+			<div class="grid-parent">
+				<header>
+					<img id="logo" src="https://assetbucket-a492924.s3.eu-west-2.amazonaws.com/logo.svg" alt="">
+				</header>
+	
+				<div id="grid-root" class="grid-container">
+				</div>
+	
+				<div class="align horizontal">
+					<div id="current-frame-name" class="align horizontal">
+						<img src="https://assetbucket-a492924.s3.eu-west-2.amazonaws.com/frame.svg" alt="">
+						<span>Frame 2</span>
+					</div>
+					<div class="fill"></div>
+					<div id="clear-merge" class="align horizontal">
+						<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M140.887 436.992H372.105C414.598 436.992 436.992 414.789 436.992 372.871V140.312C436.992 98.3945 414.598 76 372.105 76H140.887C98.5859 76 76 98.3945 76 140.312V372.871C76 414.789 98.5859 436.992 140.887 436.992ZM195.629 337.844C184.527 337.844 175.914 329.23 175.914 317.938C175.914 312.961 178.02 307.984 181.848 304.348L229.508 256.688L181.848 208.836C178.02 205.199 175.914 200.223 175.914 195.246C175.914 184.145 184.527 175.531 195.629 175.531C201.371 175.531 205.773 177.445 209.793 181.273L257.262 228.742L305.305 181.082C309.324 177.062 313.918 175.34 319.469 175.34C330.379 175.34 339.184 183.953 339.184 194.863C339.184 200.223 337.27 204.816 333.25 208.836L285.59 256.688L333.059 304.156C337.078 307.793 338.992 312.77 338.992 317.938C338.992 329.23 330.379 337.844 319.277 337.844C313.344 337.844 308.559 335.93 304.73 332.102L257.262 284.633L210.176 332.102C206.348 335.93 201.371 337.844 195.629 337.844Z" fill="black"/>
+</svg>
+
+						<span>Clear Merges</span>
+					</div>
+				</div>
+			</div>
+	
+			<div class="align horizontal input-row">
+				<div class="align horizontal">
+					<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M103 449V474H153V449H103ZM103 63V449H153V63H103Z" fill="#18A0FB"/>
+<path d="M231 449V474H281V449H231ZM231 63V449H281V63H231Z" fill="#18A0FB"/>
+<path d="M359 449V474H409V449H359ZM359 63V449H409V63H359Z" fill="#18A0FB"/>
+</svg>
+
+					<span>Grid Columns</span>
+				</div>
+				<div class="fill"></div>
+				<input id="grid-columns" placeholder="Try (1 3 1, 5, 30pt 1)" class="wide-input" type="text" value="5*2">
+			</div>
+	
+			<div class="align horizontal input-row">
+				<div class="align horizontal">
+					<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M449 153L474 153L474 103L449 103L449 153ZM449 103L63 103L63 153L449 153L449 103Z" fill="#18A0FB"/>
+<path d="M449 281L474 281L474 231L449 231L449 281ZM449 231L63 231L63 281L449 281L449 231Z" fill="#18A0FB"/>
+<path d="M449 409L474 409L474 359L449 359L449 409ZM449 359L63 359L63 409L449 409L449 359Z" fill="#18A0FB"/>
+</svg>
+
+					<span>Grid Rows</span>
+				</div>
+				<div class="fill"></div>
+				<input id="grid-rows" placeholder="Try (1 3 1, 5, 30pt 1)" class="wide-input" type="text" value="5*2">
+			</div>
+	
+			<div class="align horizontal input-row">
+				<div class="align horizontal">
+					<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M359 449L359 474L409 474L409 449L359 449ZM409 449L409 63L359 63L359 449L409 449Z" fill="#18A0FB"/>
+<path d="M103 449L103 474L153 474L153 449L103 449ZM153 449L153 63L103 63L103 449L153 449Z" fill="#18A0FB"/>
+<path d="M302.5 255.615L209.5 255.615" stroke="#18A0FB" stroke-width="40"/>
+<path d="M286 314L286 199L325.394 256.5L286 314Z" fill="#18A0FB"/>
+<path d="M226.5 199L226.5 314L187.106 256.5L226.5 199Z" fill="#18A0FB"/>
+</svg>
+
+					<span>Column Gap (pt)</span>
+				</div>
+				<div class="fill"></div>
+				<input id="column-gap" placeholder="Gap (Enter Number)" type="text" value="0">
+			</div>
+	
+			<div class="align horizontal input-row">
+				<div class="align horizontal">
+					<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M449 153L474 153L474 103L449 103L449 153ZM449 103L63 103L63 153L449 153L449 103Z" fill="#18A0FB"/>
+<path d="M449 409L474 409L474 359L449 359L449 409ZM449 359L63 359L63 409L449 409L449 359Z" fill="#18A0FB"/>
+<path d="M255.615 209.5L255.615 302.5" stroke="#18A0FB" stroke-width="40"/>
+<path d="M314 226H199L256.5 186.606L314 226Z" fill="#18A0FB"/>
+<path d="M199 285.5L314 285.5L256.5 324.894L199 285.5Z" fill="#18A0FB"/>
+</svg>
+
+					<span>Row Gap (pt)</span>
+				</div>
+				<div class="fill"></div>
+				<input id="row-gap" placeholder="Gap (Enter Number)" type="text" value="0">
+			</div>
+	
+			<div class="border"></div>
+	
+			<div class="align horizontal input-row">
+				<div class="align horizontal">
+					<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path opacity="0.6" d="M269.244 405.92C333.404 405.92 376.324 383.068 376.324 349.23C376.324 319.641 352.008 313.488 352.008 296.203C352.008 272.619 436.529 268.664 436.529 207.141C436.529 146.35 373.688 106.066 280.084 106.066C158.502 106.066 76.4707 167.59 76.4707 258.41C76.4707 346.74 154.254 405.92 269.244 405.92ZM284.186 200.402C270.562 200.402 259.137 189.27 259.137 175.5C259.137 161.73 270.562 150.598 284.186 150.598C298.102 150.598 309.088 161.73 309.088 175.5C309.088 189.416 298.102 200.402 284.186 200.402ZM204.498 224.279C187.213 224.279 173.443 210.656 173.443 193.371C173.443 176.232 187.213 162.756 204.498 162.756C221.344 162.756 235.26 176.232 235.26 193.371C235.26 210.656 221.49 224.279 204.498 224.279ZM355.23 213.146C343.951 213.146 334.723 204.064 334.723 192.785C334.723 181.799 343.951 172.57 355.23 172.57C366.217 172.57 375.299 181.945 375.299 192.785C375.299 203.918 366.363 213.146 355.23 213.146ZM146.783 277.16C133.307 277.16 122.027 265.734 122.027 252.111C122.027 238.928 133.746 227.648 146.783 227.648C160.406 227.648 171.393 238.488 171.393 252.111C171.393 265.734 160.406 277.16 146.783 277.16ZM267.047 349.084C244.635 349.084 226.324 330.627 226.324 308.068C226.324 285.656 244.635 267.199 267.047 267.199C289.605 267.199 308.062 285.656 308.062 308.068C308.062 331.066 290.045 349.084 267.047 349.084Z" fill="black"/>
+</svg>
+
+					<span>Cell Fill Color</span>
+				</div>
+				<div class="fill"></div>
+				<input id="cell-fill" value="#2EEA89" type="color">
+			</div>
+	
+			<div class="align horizontal input-row">
+				<div class="align horizontal">
+					<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path opacity="0.6" d="M103.303 190.002H407.551C424.396 190.002 433.332 180.041 433.332 163.049V147.668C433.332 130.676 424.396 120.715 407.551 120.715H103.303C87.3359 120.715 77.5215 130.676 77.5215 147.668V163.049C77.5215 180.041 86.6035 190.002 103.303 190.002ZM177.717 394.201H333.137C363.312 394.201 375.471 377.795 380.158 348.059L400.812 211.389H110.041L130.842 348.059C135.383 377.941 147.541 394.201 177.717 394.201ZM213.312 353.771C206.135 353.771 200.129 347.766 200.129 340.588C200.129 336.926 201.74 333.996 204.23 331.506L237.043 298.4L204.23 265.295C201.74 262.805 200.129 259.875 200.129 256.213C200.129 249.035 206.135 243.322 213.312 243.322C216.828 243.322 219.465 244.641 222.248 247.131L255.354 280.383L288.898 246.984C291.682 244.494 294.318 243.029 297.834 243.029C305.012 243.029 310.871 248.889 310.871 256.213C310.871 259.729 309.553 262.365 306.916 265.148L273.811 298.4L306.77 331.359C309.26 333.996 310.871 336.779 310.871 340.588C310.871 347.619 304.865 353.771 297.834 353.771C294.025 353.771 291.096 352.16 288.605 349.816L255.354 316.564L222.395 349.816C219.904 352.16 216.828 353.771 213.312 353.771Z" fill="black"/>
+</svg>
+
+					<span>Replace Selected With Grid</span>
+				</div>
+				<div class="fill"></div>
+				<input id="replace-selected" type="checkbox">
+			</div>
+	
+			<div class="border"></div>
+
+			<div style="display: none;" class="new-feature-card">
+				<div class="card-close">
+					<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M90 90L423 423" stroke="black" stroke-width="52" stroke-linecap="round"/>
+<path d="M423 90L90 423" stroke="black" stroke-width="52" stroke-linecap="round"/>
+</svg>
+
+				</div>
+				<div class="card-content">
+					<span class="card-title">Whats new?</span>
+					<span class="card-subtitle">Version 1.1</span>
+					<ul>
+						<li>
+							🎛 <b>Autopopulate — </b> you can now select more then one layer to autopopulate the layout with the other selected layers / components
+						</li>
+						<li>
+							💾  <b>Saving — </b> Save your layout and reuse them in other Figma projects
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="help-button">
+				<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M256 456.441C365.484 456.441 455.637 366.289 455.637 256.805C455.637 147.512 365.293 57.168 255.809 57.168C146.516 57.168 56.3633 147.512 56.3633 256.805C56.3633 366.289 146.516 456.441 256 456.441ZM256 412.609C169.676 412.609 100.387 343.129 100.387 256.805C100.387 170.48 169.484 101 255.809 101C342.324 101 411.613 170.48 411.805 256.805C411.996 343.129 342.324 412.609 256 412.609ZM251.406 293.938C262.508 293.938 269.973 287.812 270.738 279.773C270.93 279.008 270.93 278.051 271.121 277.477C271.887 268.098 279.16 261.59 290.836 253.934C310.168 241.684 321.461 230.773 321.461 208.953C321.461 177.18 292.559 158.23 257.531 158.23C224.801 158.23 202.023 172.586 195.707 190.77C194.367 194.215 193.602 197.469 193.602 201.297C193.602 210.867 201.258 217.375 210.062 217.375C217.336 217.375 222.504 214.504 226.523 209.145L229.203 205.699C235.52 195.746 243.941 190.961 254.469 190.961C268.633 190.961 278.203 199.383 278.203 211.25C278.203 222.734 270.164 228.285 254.277 239.387C240.879 248.766 231.117 258.336 231.117 274.605V276.52C231.117 288.004 238.391 293.938 251.406 293.938ZM251.215 353.656C264.422 353.656 274.758 344.66 274.758 331.836C274.758 319.012 264.422 310.016 251.215 310.016C238.008 310.016 227.48 319.203 227.48 331.836C227.48 344.66 238.008 353.656 251.215 353.656Z" fill="black"/>
+</svg>
+
+				<span>Open help</span>
+			</div>
+
+			<div class="app-help-container">
+				<p id="app-description">To create a grid, set the columns, rows, column gap, and row gap<br>
+					<br>
+					Column / row values are written as their cell sizes in whole numbers (with a pt suffix), or out of a total fraction, with the denominator of that fraction being all the numerators written added up. All cell values must be separated by a space. The value entered can also be a single number to create x amount of equally sized cells.<br>
+					<br>
+					Try the following in the column/row inputs to see how they change the grid:<br>
+					1 2 3 4 5<br>
+					40pt 1<br>
+					20pt 1 20pt</p>
+			</div>
+		</div>
+	
+		<div class="button-container-hover">
+			<div class="button-container">
+				<!-- <div id="undo" style="display: none;" class="button faded align horizontal">
+					<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_150:45)">
+<path d="M342.262 124.998C314.083 107.021 281.206 97.8034 247.789 98.5115C214.371 99.2197 181.914 109.821 154.522 128.976C127.13 148.131 106.033 174.978 93.8985 206.123C81.7644 237.267 79.1383 271.311 86.3523 303.948C93.5663 336.585 110.296 366.351 134.427 389.48C158.557 412.609 189.005 428.063 221.918 433.888C254.832 439.713 288.733 435.647 319.336 422.204C349.939 408.761 375.868 386.546 393.845 358.367L361.265 337.582C347.399 359.317 327.399 376.453 303.794 386.821C280.189 397.19 254.04 400.326 228.653 395.833C203.266 391.34 179.781 379.42 161.169 361.58C142.556 343.74 129.652 320.781 124.087 295.607C118.523 270.433 120.549 244.175 129.908 220.152C139.267 196.129 155.54 175.421 176.668 160.647C197.797 145.872 222.832 137.695 248.608 137.149C274.383 136.603 299.742 143.712 321.478 157.578L342.262 124.998Z" fill="black"/>
+<path d="M423.631 199.758L273.09 193.091L354.135 66.0525L423.631 199.758Z" fill="black"/>
+</g>
+<defs>
+<clipPath id="clip0_150:45">
+<rect width="512" height="512" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+
+				</div> -->
+		
+				<div id="apply-to-element" style="flex-grow: 100" class="button colour align horizontal">
+					<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="72" y="72" width="100" height="100" rx="4" fill="white"/>
+<rect x="72" y="206" width="100" height="100" rx="4" fill="white"/>
+<rect x="72" y="340" width="100" height="100" rx="4" fill="white"/>
+<rect x="206" y="72" width="100" height="100" rx="4" fill="white"/>
+<rect x="206" y="206" width="100" height="100" rx="4" fill="white"/>
+<rect x="206" y="340" width="100" height="100" rx="4" fill="white"/>
+<rect x="340" y="72" width="100" height="100" rx="4" fill="white"/>
+<rect x="340" y="206" width="100" height="100" rx="4" fill="white"/>
+<rect x="340" y="340" width="100" height="100" rx="4" fill="white"/>
+</svg>
+
+					<span>Apply To Selected</span>
+				</div>
+
+				<div id="select-saved" style="background-color: rgb(232 232 232); display: none" class="button align horizontal">
+					<select name="">
+						<option value="none">View Saved...</option>
+						<option value="current">Save Current</option>
+						<option value="current">Simple Grid</option>
+						<option value="current">4x4 Grid</option>
+					</select>
+					<!-- <span>Saved...</span> -->
+				</div>
+			</div>
+		</div>
+	
+		<!-- <div class="overlay" style="display: none;">
+			<div class="content">
+				<h2>Premade-Grids</h2>
+				<p>You can select from a range of premade grid configurations, or submit your own at https://www.easygrid.app/submit</p>
+				<ul class="premade-list">
+					<li class="premade-item">
+	
+					</li>
+				</ul>
+			</div>
+		</div> -->
+	</div>	
+
+	<script>
+		(()=>{"use strict";const e=(e,t,n,r)=>(n<0&&(e-=n=Math.abs(n)),r<0&&(t-=r=Math.abs(r)),{x:e+=1,y:t+=1,h:r,w:n}),t=({pattern:e,gap:t,realSize:n,appliedSize:r})=>{t=parseInt(t),n=parseInt(n),r=parseInt(r);const o=/^(auto|([0-9|%]+)(pt)?)(\*[0-9]+)?$/;var i=[];if(e.split(" ").forEach((e=>{if(!o.test(e))return;const t=e.split("*"),n=t[0],r=t[1]||1;for(var s=0;s<r;)i.push(n),s++})),0===i.length)i.push(1);else if(1===i.length){const e=i[0],t=parseInt(e),n=e.indexOf("pt");if(!isNaN(t)&&-1==n){i=[];for(var s=0;s<t;)i.push(1),s++}}const d=(()=>{var e=0,r=0,o={};function s(e){const t=(e=e.toString()).replace("pt",""),n=e!==t;return e=n?e.replace("pt",""):e,{numberValue:parseInt(e),isDirectPoint:n}}function d(t,n){e+=n,o[t]=n}function l(s,d){const l=(n-e-(i.length-1)*t)/r;o[s]=l*d}for(var a=0,c=0;a<i.length;){const e=i[a],{isDirectPoint:t,numberValue:n}=s(e);a+=1,0===c?t?d(a-1,n):r+=n:t||1!==c||l(a-1,n),a===i.length&&0===c&&(c=1,a=0)}return o})(),l=e=>Math.round(100*e)/100;return{gap:e=>e?l(r/n*t):t,items:e=>Object.keys(d).sort(((e,t)=>e>t)).map((t=>{const o=d[t];return e?l(r/n*o):o}))}},n=(e,t)=>{parent.postMessage({pluginMessage:{type:e,...t}},"*")},r=document.querySelector("#grid-root"),o=r.getBoundingClientRect().width;function i(e){var t=e,n=[];return{addListener:e=>!!e.call&&(n.push(e),e(t),!0),set:e=>{t=e,n.forEach((e=>e(t)))},get:()=>t}}var s={},d={width:0,height:0,name:""};const l=i({grid_columns:"1 3 1",grid_rows:"1",column_gap:"0",row_gap:"0"}),a=i({empty:!0}),c=i({empty:!0}),u=i([]),p=[{name:"Golden Ratio",id:"golden-ratio",inputs:{grid_columns:"13",grid_rows:"8",column_gap:"0",row_gap:"0"},mergedCells:[{x:0,y:0,w:7,h:7},{x:8,y:0,w:4,h:4},{x:8,y:5,w:0,h:0},{x:8,y:6,w:1,h:1},{x:9,y:5,w:0,h:0},{x:12,y:5,w:-2,h:2}]},{name:"Column Grid (12 Column)",id:"ipad-split",inputs:{grid_columns:"12",grid_rows:"1",column_gap:"6",row_gap:"0"}},{name:"iPad App With Sidebar",id:"ipad-with-sidebar",inputs:{grid_columns:"220pt 1",grid_rows:"1",column_gap:"0",row_gap:"0"}},{name:"Notch iPhone App Layout",id:"ios-app-layout",inputs:{grid_columns:"1",grid_rows:"140pt 1 83pt",column_gap:"0",row_gap:"0"}},{name:"Rule Of Threes",id:"rule-of-threes",inputs:{grid_columns:"3",grid_rows:"3",column_gap:"0",row_gap:"0"}}],m=(e,t,n)=>{e&&t?(d={width:e,height:t,name:n},c.set(d)):(d={width:0,height:0,name:""},c.set({empty:!0})),g()};function g(){if(0===d.width&&0===d.width&&""===d.name.trim())return a.set({empty:!0});const e=l.get();var n=d.width,i=d.height;const s=n/i;s<1?n=(i=300)*s:i=(n=r.getBoundingClientRect().width)/s,setTimeout((()=>{const e=Array.from(r.children||[])[0],t=Array.from(r.children||[])[1];if(e){var n=0,i=-1;Array.from(e.children).forEach((e=>{const t=e.getBoundingClientRect();-1===i?i=t.top:Math.floor(t.top)===Math.floor(i)&&(n+=t.width),console.log("child",n)})),console.log("MAX WIDTH",n,o),n>o?(e.style.overflowX="scroll",e.style.justifyContent="left",t.style.overflowX="scroll",t.style.justifyContent="left",console.log("SHOULD ALLOW SCROLL")):(e.style.overflowX="hidden",e.style.justifyContent="center",t.style.overflowX="hidden",t.style.justifyContent="center",console.log("SHOULD NOT ALLOW SCROLL"))}}),1);const c={column:t({pattern:e.grid_columns,gap:e.column_gap,realSize:d.width,appliedSize:n}),row:t({pattern:e.grid_rows,gap:e.row_gap,realSize:d.height,appliedSize:i})};a.set(c)}l.addListener((()=>g())),document.querySelector(".new-feature-card .card-close").addEventListener("click",(()=>document.querySelector(".new-feature-card").remove())),window.onmessage=e=>{const t=e.data.pluginMessage;"selectionchange"===t.type?t.item?m(t.item.width,t.item.height,t.item.name):m():"presaved-fetched"===t.type?t.items&&Array.isArray(t.items)&&u.set(t.items):"fetch-release-notes"===t.type&&t.note&&(document.querySelector(".new-feature-card").style.display="")},m(100,100,"Test Group");const y={addSelectionListener:c.addListener,addPatternListener:a.addListener,getPatternValue:a.get,addInputListener:l.addListener,addPresavedGridListener:u.addListener,getPresavedGrids:u.get,getPreExistingSavedGrids:()=>p,removePresavedGrid(e){n("delete-grid",{id:e})},getPresavedGridsWithID(e){const t=[...u.get(),...p];for(var n,r=0;r<t.length&&null==n;){const o=t[r];o.id===e&&(n=o),r++}return n||null},addPresavedGrid(e){var t=[];Object.values(s).forEach((e=>{Object.values(e).forEach((e=>{const n={...e};delete n.previewNode,t.push(n)}))}));const r=Math.random().toString().slice(3),o=l.get();n("save-grid",{id:r,name:e,inputs:o,mergedCells:t})},setAllInputValues:e=>{l.set(e)},setInputValue:(e,t)=>{l.set({...l.get(),[e]:t})},setMerges:e=>{var t={};(e=e||[]).forEach((e=>{const n=e.x,r=e.y;t[n]=t[n]||{},t[n][r]=e})),s=t},grids:{get hasMerged(){return Object.keys(s).filter((e=>0!==Object.keys(s[e]).length)).length>0},get merges(){return Object.values(s).map((e=>Object.values(e))).flat()},clear(){Object.keys(s).forEach((e=>{Object.values(s[e]).forEach((e=>{e.previewNode&&e.previewNode.remove&&e.previewNode.remove()}))})),s={}},get:(e,t)=>(s[e]||{})[t]||null,addMerge:(e,t,n,r,o)=>(s[e]=s[e]||{},s[e][t]={x:e,y:t,w:n,h:r,previewNode:o},s[e][t]),overridePreviewNode(e,t,n){const r=s[e][t];r&&(r.previewNode=n)},removeMerge(e,t){const n=s[e][t];n&&(n.previewNode&&n.previewNode.remove(),delete s[e][t])}}},h=document.querySelector("#grid-root"),v=document.createElement("div");v.classList.add("merge-container");const f=document.createElement("div");f.classList.add("cells-container"),h.appendChild(f),h.appendChild(v);var C={};function w(t,n,r,o,i){if(!t)return;n=parseInt(n),r=parseInt(r),o=parseInt(o),i=parseInt(i);const{x:s,y:d,h:l,w:a}=e(n,r,o,i);t.style.gridRowStart=`${d}`,t.style.gridRowEnd=`${d+l+1}`,t.style.gridColumnStart=`${s}`,t.style.gridColumnEnd=`${s+a+1}`}function x(){const e=document.createElement("div");return e.style.backgroundColor=function(){const e=["#E94E3D","#EF9A37","#F6CD46","#69C466","#5FC4BD","#5EAEC4","#387AF6","#A259D7","#E9445A","#9D8563"];return`${e[Math.floor(Math.random()*(e.length-1))]}AA`}(),e.style.position="relative",e.style.left="2px",e.style.top="2px",e.style.width="calc(100% - 4px)",e.style.height="calc(100% - 4px)",e.style.opacity="0.85",e.style.borderRadius="4px",e.style.pointerEvents="none",e}const E=(e,{xItems:t,yItems:n,xGap:r,yGap:o})=>{e.style.display="grid",e.style.gridTemplateColumns=t.map((e=>`${e}px`)).join(" "),e.style.gridTemplateRows=n.map((e=>`${e}px`)).join(" "),e.style.columnGap=`${r}px`,e.style.rowGap=`${o}px`,e.style.justifyContent="center"};y.addPatternListener((e=>{if(Array.from(v.children).forEach((e=>e.remove())),Array.from(f.children).forEach((e=>e.remove())),e.empty)return v.style.height="20px",void(f.style.height="20px");v.style.height="unset",f.style.height="unset",v.style.backgroundColor="unset",C={};const t=e.column.items(!0),n=e.column.gap(!0),r=e.row.items(!0),o={xItems:t,yItems:r,xGap:n,yGap:e.row.gap(!0)};E(v,o),E(f,o);for(var i=0;i<r.length;){for(var s=0;s<t.length;){const e=document.createElement("div");e.style.border="1px solid #00000026";const t=y.grids.get(s,i),n=t?x():null;n&&(t.previewNode&&t.previewNode.remove&&t.previewNode.remove(),w(n,s,i,t.w,t.h),y.grids.overridePreviewNode(s,i,n),v.appendChild(n)),e.gridDescription={id:Math.random().toString(),x:s,y:i,merged:t},f.appendChild(e),C[s]=C[s]||[],C[s][i]=e,s+=1}i+=1}}));const b=function(){var e,t,n,r,o,i,s;function d(){w(n,r,o,i,s)}function l(e){n&&e&&n.remove(),n=null,t=null,r=null,o=null,i=null,s=null,document.body.style.cursor="auto"}return{contextClick:t=>{e&&null!=e.gridDescription.merged&&(e.gridDescription.merged=null,y.grids.removeMerge(e.gridDescription.x,e.gridDescription.y))},mouseDown:l=>{1===l.which&&e&&(e.gridDescription.merged||(document.body.style.cursor="grabbing",t=e,n=x(),r=t.gridDescription.x,o=t.gridDescription.y,i=0,s=0,v.appendChild(n),d()))},mouseUp:e=>{1===e.which&&(n||t?(n||t)&&(t.gridDescription.merged=y.grids.addMerge(r,o,i,s,n),l(!1)):l(!0))},mouseMove:t=>{const l=(()=>{const e=t.target;return e.gridDescription?e:null})(),a=e;e=l,a&&(a.style.backgroundColor="unset"),e&&(e.style.backgroundColor="#00a2ff"),n&&e&&(i=e.gridDescription.x-r,s=e.gridDescription.y-o,d())}}}();document.body.addEventListener("contextmenu",(e=>b.contextClick(e))),document.body.addEventListener("mousedown",(e=>b.mouseDown(e))),document.body.addEventListener("mouseup",(e=>b.mouseUp(e))),document.body.addEventListener("mousemove",(e=>b.mouseMove(e)));const L={gridRoot:h,clear(){Object.values(C).forEach((e=>{Object.values(e).forEach((e=>{e.gridDescription.merged=null}))}))}},S={grid_columns:document.querySelector("#grid-columns"),grid_rows:document.querySelector("#grid-rows"),column_gap:document.querySelector("#column-gap"),row_gap:document.querySelector("#row-gap")};y.addInputListener((e=>{S.grid_columns.value=e.grid_columns,S.grid_rows.value=e.grid_rows,S.column_gap.value=e.column_gap,S.row_gap.value=e.row_gap})),Object.keys(S).forEach((e=>{const t=S[e];t.addEventListener("change",(()=>{y.setInputValue(e,t.value)}))}));var _=null;function M(e){var t=()=>"";const n=document.createElement("div");n.classList.add("input-overlay"),n.classList.add("opening");const r=document.createElement("span");r.classList.add("title");const o=document.createElement("div");o.classList.add("top-container");const i=document.createElement("div");i.classList.add("bottom-container");const s=document.createElement("span");s.id="confirm-button",s.innerText="Save Grid";const d=document.createElement("span");if(d.id="cancel-button",d.innerText="Cancel",n.appendChild(o),n.appendChild(i),o.appendChild(r),document.body.appendChild(n),e.inputs){r.innerText="Save Grid As...",n.classList.add("equally-divided"),i.appendChild(s),i.appendChild(d);const e=document.createElement("input");e.placeholder="Enter value...",o.appendChild(e),t=()=>{const t=e.value;return""===t.trim()?null:t}}else if(e.items){r.innerText="Edit Saved Items",n.classList.add("flex"),d.innerText="Close",i.appendChild(d);const t=document.createElement("ul");t.style="list-style: none; width: 100%; height: 100%; padding: 0 12px 12px 12px; margin: 0; box-sizing: border-box",e.items.forEach((n=>{const r=document.createElement("li");r.style="display:flex; padding: 16px; border-bottom: 1px solid black; align-items: center; background-color: #ffffff3b; border-radius: 6px; margin-bottom: 6px";const o=document.createElement("span");o.innerText=n.name,o.style="flex-grow: 100; color: white";const i=document.createElement("div"),s=document.createElement("svg");s.style="width: 22px; height: 22px; cursur: pointer",s.innerHTML='<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path d="M155.148 482H356.626C369.59 482 379.917 478.387 387.605 471.161C395.293 463.935 399.439 453.925 400.042 441.129L414.061 126.129H447.302C451.372 126.129 454.839 124.699 457.704 121.839C460.568 118.978 462 115.516 462 111.452C462 107.387 460.568 103.925 457.704 101.065C454.839 98.2043 451.372 96.7742 447.302 96.7742H64.472C60.5525 96.7742 57.1606 98.2043 54.2964 101.065C51.4321 103.925 50 107.387 50 111.452C50 115.516 51.4321 118.978 54.2964 121.839C57.1606 124.699 60.5525 126.129 64.472 126.129H97.9385L112.184 441.129C112.787 453.925 116.858 463.935 124.395 471.161C132.083 478.387 142.334 482 155.148 482ZM188.615 420.806C185.147 420.806 182.283 419.753 180.022 417.645C177.761 415.538 176.555 412.753 176.404 409.29L169.846 174.226C169.696 170.763 170.751 167.978 173.012 165.871C175.273 163.613 178.288 162.484 182.057 162.484C185.524 162.484 188.389 163.538 190.65 165.645C192.911 167.753 194.117 170.613 194.268 174.226L200.825 409.065C200.976 412.527 199.921 415.387 197.66 417.645C195.398 419.753 192.383 420.806 188.615 420.806ZM256 420.806C252.231 420.806 249.141 419.753 246.729 417.645C244.468 415.387 243.337 412.527 243.337 409.065V174.226C243.337 170.763 244.468 167.978 246.729 165.871C249.141 163.613 252.231 162.484 256 162.484C259.769 162.484 262.784 163.613 265.045 165.871C267.457 167.978 268.663 170.763 268.663 174.226V409.065C268.663 412.527 267.457 415.387 265.045 417.645C262.784 419.753 259.769 420.806 256 420.806ZM323.159 420.806C319.39 420.806 316.375 419.753 314.114 417.645C312.004 415.387 310.948 412.602 310.948 409.29L317.732 174.226C317.883 170.613 319.089 167.753 321.35 165.645C323.611 163.538 326.476 162.484 329.943 162.484C333.712 162.484 336.727 163.613 338.988 165.871C341.249 167.978 342.304 170.763 342.154 174.226L335.37 409.516C335.37 412.828 334.239 415.538 331.978 417.645C329.717 419.753 326.777 420.806 323.159 420.806ZM161.027 103.323H196.077V65.1613C196.077 59.2903 197.886 54.6237 201.504 51.1613C205.273 47.6989 210.323 45.9677 216.654 45.9677H294.894C301.225 45.9677 306.2 47.6989 309.818 51.1613C313.587 54.6237 315.471 59.2903 315.471 65.1613V103.323H350.52V63.3548C350.52 47.6989 345.696 35.4301 336.048 26.5484C326.551 17.5161 313.436 13 296.703 13H214.619C198.037 13 184.921 17.5161 175.273 26.5484C165.776 35.4301 161.027 47.6989 161.027 63.3548V103.323Z" fill="#EF453B"/>\n</svg>',i.appendChild(s),r.appendChild(o),r.appendChild(i),t.appendChild(r),s.addEventListener("click",(()=>{r.remove(),e.remove(n.id)}))})),o.appendChild(t)}return new Promise(((e,n)=>{_=()=>n(),d.addEventListener("click",(()=>n())),s.addEventListener("click",(()=>{const n=t();n&&e(n)}))})).finally((()=>{n.classList.remove("opening"),n.classList.add("closing"),setTimeout((()=>n.remove()),290)}))}const A=document.querySelector("#clear-merge"),D=document.querySelector("#current-frame-name span"),k=document.querySelector("#apply-to-element"),q=document.querySelector("#apply-to-element svg"),I=document.querySelector("#apply-to-element span"),O=document.querySelector("#select-saved"),P=document.querySelector("#select-saved select"),G=document.querySelector(".help-screen"),T=document.querySelector(".help-button"),j=document.querySelector(".help-screen .button"),N=I.innerText;A.style.cursor="pointer",A.addEventListener("click",(()=>{y.grids.clear(),L.clear()})),y.addSelectionListener((e=>{e.empty?(_&&_(),Object.values(S).forEach((e=>e.setAttribute("disabled","disabled"))),document.querySelector(".body-container .button-container").style.border="0px",A.style.opacity="0.3",q.style.display="none",k.style.color="#848b92",k.style.cursor="not-allowed",k.style.backgroundColor="rgb(218 220 222)",I.innerText="Must Select Atleast One Layer",D.innerText="Select Element...",D.parentElement.style.opacity="0.4",D.style.fontWeight=600,D.style.textDecoraction="underline",O.style.display="none"):(Object.values(S).forEach((e=>e.removeAttribute("disabled"))),document.querySelector(".body-container .button-container").style.border="1px solid #0097f7",A.style.opacity="0.8",q.style.display="unset",k.style.color="",k.style.cursor="",k.style.backgroundColor="",I.innerText=N,D.innerText=e.name,D.parentElement.style.opacity="1",D.style.textDecoraction="",D.style.fontWeight=400,O.style.display="")})),T.addEventListener("click",(()=>{G.classList.add("opening")})),j.addEventListener("click",(()=>{G.classList.remove("opening"),G.classList.add("closing"),G.addEventListener("animationend",(function e(){G.classList.remove("closing"),G.removeEventListener("animationend",e)}))})),y.addPresavedGridListener((function(e){function t(e,t,n){const r=document.createElement("option");return r.innerText=t,r.setAttribute("value",e),n.appendChild(r),r}P.innerHTML="";const n=y.getPreExistingSavedGrids(),r=document.createElement("optgroup");r.setAttribute("label","Actions");const o=document.createElement("optgroup");o.setAttribute("label","Pre-Made Layouts");const i=document.createElement("optgroup");i.setAttribute("label",0===e.length?"Nothing Saved Yet":"Saved History"),t("empty","Saved...",r),t("save","Save Current Layout",r),t("edit","Edit Saved",r),P.appendChild(r),P.appendChild(i),P.appendChild(o),e.forEach((e=>t(e.id,e.name,i))),n.forEach((e=>t(e.id,e.name,o)))})),O.addEventListener("click",(()=>P.click())),P.addEventListener("change",(e=>{const t=P.value;if("save"===t)M({inputs:!0}).then((e=>y.addPresavedGrid(e)));else if("edit"===t)M({items:y.getPresavedGrids(),remove:e=>y.removePresavedGrid(e)}).then((()=>{}));else if("empty"!=t&&"----"!=t){const e=y.getPresavedGridsWithID(t);e&&(y.setMerges(e.mergedCells),y.setAllInputValues(e.inputs))}P.selectedIndex=0})),k.addEventListener("click",(()=>{const t=y.getPatternValue();if(t.empty)return alert("Cannot apply to element without selecting any layers!");const r=t.column.items(!1),o=t.row.items(!1),i=t.column.gap(!1),s=t.row.gap(!1);var d=[],l=0,a=0;if(y.grids.hasMerged)y.grids.merges.forEach((t=>{const n=e(t.x,t.y,t.w,t.h);function l(e,t,n,r){for(var o=0,i=0,s=!1;!s;)i===n?(r&&(o+=e[i]),s=!0):o+=e[i]+t,i++;return o}n.x=n.x-1,n.y=n.y-1;const a=l(r,i,n.x,!1),c=l(o,s,n.y,!1),u=l(r,i,n.x+n.w,!0)-a,p=l(o,s,n.y+n.h,!0)-c;d.push({x:a,y:c,width:u,height:p})}));else for(var c=0;c<o.length;){var u=0;l=0;const e=o[c];for(;u<r.length;){const t=r[u];d.push({x:l,y:a,width:t,height:e}),l+=t+i,u++}c++,a+=e+s}const p=Math.random().toString();n("create-cells",{id:p,items:d,colour:document.querySelector("#cell-fill").value,replaceSelected:document.querySelector("#replace-selected").checked})}))})();
+	</script>
+	<!-- <script src="http://881c-94-5-65-255.ngrok.io/dist/index.js"></script> -->
+</body>

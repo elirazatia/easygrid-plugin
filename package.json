@@ -1,0 +1,21 @@
+{
+  "name": "easygrid2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main-export.js",
+  "scripts": {
+    "build": "npx webpack && node main-export",
+    "run": "node local-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "loadash": "^1.0.0"
+  }
+}
