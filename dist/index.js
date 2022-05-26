@@ -206,9 +206,10 @@ function inputOverlay() {
             return [input]
         },
         onConfirm:(body) => {
-            alert('WORK ON SECURING THE INPUT!!!')
             const input = body.querySelector('input')
-            return input.value
+            const val = input.value
+            if (val.trim() === '') return null
+            return val
         }
     }
 }
@@ -274,8 +275,10 @@ function closeOverlay() {
  * @returns {Promise<String>} The input provided by the user
  */
 function openOverlay(data) {
-    // var valueGetter = (() => { return '' })
-
+    /**
+     * The part below constructs the overlay elements
+     * Check out the Elements part of the Figma console to see what is going on here
+     */
     const overlay = document.createElement('div')
     overlay.classList.add('input-overlay')
     overlay.classList.add('opening')
@@ -311,9 +314,7 @@ function openOverlay(data) {
     const body = data.body()
     body.forEach(element => topContainer.appendChild(element))
 
-    /**
-     * Return a promise that is resolved when the user selects a value
-     */
+    /** * Return a promise that is resolved when the user selects a value */
     return new Promise((resolve, reject) => {
         currentOverlay = (() => reject())
 
@@ -327,63 +328,6 @@ function openOverlay(data) {
         overlay.classList.add('closing')
         setTimeout(() => overlay.remove(), 290)
     })
-
-        
-    if (data.inputs) {
-        title.innerText = 'Save Grid As...'
-        overlay.classList.add('equally-divided')
-
-        bottomContainer.appendChild(confirmButton)
-        bottomContainer.appendChild(cancelButton)
-
-        const input = document.createElement('input')
-        input.placeholder = 'Enter value...'
-        topContainer.appendChild(input)
-
-        valueGetter = (() => {
-            const val = input.value
-            if (val.trim() === '') return null
-            return val
-        })
-    } else if (data.items) {
-        title.innerText = 'Edit Saved Items'
-        overlay.classList.add('flex')
-
-        cancelButton.innerText = 'Close'
-        bottomContainer.appendChild(cancelButton)
-
-        const list = document.createElement('ul')
-        list.style = 'list-style: none; width: 100%; height: 100%; padding: 0 12px 12px 12px; margin: 0; box-sizing: border-box'
-
-        data.items.forEach(item => {
-            const view = document.createElement('li')
-            view.style = 'display:flex; padding: 16px; border-bottom: 1px solid black; align-items: center; background-color: #ffffff3b; border-radius: 6px; margin-bottom: 6px'
-
-            const label = document.createElement('span')
-            label.innerText = item.name//'View Name'
-            label.style = 'flex-grow: 100; color: white'
-
-            const rightContainer = document.createElement('div')
-            // rightContainer.style = ''
-
-            const deleteButton = document.createElement('svg')
-            deleteButton.style = 'width: 22px; height: 22px; cursur: pointer'
-            deleteButton.innerHTML = trashIcon
-
-            rightContainer.appendChild(deleteButton)
-
-            view.appendChild(label)
-            view.appendChild(rightContainer)
-            list.appendChild(view)
-
-            deleteButton.addEventListener('click', () => {
-                view.remove()
-                data.remove(item.id)
-            })
-        })
-
-        topContainer.appendChild(list)
-    }
 }
 
 /* harmony default export */ const overlay_ui = ({
@@ -1423,7 +1367,119 @@ document.addEventListener(EVENTS.ConfigChanged, (e) => {
 
     inputs[detailfor].value = detailNewValue
 })
+;// CONCATENATED MODULE: ./scripts/interface/save-dropdown.js
+
+
+
+
+
+
+/**
+ * Configure the buttons and dropdown that let the user select premade grids
+ */
+const selectSavedButton = document.querySelector('#select-saved')
+const selectSavedDropdown = document.querySelector('#select-saved select')
+
+/** * Simulate a click on the dropdown item if clicked on the dropdown button */
+selectSavedButton.addEventListener('click', () => (selectSavedDropdown.click()))
+
+/**
+ * Listen for a change in the selection option in the dropdown (menu) and determain what should happen based on the ID of the option selected
+ */
+selectSavedDropdown.addEventListener('change', (e) => {
+    const val = selectSavedDropdown.value
+    
+    if (val === 'save') {
+        /** * If selection option == save then open an overlay with an input option that when confirmed, saves a new grid to local storage */
+        overlay_ui.openOverlay(
+            inputOverlay()
+        ).then(value => save_grid.addPresavedGrid(value, config.getAll()))
+    } else if (val === 'edit') {
+        /** * If selection option == edit then open an overlay with the presaved grids that can be removed and renamed */
+        overlay_ui.openOverlay(
+            itemArrayOverlay(
+                save_grid.getPresavedGrids().filter(i => {
+                    console.log('SAVE ITEM', i)
+                    return (i.isCustomMade)
+                }),
+
+                (id) => save_grid.removePresavedGrid(id)
+            )
+        ).finally(() => {})
+    } else if (val != 'empty' && val != '----') {
+        /**
+         * If selection is any other value then attempt to get the grid with the given ID,
+         * and if successful set merges and configuration to the ones from the grid
+         */
+        const found = save_grid.getPresavedGridsWithID(val)
+        if (found) {
+            config.setAll(found.inputs)
+        }
+    }
+
+    /** * Revert dropdown to the placeholder element (no action selected) */
+    selectSavedDropdown.selectedIndex = 0
+})
+
+/** * Listens for when the array of saved grids has changed (removed, updated) to refresh the selectors dropdown options */
+document.addEventListener(EVENTS.PresavedArrayChanged, (e) => {
+    const newArray = Array.from(e.detail)
+    if (newArray == null || !Array.isArray(newArray)) return
+
+    /**
+     * Adds a dropdown item to the given option group to create the new dropdown children
+     * @param {String} value The identifier for the dropdown option
+     * @param {String} label The label for the dropdown item
+     * @param {HTMLOptGroupElement} childOf The optgroup parent of the new item
+     * @returns 
+     */
+    function createDropdownItem(value, label, childOf) {
+        const item = document.createElement('option')
+        item.innerText = label
+        item.setAttribute('value', value)
+        childOf.appendChild(item)
+
+        return item
+    }
+
+    /** * Clear the contents of the dropdown */
+    selectSavedDropdown.innerHTML = ''
+
+    /** * The group that contains the actions availiable (edit, save current, ...) */
+    const mainOptionGroup = document.createElement('optgroup')
+    mainOptionGroup.setAttribute('label', 'Actions')
+
+    /** * The group that contains the preexisting grid options (created in scripts/controllers/save-grid.js) */
+    const preExistingOptionGroup = document.createElement('optgroup')
+    preExistingOptionGroup.setAttribute('label', 'Pre-Made Layouts')
+
+    /** * The group that contains the custom grid (made and saved by the user) */
+    const suboptionsOptionGroup = document.createElement('optgroup')
+    suboptionsOptionGroup.setAttribute('label', (newArray.length === 0) ? 'Nothing Saved Yet' : 'Saved History')
+
+    /** * Create action items */
+    createDropdownItem('empty', 'Saved...', mainOptionGroup)
+    createDropdownItem('save', 'Save Current Layout', mainOptionGroup)
+    createDropdownItem('edit', 'Edit Saved', mainOptionGroup)
+
+    /** * Add sub groups to the dropdown */
+    selectSavedDropdown.appendChild(mainOptionGroup)
+    selectSavedDropdown.appendChild(suboptionsOptionGroup)
+    selectSavedDropdown.appendChild(preExistingOptionGroup)
+
+    /** * Loop thorugh the list of custom grids availiable and add them to the appropiate group */
+    newArray.filter(i => (i.isCustomMade)).forEach(item =>
+        createDropdownItem(item.id, item.name, suboptionsOptionGroup))
+
+        /** * Loop thorugh the list of custom grids availiable and add them to the appropiate group */
+    newArray.filter(i => (!i.isCustomMade)).forEach(item =>
+        createDropdownItem(item.id, item.name, preExistingOptionGroup))
+})
+
+
+
 ;// CONCATENATED MODULE: ./scripts/root/root.js
+
 
 
 
@@ -1535,121 +1591,9 @@ selectionActions.push(selection => {
 /**
  * Configure the buttons and dropdown that let the user select premade grids
  */
-const selectSavedButton = document.querySelector('#select-saved')
-const selectSavedDropdown = document.querySelector('#select-saved select')
-
-/** * Simulate a click on the dropdown item if clicked on the dropdown button */
-selectSavedButton.addEventListener('click', () => (selectSavedDropdown.click()))
 selectionActions.push(selection => {
     if (selection) selectSavedButton.style.display = ''
     else selectSavedButton.style.display = 'none'
-})
-
-selectSavedDropdown.addEventListener('change', (e) => {
-    const val = selectSavedDropdown.value
-    
-    if (val === 'save') {
-        /**
-         * If selection option == save then open an overlay with an input option that when confirmed, saves a new grid to local storage
-         */
-        overlay_ui.openOverlay(
-            inputOverlay()
-        ).then(value => alert('NEW VALUE' + value))
-
-        // overlay.openOverlay({
-            // inputs:true
-        // }).then(name => saveGrid.addPresavedGrid(name, config.getAll()))
-    } else if (val === 'edit') {
-        /**
-         * If selection option == edit then open an overlay with the presaved grids that can be removed and renamed
-         */
-        overlay_ui.openOverlay(
-            itemArrayOverlay(
-                save_grid.getPresavedGrids().filter(i => {
-                    console.log('SAVE ITEM', i)
-                    return (i.isCustomMade)
-                }),
-
-                (id) => save_grid.removePresavedGrid(id)
-            )
-        ).finally(() => {})
-        // overlay.openOverlay({
-        //     items:saveGrid.getPresavedGrids().filter(i => {
-        //         console.log('SAVE ITEM', i)
-        //         return (i.isCustomMade)
-        //     }),//app.getPresavedGrids(),
-        //     remove:(id) => saveGrid.removePresavedGrid(id) //(id) => (app.removePresavedGrid(id))
-        // }).then(() => {})
-    } else if (val != 'empty' && val != '----') {
-        /**
-         * If selection is any other value then attempt to get the grid with the given ID,
-         * and if successful set merges and configuration to the ones from the grid
-         */
-        const found = save_grid.getPresavedGridsWithID(val)
-        if (found) {
-            config.setAll(found.inputs)
-        }
-    }
-
-    /** * Revert dropdown to the placeholder element (no action selected) */
-    selectSavedDropdown.selectedIndex = 0
-})
-
-/** * Listens for when the array of saved grids has changed (removed, updated) to refresh the selectors dropdown options */
-document.addEventListener(EVENTS.PresavedArrayChanged, (e) => {
-    const newArray = Array.from(e.detail)
-    if (newArray == null || !Array.isArray(newArray)) return
-
-    /**
-     * Adds a dropdown item to the given option group to create the new dropdown children
-     * @param {String} value The identifier for the dropdown option
-     * @param {String} label The label for the dropdown item
-     * @param {HTMLOptGroupElement} childOf The optgroup parent of the new item
-     * @returns 
-     */
-    function createDropdownItem(value, label, childOf) {
-        const item = document.createElement('option')
-        item.innerText = label
-        item.setAttribute('value', value)
-        childOf.appendChild(item)
-
-        return item
-    }
-
-    /** * Clear the contents of the dropdown */
-    selectSavedDropdown.innerHTML = ''
-
-    /** * The group that contains the actions availiable (edit, save current, ...) */
-    const mainOptionGroup = document.createElement('optgroup')
-    mainOptionGroup.setAttribute('label', 'Actions')
-
-    /** * The group that contains the preexisting grid options (created in scripts/controllers/save-grid.js) */
-    const preExistingOptionGroup = document.createElement('optgroup')
-    preExistingOptionGroup.setAttribute('label', 'Pre-Made Layouts')
-
-    /** * The group that contains the custom grid (made and saved by the user) */
-    const suboptionsOptionGroup = document.createElement('optgroup')
-    suboptionsOptionGroup.setAttribute('label', (newArray.length === 0) ? 'Nothing Saved Yet' : 'Saved History')
-
-    /** * Create action items */
-    createDropdownItem('empty', 'Saved...', mainOptionGroup)
-    createDropdownItem('save', 'Save Current Layout', mainOptionGroup)
-    createDropdownItem('edit', 'Edit Saved', mainOptionGroup)
-
-    /**
-     * Add sub groups to the dropdown
-     */
-    selectSavedDropdown.appendChild(mainOptionGroup)
-    selectSavedDropdown.appendChild(suboptionsOptionGroup)
-    selectSavedDropdown.appendChild(preExistingOptionGroup)
-
-    /** * Loop thorugh the list of custom grids availiable and add them to the appropiate group */
-    newArray.filter(i => (i.isCustomMade)).forEach(item =>
-        createDropdownItem(item.id, item.name, suboptionsOptionGroup))
-
-        /** * Loop thorugh the list of custom grids availiable and add them to the appropiate group */
-    newArray.filter(i => (!i.isCustomMade)).forEach(item =>
-        createDropdownItem(item.id, item.name, preExistingOptionGroup))
 })
 
 
