@@ -1,18 +1,20 @@
 import { EVENTS } from "../TYPES"
-
-import merging from "../controllers/merging"
-import overlay, { inputOverlay, itemArrayOverlay } from '../interface/overlay-ui'
-import toElement from "../controllers/to-element"
-
 import evaluatePattern from "../util/evalute-pattern"
 
+import merging from "../controllers/merging"
 import "../controllers/selection"
 import "../controllers/save-grid"
+import toElement from "../controllers/to-element"
+
+// import overlay, { inputOverlay, itemArrayOverlay } from '../interface/overlay-ui'
 
 import '../interface/config-ui'
-import saveGrid from "../controllers/save-grid"
-import config from "../controllers/config"
+import '../interface/help-button'
 import { selectSavedButton } from "../interface/save-dropdown"
+
+// import saveGrid from "../controllers/save-grid"
+// import config from "../controllers/config"
+
 
 
 
@@ -113,32 +115,4 @@ selectionActions.push(selection => {
 selectionActions.push(selection => {
     if (selection) selectSavedButton.style.display = ''
     else selectSavedButton.style.display = 'none'
-})
-
-
-
-/**
- * Configures the help menu
- */
-const helpSection = document.querySelector('.help-screen')
-const helpSectionOpenButton = document.querySelector('.help-button')
-const helpSectionCloseButton = document.querySelector('.help-screen .button')
-
-/** * Listen for click on the help button to open the helpSection */
-helpSectionOpenButton.addEventListener('click', () => {
-    helpSection.classList.add('opening')
-})
-
-/** * Listen for a click on the close button to close the help section */
-helpSectionCloseButton.addEventListener('click', () => {
-    /** * Called on the animationend event, removes the class that sets the closing animation and remove the listener */
-    function e() {
-        helpSection.classList.remove('closing')
-        helpSection.removeEventListener('animationend', e)
-    }
-
-    helpSection.classList.remove('opening')
-    helpSection.classList.add('closing')
-
-    helpSection.addEventListener('animationend', e)
 })
