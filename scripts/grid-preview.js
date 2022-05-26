@@ -17,14 +17,13 @@ gridMergeContainer.classList.add('merge-container')
 const gridCellsContainer = document.createElement('div')
 gridCellsContainer.classList.add('cells-container')
 
-gridRoot.appendChild(gridCellsContainer)
-gridRoot.appendChild(gridMergeContainer)
+// gridRoot.appendChild(gridCellsContainer)
+// gridRoot.appendChild(gridMergeContainer)
 
 var items = {}
 
 function applyPreviewPropertiesToNode(node,xPos,yPos,width,height) {
-    if (!node)
-        return
+    if (!node) return
 
     xPos = parseInt(xPos)
     yPos = parseInt(yPos)
@@ -167,15 +166,15 @@ const grabber = (function grabber() {
     var grabbingWidth;
     var grabbingHeight;
 
-    function applyPropertiesToPreviewNode() {
-        applyPreviewPropertiesToNode(
-            grabbingPreviewNode,
-            grabbingX,
-            grabbingY,
-            grabbingWidth,
-            grabbingHeight
-        )
-    }
+    // function applyPropertiesToPreviewNode() {
+    //     applyPreviewPropertiesToNode(
+    //         grabbingPreviewNode,
+    //         grabbingX,
+    //         grabbingY,
+    //         grabbingWidth,
+    //         grabbingHeight
+    //     )
+    // }
 
     function cancelMerge(deletesPreviewNode) {
         if (grabbingPreviewNode && deletesPreviewNode)
@@ -269,10 +268,12 @@ const grabber = (function grabber() {
     }
 })()
 
-document.body.addEventListener('contextmenu', (e) => grabber.contextClick(e))
-document.body.addEventListener('mousedown', (e) => grabber.mouseDown(e))
-document.body.addEventListener('mouseup', (e) => grabber.mouseUp(e))
-document.body.addEventListener('mousemove', (e) => grabber.mouseMove(e))
+// document.body.addEventListener('contextmenu', (e) => grabber.contextClick(e))
+// document.body.addEventListener('mousedown', (e) => grabber.mouseDown(e))
+// document.body.addEventListener('mouseup', (e) => grabber.mouseUp(e))
+// document.body.addEventListener('mousemove', (e) => grabber.mouseMove(e))
+
+
 
 export default {
     gridRoot:gridRoot,

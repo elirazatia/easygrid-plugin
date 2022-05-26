@@ -1,2 +1,4 @@
-import _ from "./scripts/ui"
-// ui.run()
+/**
+ * Import the UI element
+ */
+import _ from "./scripts/root/root"

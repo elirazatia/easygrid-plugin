@@ -14,16 +14,17 @@
 	var elements = []
 	const split = pattern.split(' ')
 
-	// Make sure every item in the pattern in valid and occurs as many times as needed
-	// (Based if the item has a multiplier or not)
+	/**
+	 * Make sure every item in the pattern in valid and occurs as many times as needed
+	 * (Based if the item has a multiplier or not)
+	 */
 	split.forEach(item => {
 		if (!isValidElement.test(item)) return
 
-		// const isMultiplied = item.includes('*')
 		const split = item.split('*')
 
 		const value = split[0]
-		const multiplier = split[1] || 1 //(split.length === 1) ? split[0] : 1
+		const multiplier = split[1] || 1
 
 		var i = 0
 		while (i < multiplier) {
@@ -32,7 +33,9 @@
 		}
 	})
 
-	// check if items are empty, if so make a single item, if items only contain one item then use that value as the amount of columns/rows
+	/**
+	 * check if items are empty, if so make a single item, if items only contain one item then use that value as the amount of columns/rows
+	 */
 	if (elements.length === 0) {
         elements.push(1)
     } else if (elements.length === 1) {
@@ -50,22 +53,23 @@
         }
     }
 
-	// console.log('ELEMENTS after', elements)
 
-	// The final array of items (in real sizes)
+	/** * The final array of items (in real sizes) */
 	const array = (() => {
 		var usedSpace = 0
         var totalFractions = 0
 
         var items = {}
 
-		// Checks a text value and see if it is a fraction or a direct number point, and an integrer based number value
+		/**
+		 * Checks a text value and see if it is a fraction or a direct number point, and an integrer based number value
+		 * @param {String} element a part of the config values, for example a grid_column input of 1 1 1 would result in expand being called 3 times with '1' as the element argument
+		 * @returns {{numberValue:String, isDirectPoint:Boolean}} numberValue is the real figma screen value for the passed element
+		 */
 		function expand(element) {
-			// console.log('SHOULD EXPAND', element)
 			element = element.toString()
             const replaced = element.replace('pt', '')
             const isDirectPoint = (element !== replaced)
-			// console.log('replaced', element, isDirectPoint)
 
             element = (isDirectPoint) ? element.replace('pt', '') : element
             const numberValue = parseInt(element)
@@ -104,7 +108,9 @@
 				evaluatingAs = 1
 				index = 0
 			}
-		} return items
+		}
+		
+		return items
 	})()
 
 	const nearestDecimal = (val) => (Math.round(val * 100) / 100)

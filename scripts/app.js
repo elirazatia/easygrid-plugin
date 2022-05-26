@@ -1,6 +1,6 @@
 import util from "./util"
 // import gridPreview from "./grid-preview"
-import expandGrid from "./expand-grid"
+// import expandGrid from "./expand-grid"
 import communicator from "./communicator"
 
 const gridRoot = document.querySelector('#grid-root')
@@ -244,8 +244,8 @@ window.onmessage = (message) => {
     const data = message.data.pluginMessage
 
     if (data.type === 'selectionchange') {
-        if (data.item) setSelection(data.item.width, data.item.height, data.item.name)
-        else setSelection()
+        // if (data.item) setSelection(data.item.width, data.item.height, data.item.name)
+        // else setSelection()
     } else if (data.type === 'presaved-fetched') {
         if (data.items && Array.isArray(data.items))
             presavedListeners.set(data.items)
@@ -257,8 +257,8 @@ window.onmessage = (message) => {
     }
 }
 
-setSelection(100, 100, 'Test Group')
-
+// setSelection(100, 100, 'Test Group')
+// 
 export default {
     addSelectionListener:selectionListeners.addListener,
 

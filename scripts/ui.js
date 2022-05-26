@@ -2,28 +2,40 @@ import _ from "./grid-preview"
 import app from "./app"
 import communicator from "./communicator"
 import util from "./util"
-import gridPreview from "./grid-preview"
+// import gridPreview from "./grid-preview"
 
-const inputs = {
-    grid_columns:document.querySelector('#grid-columns'),
-    grid_rows:document.querySelector('#grid-rows'),
-    column_gap:document.querySelector('#column-gap'),
-    row_gap:document.querySelector('#row-gap')
-}
 
-app.addInputListener((newValue) => {
-    inputs.grid_columns.value = newValue.grid_columns
-    inputs.grid_rows.value = newValue.grid_rows
-    inputs.column_gap.value = newValue.column_gap
-    inputs.row_gap.value = newValue.row_gap
-})
+import selection from "./controllers/selection"
+import saveGrid from "./controllers/save-grid"
 
-Object.keys(inputs).forEach(key => {
-    const val = inputs[key]
-    val.addEventListener('change', () => {
-        app.setInputValue(key, val.value)
-    })
-})
+import configUI from './interface/config-ui'
+import overlayUI from './interface/overlay-ui'
+import gridPreviewUi from "./interface/grid-preview/grid-preview-ui"
+
+
+
+
+
+const inputs = {}
+//     grid_columns:document.querySelector('#grid-columns'),
+//     grid_rows:document.querySelector('#grid-rows'),
+//     column_gap:document.querySelector('#column-gap'),
+//     row_gap:document.querySelector('#row-gap')
+// }
+
+// app.addInputListener((newValue) => {
+//     inputs.grid_columns.value = newValue.grid_columns
+//     inputs.grid_rows.value = newValue.grid_rows
+//     inputs.column_gap.value = newValue.column_gap
+//     inputs.row_gap.value = newValue.row_gap
+// })
+
+// Object.keys(inputs).forEach(key => {
+//     const val = inputs[key]
+//     val.addEventListener('change', () => {
+//         app.setInputValue(key, val.value)
+//     })
+// })
 
 const trashIcon = `<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M155.148 482H356.626C369.59 482 379.917 478.387 387.605 471.161C395.293 463.935 399.439 453.925 400.042 441.129L414.061 126.129H447.302C451.372 126.129 454.839 124.699 457.704 121.839C460.568 118.978 462 115.516 462 111.452C462 107.387 460.568 103.925 457.704 101.065C454.839 98.2043 451.372 96.7742 447.302 96.7742H64.472C60.5525 96.7742 57.1606 98.2043 54.2964 101.065C51.4321 103.925 50 107.387 50 111.452C50 115.516 51.4321 118.978 54.2964 121.839C57.1606 124.699 60.5525 126.129 64.472 126.129H97.9385L112.184 441.129C112.787 453.925 116.858 463.935 124.395 471.161C132.083 478.387 142.334 482 155.148 482ZM188.615 420.806C185.147 420.806 182.283 419.753 180.022 417.645C177.761 415.538 176.555 412.753 176.404 409.29L169.846 174.226C169.696 170.763 170.751 167.978 173.012 165.871C175.273 163.613 178.288 162.484 182.057 162.484C185.524 162.484 188.389 163.538 190.65 165.645C192.911 167.753 194.117 170.613 194.268 174.226L200.825 409.065C200.976 412.527 199.921 415.387 197.66 417.645C195.398 419.753 192.383 420.806 188.615 420.806ZM256 420.806C252.231 420.806 249.141 419.753 246.729 417.645C244.468 415.387 243.337 412.527 243.337 409.065V174.226C243.337 170.763 244.468 167.978 246.729 165.871C249.141 163.613 252.231 162.484 256 162.484C259.769 162.484 262.784 163.613 265.045 165.871C267.457 167.978 268.663 170.763 268.663 174.226V409.065C268.663 412.527 267.457 415.387 265.045 417.645C262.784 419.753 259.769 420.806 256 420.806ZM323.159 420.806C319.39 420.806 316.375 419.753 314.114 417.645C312.004 415.387 310.948 412.602 310.948 409.29L317.732 174.226C317.883 170.613 319.089 167.753 321.35 165.645C323.611 163.538 326.476 162.484 329.943 162.484C333.712 162.484 336.727 163.613 338.988 165.871C341.249 167.978 342.304 170.763 342.154 174.226L335.37 409.516C335.37 412.828 334.239 415.538 331.978 417.645C329.717 419.753 326.777 420.806 323.159 420.806ZM161.027 103.323H196.077V65.1613C196.077 59.2903 197.886 54.6237 201.504 51.1613C205.273 47.6989 210.323 45.9677 216.654 45.9677H294.894C301.225 45.9677 306.2 47.6989 309.818 51.1613C313.587 54.6237 315.471 59.2903 315.471 65.1613V103.323H350.52V63.3548C350.52 47.6989 345.696 35.4301 336.048 26.5484C326.551 17.5161 313.436 13 296.703 13H214.619C198.037 13 184.921 17.5161 175.273 26.5484C165.776 35.4301 161.027 47.6989 161.027 63.3548V103.323Z" fill="#EF453B"/>
@@ -31,120 +43,8 @@ const trashIcon = `<svg width="512" height="512" viewBox="0 0 512 512" fill="non
 
 
 
-var openedOverlay = null
 
 
-/**
- * Creates an overlay that the user can enter an input into.
- * @param {{inputs:Boolean}|{items:Array<String>, remove:function(string):void}} data
- * @returns {Promise<String>} The input provided by the user
- */
-function createOverlay(data) {
-    var valueGetter = (() => {return ''})
-
-    const overlay = document.createElement('div')
-    overlay.classList.add('input-overlay')
-    overlay.classList.add('opening')
-
-    const title = document.createElement('span')
-    title.classList.add('title')
-    
-    const topContainer = document.createElement('div')
-    topContainer.classList.add('top-container')
-
-    const bottomContainer = document.createElement('div')
-    bottomContainer.classList.add('bottom-container')
-
-    const confirmButton = document.createElement('span')
-    confirmButton.id = 'confirm-button'
-    confirmButton.innerText = 'Save Grid'
-
-    const cancelButton = document.createElement('span')
-    cancelButton.id = 'cancel-button'
-    cancelButton.innerText = 'Cancel'
-
-    overlay.appendChild(topContainer)
-    overlay.appendChild(bottomContainer)
-
-    topContainer.appendChild(title)
-    document.body.appendChild(overlay)
-
-    if (data.inputs) {
-        title.innerText = 'Save Grid As...'
-        overlay.classList.add('equally-divided')
-
-        bottomContainer.appendChild(confirmButton)
-        bottomContainer.appendChild(cancelButton)
-
-        const input = document.createElement('input')
-        input.placeholder = 'Enter value...'
-        topContainer.appendChild(input)
-
-        valueGetter = (() => {
-            const val = input.value
-            if (val.trim() === '') return null
-            return val
-        })
-    } else if (data.items) {
-        title.innerText = 'Edit Saved Items'
-        overlay.classList.add('flex')
-
-        cancelButton.innerText = 'Close'
-        bottomContainer.appendChild(cancelButton)
-
-        const list = document.createElement('ul')
-        list.style = 'list-style: none; width: 100%; height: 100%; padding: 0 12px 12px 12px; margin: 0; box-sizing: border-box'
-        
-        data.items.forEach(item => {
-            const view = document.createElement('li')
-            view.style = 'display:flex; padding: 16px; border-bottom: 1px solid black; align-items: center; background-color: #ffffff3b; border-radius: 6px; margin-bottom: 6px'
-
-            const label = document.createElement('span')
-            label.innerText = item.name//'View Name'
-            label.style = 'flex-grow: 100; color: white'
-
-            const rightContainer = document.createElement('div')
-            // rightContainer.style = ''
-
-            const deleteButton = document.createElement('svg')
-            deleteButton.style = 'width: 22px; height: 22px; cursur: pointer'
-            deleteButton.innerHTML = trashIcon
-
-            rightContainer.appendChild(deleteButton)
-
-            view.appendChild(label)
-            view.appendChild(rightContainer)
-            list.appendChild(view)
-
-            deleteButton.addEventListener('click', () => {
-                view.remove()
-                data.remove(item.id)
-            })
-        })
-
-        topContainer.appendChild(list)
-    }
-
-    return new Promise((resolve, reject) => {
-        openedOverlay = (() => reject())
-
-        cancelButton.addEventListener('click', () => reject())
-        confirmButton.addEventListener('click', () => {
-            const res = valueGetter()
-            if (res) resolve(res)
-        })
-    }).finally(() => {
-        overlay.classList.remove('opening')
-        overlay.classList.add('closing')
-        setTimeout(() => overlay.remove(), 290)
-    })
-}
-
-function forceCloseInputOverlay() {
-    if (openedOverlay) {
-        openedOverlay()
-    }
-}
 
 
 const clearMergeButton = document.querySelector('#clear-merge')
@@ -172,7 +72,8 @@ clearMergeButton.addEventListener('click', () => {
 
 app.addSelectionListener(selection => {
     if (selection.empty) {
-        forceCloseInputOverlay()
+        overlayUI.closeOverlay()
+        // forceCloseInputOverlay()
 
         Object.values(inputs).forEach(input => input.setAttribute('disabled', 'disabled'))
 
