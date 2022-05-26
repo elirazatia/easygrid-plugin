@@ -302,7 +302,7 @@ function closeOverlay() {
  * @typedef {'selection'} ListenType
  */
 
-/* harmony default export */ const util_communicator = ({
+/* harmony default export */ const communicator = ({
     /**
      * 
      * @param {PostType} type 
@@ -389,7 +389,7 @@ function closeOverlay() {
         }
     }
 
-    util_communicator.postToFigma('create-cells', {
+    communicator.postToFigma('create-cells', {
         id:Math.random().toString().slice(4),
         items:finalItems,
 
@@ -608,6 +608,20 @@ document.addEventListener(EVENTS.ConfigChanged, (e) => {
      */
     getAll() {
         return configValues
+    },
+
+    /**
+     * Override the configu values with new ones and dispatch and event that the config values have been changed
+     * @param {Object<String, String>} withValues 
+     */
+    setAll(withValues) {
+        configValues = withValues
+        Object.keys(configValues).forEach(key => {
+            const value = configValues[key]
+            document.dispatchEvent(new CustomEvent(EVENTS.ConfigChanged, {
+                detail:{for:key, newValue:value}
+            }))
+        })
     },
     
     /**
@@ -1120,6 +1134,8 @@ function evaluatePattern() {
 
 
 
+
+
 /**
  * ##TODO: CHANGE THE INPUTS IN THE PREMADE LAYOUTS TO NEW SYNTAX FOR THE CONFIG INPUTS
  */
@@ -1139,7 +1155,7 @@ const premadeLayouts = [
     {
         name: "Golden Ratio",
         id: "golden-ratio",
-        inputs: {grid_columns: "13", grid_rows: "8", column_gap: "0", row_gap: "0"},
+        inputs: {grid_columns: "13", grid_rows: "8", grid_columns_gap: "0", grid_rows_gap: "0"},
         mergedCells: [
             {x: 0, y: 0, w: 7, h: 7},
             {x: 8, y: 0, w: 4, h: 4},
@@ -1152,22 +1168,22 @@ const premadeLayouts = [
     {
         name: "Column Grid (12 Column)",
         id: "ipad-split",
-        inputs: {grid_columns: "12", grid_rows: "1", column_gap: "6", row_gap: "0"}
+        inputs: {grid_columns: "12", grid_rows: "1", grid_columns_gap: "6", grid_rows_gap: "0"}
     },
     {
         name: "iPad App With Sidebar",
         id: "ipad-with-sidebar",
-        inputs: {grid_columns: "220pt 1", grid_rows: "1", column_gap: "0", row_gap: "0"}
+        inputs: {grid_columns: "220pt 1", grid_rows: "1", grid_columns_gap: "0", grid_rows_gap: "0"}
     },
     {
         name: "Notch iPhone App Layout",
         id: "ios-app-layout",
-        inputs: {grid_columns: "1", grid_rows: "140pt 1 83pt", column_gap: "0", row_gap: "0"}
+        inputs: {grid_columns: "1", grid_rows: "140pt 1 83pt", grid_columns_gap: "0", grid_rows_gap: "0"}
     },
     {
         name: "Rule Of Threes",
         id: "rule-of-threes",
-        inputs: {grid_columns: "3", grid_rows: "3", column_gap: "0", row_gap: "0"}
+        inputs: {grid_columns: "3", grid_rows: "3", grid_columns_gap: "0", grid_rows_gap: "0"}
     }
 ]
 
@@ -1228,20 +1244,38 @@ window.addEventListener('message', (message) => {
     },
 
     /**
+     * Calls for the grid with the given ID to be from storage
+     * @param {String} id 
+     */
+    removePresavedGrid(id) {
+        communicator.postToFigma('delete-grid', { id:id })
+    },
+
+    /**
      * Adds the current grid layout and passed config 
      * @param {String} withName 
      * @param {Object} configOptions
      * @param {Object} mergedCells 
      */
     addPresavedGrid(withName, configOptions, mergedCells) {
-        var mergedArray = []
-        Object.values(mergedCells).forEach(val => {
-            Object.values(val).forEach(i => {
-                const n = { ...i }
-                delete n.previewNode
+        // var mergedArray = []
+        // Object.values(mergedCells).forEach(val => {
+        //     Object.values(val).forEach(i => {
+        //         const n = { ...i }
+        //         delete n.previewNode
 
-                mergedArray.push(n)
-            })
+        //         mergedArray.push(n)
+        //     })
+        // })
+
+        var mergedArray = []
+        merging.forEach(merge => {
+            var duplicate = JSON.stringify(
+                JSON.parse(merge)
+            )
+
+            delete duplicate.preview
+            mergedArray.push(duplicate)
         })
 
         const newID = Math.random().toString().slice(3)
@@ -1306,6 +1340,7 @@ document.addEventListener(EVENTS.ConfigChanged, (e) => {
     inputs[detailfor].value = detailNewValue
 })
 ;// CONCATENATED MODULE: ./scripts/root/root.js
+
 
 
 
@@ -1434,14 +1469,17 @@ selectSavedDropdown.addEventListener('change', (e) => {
          */
         overlay_ui.openOverlay({
             inputs:true
-        })//.then(name => app.addPresavedGrid(name))
+        }).then(name => save_grid.addPresavedGrid(name))//app.addPresavedGrid(name))
     } else if (val === 'edit') {
         /**
          * If selection option == edit then open an overlay with the presaved grids that can be removed and renamed
          */
         overlay_ui.openOverlay({
-            items:save_grid.getPresavedGrids(),//app.getPresavedGrids(),
-            remove:(id) => alert("Should remove") //(id) => (app.removePresavedGrid(id))
+            items:save_grid.getPresavedGrids().filter(i => {
+                console.log('SAVE ITEM', i)
+                return (i.isCustomMade)
+            }),//app.getPresavedGrids(),
+            remove:(id) => save_grid.removePresavedGrid(id) //(id) => (app.removePresavedGrid(id))
         }).then(() => {})
     } else if (val != 'empty' && val != '----') {
         /**
@@ -1450,6 +1488,7 @@ selectSavedDropdown.addEventListener('change', (e) => {
          */
         const found = save_grid.getPresavedGridsWithID(val)//app.getPresavedGridsWithID(val)
         if (found) {
+            config.setValues(found.inputs)
             // MUST CALL SETALLINPUTVALUES AS SETMERGES DOESN'T ACTIVE ANY EVENT LISTENERS
             // app.setMerges(found.mergedCells)
             // app.setAllInputValues(found.inputs)

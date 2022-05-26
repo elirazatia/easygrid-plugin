@@ -11,6 +11,7 @@ import "../controllers/save-grid"
 
 import '../interface/config-ui'
 import saveGrid from "../controllers/save-grid"
+import config from "../controllers/config"
 
 
 
@@ -126,14 +127,17 @@ selectSavedDropdown.addEventListener('change', (e) => {
          */
         overlay.openOverlay({
             inputs:true
-        })//.then(name => app.addPresavedGrid(name))
+        }).then(name => saveGrid.addPresavedGrid(name))//app.addPresavedGrid(name))
     } else if (val === 'edit') {
         /**
          * If selection option == edit then open an overlay with the presaved grids that can be removed and renamed
          */
         overlay.openOverlay({
-            items:saveGrid.getPresavedGrids(),//app.getPresavedGrids(),
-            remove:(id) => alert("Should remove") //(id) => (app.removePresavedGrid(id))
+            items:saveGrid.getPresavedGrids().filter(i => {
+                console.log('SAVE ITEM', i)
+                return (i.isCustomMade)
+            }),//app.getPresavedGrids(),
+            remove:(id) => saveGrid.removePresavedGrid(id) //(id) => (app.removePresavedGrid(id))
         }).then(() => {})
     } else if (val != 'empty' && val != '----') {
         /**
@@ -142,6 +146,7 @@ selectSavedDropdown.addEventListener('change', (e) => {
          */
         const found = saveGrid.getPresavedGridsWithID(val)//app.getPresavedGridsWithID(val)
         if (found) {
+            config.setValues(found.inputs)
             // MUST CALL SETALLINPUTVALUES AS SETMERGES DOESN'T ACTIVE ANY EVENT LISTENERS
             // app.setMerges(found.mergedCells)
             // app.setAllInputValues(found.inputs)

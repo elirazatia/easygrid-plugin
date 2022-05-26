@@ -278,7 +278,7 @@ figma.ui.onmessage = (message => {
         const mergedCells = message.mergedCells
 
         figma.clientStorage.getAsync('@presaved').then(val => {
-            const valueForSave = { id:id, name:name, inputs:inputs, mergedCells:mergedCells }
+            const valueForSave = { id:id, name:name, inputs:inputs, mergedCells:mergedCells, isCustomMade:true }
             // console.log('value to save [DEBUG MODE]', valueForSave)
             if (val && Array.isArray(val)) val.push(valueForSave)
             else val = [valueForSave]

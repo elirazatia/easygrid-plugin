@@ -1,5 +1,7 @@
 import { EVENTS, WINDOW_EVENTS } from "../TYPES"
 import SavedGrid from '../models/SavedGrid'
+import merging from "./merging"
+import communicator from "../util/communicator"
 
 /**
  * ##TODO: CHANGE THE INPUTS IN THE PREMADE LAYOUTS TO NEW SYNTAX FOR THE CONFIG INPUTS
@@ -20,7 +22,7 @@ const premadeLayouts = [
     {
         name: "Golden Ratio",
         id: "golden-ratio",
-        inputs: {grid_columns: "13", grid_rows: "8", column_gap: "0", row_gap: "0"},
+        inputs: {grid_columns: "13", grid_rows: "8", grid_columns_gap: "0", grid_rows_gap: "0"},
         mergedCells: [
             {x: 0, y: 0, w: 7, h: 7},
             {x: 8, y: 0, w: 4, h: 4},
@@ -33,22 +35,22 @@ const premadeLayouts = [
     {
         name: "Column Grid (12 Column)",
         id: "ipad-split",
-        inputs: {grid_columns: "12", grid_rows: "1", column_gap: "6", row_gap: "0"}
+        inputs: {grid_columns: "12", grid_rows: "1", grid_columns_gap: "6", grid_rows_gap: "0"}
     },
     {
         name: "iPad App With Sidebar",
         id: "ipad-with-sidebar",
-        inputs: {grid_columns: "220pt 1", grid_rows: "1", column_gap: "0", row_gap: "0"}
+        inputs: {grid_columns: "220pt 1", grid_rows: "1", grid_columns_gap: "0", grid_rows_gap: "0"}
     },
     {
         name: "Notch iPhone App Layout",
         id: "ios-app-layout",
-        inputs: {grid_columns: "1", grid_rows: "140pt 1 83pt", column_gap: "0", row_gap: "0"}
+        inputs: {grid_columns: "1", grid_rows: "140pt 1 83pt", grid_columns_gap: "0", grid_rows_gap: "0"}
     },
     {
         name: "Rule Of Threes",
         id: "rule-of-threes",
-        inputs: {grid_columns: "3", grid_rows: "3", column_gap: "0", row_gap: "0"}
+        inputs: {grid_columns: "3", grid_rows: "3", grid_columns_gap: "0", grid_rows_gap: "0"}
     }
 ]
 
@@ -109,20 +111,38 @@ export default {
     },
 
     /**
+     * Calls for the grid with the given ID to be from storage
+     * @param {String} id 
+     */
+    removePresavedGrid(id) {
+        communicator.postToFigma('delete-grid', { id:id })
+    },
+
+    /**
      * Adds the current grid layout and passed config 
      * @param {String} withName 
      * @param {Object} configOptions
      * @param {Object} mergedCells 
      */
     addPresavedGrid(withName, configOptions, mergedCells) {
-        var mergedArray = []
-        Object.values(mergedCells).forEach(val => {
-            Object.values(val).forEach(i => {
-                const n = { ...i }
-                delete n.previewNode
+        // var mergedArray = []
+        // Object.values(mergedCells).forEach(val => {
+        //     Object.values(val).forEach(i => {
+        //         const n = { ...i }
+        //         delete n.previewNode
 
-                mergedArray.push(n)
-            })
+        //         mergedArray.push(n)
+        //     })
+        // })
+
+        var mergedArray = []
+        merging.forEach(merge => {
+            var duplicate = JSON.stringify(
+                JSON.parse(merge)
+            )
+
+            delete duplicate.preview
+            mergedArray.push(duplicate)
         })
 
         const newID = Math.random().toString().slice(3)

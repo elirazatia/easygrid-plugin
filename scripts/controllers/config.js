@@ -32,6 +32,20 @@ export default {
     getAll() {
         return configValues
     },
+
+    /**
+     * Override the configu values with new ones and dispatch and event that the config values have been changed
+     * @param {Object<String, String>} withValues 
+     */
+    setAll(withValues) {
+        configValues = withValues
+        Object.keys(configValues).forEach(key => {
+            const value = configValues[key]
+            document.dispatchEvent(new CustomEvent(EVENTS.ConfigChanged, {
+                detail:{for:key, newValue:value}
+            }))
+        })
+    },
     
     /**
      * Get the configuration option for 'key'

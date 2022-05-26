@@ -18,4 +18,10 @@ export default class SavedGrid {
      * @type {Array<{x:Number, y:Number, w:Number, h:Number}>}
      */
     get mergedCells() {  }
+
+    /**
+     * Was this grid made by the user
+     * @type {Boolean}
+     */
+    get isCustomMade() {  }
 }
