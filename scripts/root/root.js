@@ -10,6 +10,7 @@ import "../controllers/selection"
 import "../controllers/save-grid"
 
 import '../interface/config-ui'
+import saveGrid from "../controllers/save-grid"
 
 
 
@@ -125,25 +126,25 @@ selectSavedDropdown.addEventListener('change', (e) => {
          */
         overlay.openOverlay({
             inputs:true
-        }).then(name => app.addPresavedGrid(name))
+        })//.then(name => app.addPresavedGrid(name))
     } else if (val === 'edit') {
         /**
          * If selection option == edit then open an overlay with the presaved grids that can be removed and renamed
          */
         overlay.openOverlay({
-            items:app.getPresavedGrids(),
-            remove:(id) => (app.removePresavedGrid(id))
+            items:saveGrid.getPresavedGrids(),//app.getPresavedGrids(),
+            remove:(id) => alert("Should remove") //(id) => (app.removePresavedGrid(id))
         }).then(() => {})
     } else if (val != 'empty' && val != '----') {
         /**
          * If selection is any other value then attempt to get the grid with the given ID,
          * and if successful set merges and configuration to the ones from the grid
          */
-        const found = app.getPresavedGridsWithID(val)
+        const found = saveGrid.getPresavedGridsWithID(val)//app.getPresavedGridsWithID(val)
         if (found) {
             // MUST CALL SETALLINPUTVALUES AS SETMERGES DOESN'T ACTIVE ANY EVENT LISTENERS
-            app.setMerges(found.mergedCells)
-            app.setAllInputValues(found.inputs)
+            // app.setMerges(found.mergedCells)
+            // app.setAllInputValues(found.inputs)
         }
     }
 
