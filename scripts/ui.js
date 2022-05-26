@@ -73,7 +73,6 @@ clearMergeButton.addEventListener('click', () => {
 app.addSelectionListener(selection => {
     if (selection.empty) {
         overlayUI.closeOverlay()
-        // forceCloseInputOverlay()
 
         Object.values(inputs).forEach(input => input.setAttribute('disabled', 'disabled'))
 

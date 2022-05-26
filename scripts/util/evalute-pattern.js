@@ -1,13 +1,20 @@
 import expandGrid from "./expand-grid";
 import FigmaSelection from "../models/selection";
 
+import selection from "../controllers/selection";
+import gridPreviewUi from "../interface/grid-preview/grid-preview-ui";
+import config from "../controllers/config";
+
 /**
  * Converts the Figma layer selection, the configuration (rows, columns, and gap inputs) and the container that previews the grid to return an array of every cell and their respective size
  * @param {FigmaSelection} selection 
  */
-export default function evaluatePattern(selection, config, patternContainer) {
-    var w = selection.width
-    var h = selection.height
+export default function evaluatePattern() {
+    var w = selection.current.width
+    var h = selection.current.height
+
+    const configValues = config.getAll()
+    const patternContainer = gridPreviewUi.rootGridElement
 
     /**
      * Get the ratio of the selected element by dividing its width by its height
@@ -25,15 +32,15 @@ export default function evaluatePattern(selection, config, patternContainer) {
 
     return {
         column:expandGrid({
-            pattern:config.grid_columns,
-            gap:config.grid_columns_gap,
-            realSize:selection.width,
+            pattern:configValues.grid_columns,
+            gap:configValues.grid_columns_gap,
+            realSize:selection.current.width,
             appliedSize:w
         }),
         row:expandGrid({
-            pattern:config.grid_rows,
-            gap:config.grid_rows_gap,
-            realSize:selection.height,
+            pattern:configValues.grid_rows,
+            gap:configValues.grid_rows_gap,
+            realSize:selection.current.height,
             appliedSize:h
         })
     }

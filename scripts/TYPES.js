@@ -1,3 +1,6 @@
+/**
+ * Possible app events
+ */
 const EVENTS = {
     SelectionChanged:'SelectionChanged',
     ConfigChanged:'ConfigChanged',
@@ -9,11 +12,17 @@ const EVENTS = {
     MergesCleared:'MergesCleared'
 }
 
+/**
+ * Possible events that can be sent from the Figma code.js file
+ */
 const WINDOW_EVENTS = {
     SelectionChanged:'selectionchange',
     FetchedPresavedFromStorage:'presaved-fetched'
 }
 
+/**
+ * Generic options that are used throughout the app
+ */
 const OPTIONS = {
     GridPadding:2,
     GridCornerRadius:4

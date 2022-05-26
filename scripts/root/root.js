@@ -1,12 +1,16 @@
+import { EVENTS } from "../TYPES"
+
 import merging from "../controllers/merging"
+import overlay from '../interface/overlay-ui'
+import toElement from "../controllers/to-element"
+
+import evaluatePattern from "../util/evalute-pattern"
 
 import "../controllers/selection"
 import "../controllers/save-grid"
 
 import '../interface/config-ui'
-import "../interface/grid-preview/grid-preview-ui"
 
-import { EVENTS } from "../TYPES"
 
 
 /**
@@ -65,6 +69,18 @@ applyToElementButton.addEventListener('click', () => {
      * Listen for clicks on the apply to element button
      * If clicked calculate the final grid and send that to the figma.post function
      */
+
+    /** * Evalute the pattern using the given options to create the grid and cell merge previews */
+    const pattern = evaluatePattern()
+
+    /** * Call a function that sends the pattern over to the Figma layer using the correct sizing relative to the layer */
+    toElement({
+        xItems:pattern.column.items(false), yItems:pattern.row.items(false),
+        xGap:pattern.column.gap(false), yGap:pattern.row.gap(false)
+    }, {
+        colour:document.querySelector('#cell-fill').value,
+        replaceSelected:document.querySelector('#replace-selected').checked
+    })
 })
 
 selectionActions.push(selection => {
@@ -107,14 +123,14 @@ selectSavedDropdown.addEventListener('change', (e) => {
         /**
          * If selection option == save then open an overlay with an input option that when confirmed, saves a new grid to local storage
          */
-        createOverlay({
+        overlay.openOverlay({
             inputs:true
         }).then(name => app.addPresavedGrid(name))
     } else if (val === 'edit') {
         /**
          * If selection option == edit then open an overlay with the presaved grids that can be removed and renamed
          */
-        createOverlay({
+        overlay.openOverlay({
             items:app.getPresavedGrids(),
             remove:(id) => (app.removePresavedGrid(id))
         }).then(() => {})

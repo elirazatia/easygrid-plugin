@@ -56,8 +56,8 @@ const applyGridPatternToNode = (node, {xItems, yItems, xGap, yGap}) => {
 }
 
 function refreshLayout() {
-    let currentSelection = selection.current
-    let configValues = config.getAll()
+    // let currentSelection = selection.current
+    // let configValues = config.getAll()
 
     Array.from(gridMergeContainer.children).forEach(child => child.remove())
     Array.from(gridCellsContainer.children).forEach(child => child.remove())
@@ -83,7 +83,7 @@ function refreshLayout() {
     /**
      * Evalute the pattern using the given options to create the grid and cell merge previews
      */
-    const pattern = evaluatePattern(currentSelection, configValues, gridCellsContainer)
+    const pattern = evaluatePattern()
 
     const patternOptions = {
         xItems:pattern.column.items(true), yItems:pattern.row.items(true),
@@ -168,14 +168,6 @@ document.addEventListener(EVENTS.PreviewCellGrabBegin, () => { document.body.sty
 document.addEventListener(EVENTS.PreviewCellGrabEnd, () => { document.body.style.cursor = 'auto' })
 
 
-// export default {
-    // get rootGridElement() { return gridRoot },
-
-    // /**
-    //  * ##TODO
-    //  * Clears all the mergers from both the interface (using the preview element) and storage
-    //  */
-    // clear() {
-    //     alert('SHOULD CLEAR')
-    // }
-// }
+export default {
+    get rootGridElement() { return gridRoot },
+}

@@ -113,5 +113,18 @@ export default {
     clear() {
         merges = {}
         document.dispatchEvent(new CustomEvent(EVENTS.MergesCleared, {}))
+    },
+
+    /**
+     * Has the user merged any grid cells?
+     * @returns {Boolean} True if the user has merged cells
+     */
+    doesIncludeMerges() {
+        return (Object.keys(merges).length > 0)
+    },
+
+    forEach(callback) {
+        if (!callback.call) return
+        Object.values(merges).map(yValue => Object.values(yValue)).flat().forEach(i => callback(i))
     }
 }

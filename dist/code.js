@@ -299,6 +299,7 @@ figma.ui.onmessage = (message => {
     } else if (message.type === 'create-cells') {
         var items = []
 
+        console.log('SHOUDL CREATE LAYERS', message)
         const colour = hexToRGB(message.colour)
         const shouldReplace = message.replaceSelected
 
