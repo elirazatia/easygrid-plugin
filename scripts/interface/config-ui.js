@@ -43,7 +43,8 @@ document.addEventListener(EVENTS.ConfigChanged, (e) => {
     let detail = e.detail
     let detailfor = detail['for']
     let detailNewValue = detail['newValue']
-    if (detail == null || detailfor === null || detailNewValue === null || !(detailfor instanceof String)) return
+    if (!detailfor || !detailNewValue) return
+    // if (detail == null || detailfor === null || detailNewValue === null || !(detailfor instanceof String)) return
 
     inputs[detailfor].value = detailNewValue
 })

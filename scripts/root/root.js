@@ -127,7 +127,7 @@ selectSavedDropdown.addEventListener('change', (e) => {
          */
         overlay.openOverlay({
             inputs:true
-        }).then(name => saveGrid.addPresavedGrid(name))//app.addPresavedGrid(name))
+        }).then(name => saveGrid.addPresavedGrid(name, config.getAll()))//app.addPresavedGrid(name))
     } else if (val === 'edit') {
         /**
          * If selection option == edit then open an overlay with the presaved grids that can be removed and renamed
@@ -146,7 +146,7 @@ selectSavedDropdown.addEventListener('change', (e) => {
          */
         const found = saveGrid.getPresavedGridsWithID(val)//app.getPresavedGridsWithID(val)
         if (found) {
-            config.setValues(found.inputs)
+            config.setAll(found.inputs)
             // MUST CALL SETALLINPUTVALUES AS SETMERGES DOESN'T ACTIVE ANY EVENT LISTENERS
             // app.setMerges(found.mergedCells)
             // app.setAllInputValues(found.inputs)
@@ -178,10 +178,6 @@ document.addEventListener(EVENTS.PresavedArrayChanged, (e) => {
         return item
     }
 
-    /**
-     * ##TODO: Create a distinction between system premade grids and custom user ones so they can be added to their correct option group
-     */
-
     /** * Clear the contents of the dropdown */
     selectSavedDropdown.innerHTML = ''
 
@@ -210,8 +206,12 @@ document.addEventListener(EVENTS.PresavedArrayChanged, (e) => {
     selectSavedDropdown.appendChild(preExistingOptionGroup)
 
     /** * Loop thorugh the list of custom grids availiable and add them to the appropiate group */
-    newArray.forEach(item =>
+    newArray.filter(i => (i.isCustomMade)).forEach(item =>
         createDropdownItem(item.id, item.name, suboptionsOptionGroup))
+
+        /** * Loop thorugh the list of custom grids availiable and add them to the appropiate group */
+    newArray.filter(i => (!i.isCustomMade)).forEach(item =>
+        createDropdownItem(item.id, item.name, preExistingOptionGroup))
 })
 
 

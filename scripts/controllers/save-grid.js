@@ -69,7 +69,7 @@ window.addEventListener('message', (message) => {
         document.dispatchEvent(new CustomEvent(EVENTS.PresavedArrayChanged, {
             detail:[
                 ...customLayouts,//premadeLayouts,
-                ...data.items
+                ...premadeLayouts
             ]
         }))
     }
@@ -122,13 +122,12 @@ export default {
      * Adds the current grid layout and passed config 
      * @param {String} withName 
      * @param {Object} configOptions
-     * @param {Object} mergedCells 
      */
-    addPresavedGrid(withName, configOptions, mergedCells) {
+    addPresavedGrid(withName, configOptions) {
         // var mergedArray = []
         // Object.values(mergedCells).forEach(val => {
         //     Object.values(val).forEach(i => {
-        //         const n = { ...i }
+        //         const n = { ...i }]
         //         delete n.previewNode
 
         //         mergedArray.push(n)

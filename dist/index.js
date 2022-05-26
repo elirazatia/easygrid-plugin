@@ -615,8 +615,8 @@ document.addEventListener(EVENTS.ConfigChanged, (e) => {
      * @param {Object<String, String>} withValues 
      */
     setAll(withValues) {
-        configValues = withValues
         Object.keys(configValues).forEach(key => {
+            configValues[key] = withValues[key] || configValues[key]
             const value = configValues[key]
             document.dispatchEvent(new CustomEvent(EVENTS.ConfigChanged, {
                 detail:{for:key, newValue:value}
@@ -1202,7 +1202,7 @@ window.addEventListener('message', (message) => {
         document.dispatchEvent(new CustomEvent(EVENTS.PresavedArrayChanged, {
             detail:[
                 ...customLayouts,//premadeLayouts,
-                ...data.items
+                ...premadeLayouts
             ]
         }))
     }
@@ -1255,13 +1255,12 @@ window.addEventListener('message', (message) => {
      * Adds the current grid layout and passed config 
      * @param {String} withName 
      * @param {Object} configOptions
-     * @param {Object} mergedCells 
      */
-    addPresavedGrid(withName, configOptions, mergedCells) {
+    addPresavedGrid(withName, configOptions) {
         // var mergedArray = []
         // Object.values(mergedCells).forEach(val => {
         //     Object.values(val).forEach(i => {
-        //         const n = { ...i }
+        //         const n = { ...i }]
         //         delete n.previewNode
 
         //         mergedArray.push(n)
@@ -1335,7 +1334,8 @@ document.addEventListener(EVENTS.ConfigChanged, (e) => {
     let detail = e.detail
     let detailfor = detail['for']
     let detailNewValue = detail['newValue']
-    if (detail == null || detailfor === null || detailNewValue === null || !(detailfor instanceof String)) return
+    if (!detailfor || !detailNewValue) return
+    // if (detail == null || detailfor === null || detailNewValue === null || !(detailfor instanceof String)) return
 
     inputs[detailfor].value = detailNewValue
 })
@@ -1469,7 +1469,7 @@ selectSavedDropdown.addEventListener('change', (e) => {
          */
         overlay_ui.openOverlay({
             inputs:true
-        }).then(name => save_grid.addPresavedGrid(name))//app.addPresavedGrid(name))
+        }).then(name => save_grid.addPresavedGrid(name, config.getAll()))//app.addPresavedGrid(name))
     } else if (val === 'edit') {
         /**
          * If selection option == edit then open an overlay with the presaved grids that can be removed and renamed
@@ -1488,7 +1488,7 @@ selectSavedDropdown.addEventListener('change', (e) => {
          */
         const found = save_grid.getPresavedGridsWithID(val)//app.getPresavedGridsWithID(val)
         if (found) {
-            config.setValues(found.inputs)
+            config.setAll(found.inputs)
             // MUST CALL SETALLINPUTVALUES AS SETMERGES DOESN'T ACTIVE ANY EVENT LISTENERS
             // app.setMerges(found.mergedCells)
             // app.setAllInputValues(found.inputs)
@@ -1520,10 +1520,6 @@ document.addEventListener(EVENTS.PresavedArrayChanged, (e) => {
         return item
     }
 
-    /**
-     * ##TODO: Create a distinction between system premade grids and custom user ones so they can be added to their correct option group
-     */
-
     /** * Clear the contents of the dropdown */
     selectSavedDropdown.innerHTML = ''
 
@@ -1552,8 +1548,12 @@ document.addEventListener(EVENTS.PresavedArrayChanged, (e) => {
     selectSavedDropdown.appendChild(preExistingOptionGroup)
 
     /** * Loop thorugh the list of custom grids availiable and add them to the appropiate group */
-    newArray.forEach(item =>
+    newArray.filter(i => (i.isCustomMade)).forEach(item =>
         createDropdownItem(item.id, item.name, suboptionsOptionGroup))
+
+        /** * Loop thorugh the list of custom grids availiable and add them to the appropiate group */
+    newArray.filter(i => (!i.isCustomMade)).forEach(item =>
+        createDropdownItem(item.id, item.name, preExistingOptionGroup))
 })
 
 

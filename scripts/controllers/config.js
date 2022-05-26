@@ -38,8 +38,8 @@ export default {
      * @param {Object<String, String>} withValues 
      */
     setAll(withValues) {
-        configValues = withValues
         Object.keys(configValues).forEach(key => {
+            configValues[key] = withValues[key] || configValues[key]
             const value = configValues[key]
             document.dispatchEvent(new CustomEvent(EVENTS.ConfigChanged, {
                 detail:{for:key, newValue:value}
