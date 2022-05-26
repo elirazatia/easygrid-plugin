@@ -70,7 +70,10 @@ function applyMerge() {
     if (!grabbingPreviewNode && !grabbingStartNode)
         return
     
-    grabbingStartNode.gridDescription.merged = merging.addMerge(grabbingX,grabbingY,grabbingWidth,grabbingHeight,grabbingPreviewNode) //{
+    grabbingStartNode.gridDescription.merged = merging.addMerge({
+        x:grabbingX, y:grabbingY, width:grabbingWidth, height:grabbingHeight, preview:grabbingPreviewNode
+    })
+        // grabbingX,grabbingY,grabbingWidth,grabbingHeight,grabbingPreviewNode}) //{
     cancelMerge(false) 
 }
 

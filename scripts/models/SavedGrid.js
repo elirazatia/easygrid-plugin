@@ -1,3 +1,5 @@
+import { Merger } from "./Merger";
+
 export default class SavedGrid {
     /**
      * @type {String}
@@ -15,7 +17,7 @@ export default class SavedGrid {
     get inputs() {  }
 
     /**
-     * @type {Array<{x:Number, y:Number, w:Number, h:Number}>}
+     * @type {Array<Merger>}
      */
     get mergedCells() {  }
 

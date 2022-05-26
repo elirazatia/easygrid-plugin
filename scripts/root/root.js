@@ -1,7 +1,7 @@
 import { EVENTS } from "../TYPES"
 
 import merging from "../controllers/merging"
-import overlay from '../interface/overlay-ui'
+import overlay, { inputOverlay, itemArrayOverlay } from '../interface/overlay-ui'
 import toElement from "../controllers/to-element"
 
 import evaluatePattern from "../util/evalute-pattern"
@@ -12,6 +12,7 @@ import "../controllers/save-grid"
 import '../interface/config-ui'
 import saveGrid from "../controllers/save-grid"
 import config from "../controllers/config"
+
 
 
 
@@ -125,31 +126,42 @@ selectSavedDropdown.addEventListener('change', (e) => {
         /**
          * If selection option == save then open an overlay with an input option that when confirmed, saves a new grid to local storage
          */
-        overlay.openOverlay({
-            inputs:true
-        }).then(name => saveGrid.addPresavedGrid(name, config.getAll()))//app.addPresavedGrid(name))
+        overlay.openOverlay(
+            inputOverlay()
+        ).then(value => alert('NEW VALUE' + value))
+
+        // overlay.openOverlay({
+            // inputs:true
+        // }).then(name => saveGrid.addPresavedGrid(name, config.getAll()))
     } else if (val === 'edit') {
         /**
          * If selection option == edit then open an overlay with the presaved grids that can be removed and renamed
          */
-        overlay.openOverlay({
-            items:saveGrid.getPresavedGrids().filter(i => {
-                console.log('SAVE ITEM', i)
-                return (i.isCustomMade)
-            }),//app.getPresavedGrids(),
-            remove:(id) => saveGrid.removePresavedGrid(id) //(id) => (app.removePresavedGrid(id))
-        }).then(() => {})
+        overlay.openOverlay(
+            itemArrayOverlay(
+                saveGrid.getPresavedGrids().filter(i => {
+                    console.log('SAVE ITEM', i)
+                    return (i.isCustomMade)
+                }),
+
+                (id) => saveGrid.removePresavedGrid(id)
+            )
+        ).finally(() => {})
+        // overlay.openOverlay({
+        //     items:saveGrid.getPresavedGrids().filter(i => {
+        //         console.log('SAVE ITEM', i)
+        //         return (i.isCustomMade)
+        //     }),//app.getPresavedGrids(),
+        //     remove:(id) => saveGrid.removePresavedGrid(id) //(id) => (app.removePresavedGrid(id))
+        // }).then(() => {})
     } else if (val != 'empty' && val != '----') {
         /**
          * If selection is any other value then attempt to get the grid with the given ID,
          * and if successful set merges and configuration to the ones from the grid
          */
-        const found = saveGrid.getPresavedGridsWithID(val)//app.getPresavedGridsWithID(val)
+        const found = saveGrid.getPresavedGridsWithID(val)
         if (found) {
             config.setAll(found.inputs)
-            // MUST CALL SETALLINPUTVALUES AS SETMERGES DOESN'T ACTIVE ANY EVENT LISTENERS
-            // app.setMerges(found.mergedCells)
-            // app.setAllInputValues(found.inputs)
         }
     }
 

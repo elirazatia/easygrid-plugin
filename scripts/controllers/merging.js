@@ -1,18 +1,19 @@
+import { Merger, PreviewMerger } from "../models/Merger"
 import { EVENTS } from "../TYPES"
 
 var merges = {}
 
 /**
  * Add value to merges in merges[x][y]
- * @param {Number} x 
- * @param {Number} y 
- * @param {Object} value 
- * @returns {Object}
+ * @param {PreviewMerger} context
+ * @returns {PreviewMerger}
  */
-function addToMerge(x,y,value) {
+function addToMerge(context) {
+    const x = context.x
+    const y = context.y
     merges[x] = merges[x] || {}
     merges[x][y] = value
-    console.log(`Value for ${x} - ${y} is: `, merges[x][y])
+    // console.log(`Value for ${x} - ${y} is: `, merges[x][y])
 
     return merges[x][y]
 }
@@ -45,17 +46,14 @@ function getMergeValue(x,y) {
 export default {
     /**
      * Add a merger (call from the user interface when releases his mouse over the preview grid)
-     * @param {Number} x 
-     * @param {Number} y 
-     * @param {Number} w 
-     * @param {Number} h 
-     * @param {HTMLElement} preview 
-     * @returns 
+     * @param {PreviewMerger} context
+     * @returns {PreviewMerger}
      */
-    addMerge(x,y,w,h,preview) {
-        return addToMerge(x,y,{
-            x:x,y:y,w:w,h:h,preview:preview
-        })
+    addMerge(context) {
+        return addToMerge(context)
+        // return addToMerge(x,y,{
+        //     x:x,y:y,w:w,h:h,preview:preview
+        // })
     },
 
     /**
@@ -84,9 +82,7 @@ export default {
      */
     removeMerge(x,y,cellNode) {
         const cell = getMergeValue(x,y)
-        console.log('cell valye', cell)
         if (!cell) return false
-        console.log('cell valye', cell)
 
         console.log(cell.preview.remove)
         if (cell.preview) cell.preview.remove()
@@ -101,7 +97,7 @@ export default {
      * Get the details for the mergere at x,y (if exists)
      * @param {Number} x 
      * @param {Number} y 
-     * @returns {MergeType}
+     * @returns {PreviewMerger}
      */
     detailForMerge(x,y) {
         return getMergeValue(x,y)
@@ -123,6 +119,11 @@ export default {
         return (Object.keys(merges).length > 0)
     },
 
+    /**
+     * 
+     * @param {function(Merger):void} callback 
+     * @returns 
+     */
     forEach(callback) {
         if (!callback.call) return
         Object.values(merges).map(yValue => Object.values(yValue)).flat().forEach(i => callback(i))

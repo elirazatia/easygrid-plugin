@@ -4,11 +4,6 @@ import merging from "./merging"
 import communicator from "../util/communicator"
 
 /**
- * ##TODO: CHANGE THE INPUTS IN THE PREMADE LAYOUTS TO NEW SYNTAX FOR THE CONFIG INPUTS
- */
-
-
-/**
  * The layouts made by the user that have been fetched using the window.onmessage event
  * @type {Array<SavedGrid>}
  */
@@ -124,16 +119,6 @@ export default {
      * @param {Object} configOptions
      */
     addPresavedGrid(withName, configOptions) {
-        // var mergedArray = []
-        // Object.values(mergedCells).forEach(val => {
-        //     Object.values(val).forEach(i => {
-        //         const n = { ...i }]
-        //         delete n.previewNode
-
-        //         mergedArray.push(n)
-        //     })
-        // })
-
         var mergedArray = []
         merging.forEach(merge => {
             var duplicate = JSON.stringify(
@@ -145,7 +130,7 @@ export default {
         })
 
         const newID = Math.random().toString().slice(3)
-        const currentInput = configOptions//inputListeners.get()
+        const currentInput = configOptions
         communicator.postToFigma('save-grid', {
             id:newID,
             name:withName,
