@@ -1,4 +1,5 @@
-import util from "../../util"
+// import util from "../../util"
+import calculateFinalXYWH from '../../util/calculate-xyhw'
 
 export default function applyPreviewPropertiesToNode(node,xPos,yPos,width,height) {
     if (!node) return
@@ -8,7 +9,7 @@ export default function applyPreviewPropertiesToNode(node,xPos,yPos,width,height
     width = parseInt(width)
     height = parseInt(height)
 
-    const {x,y,h,w} = util.calculateFinalXYWH(
+    const {x,y,h,w} = calculateFinalXYWH(
         xPos,
         yPos,
         width,

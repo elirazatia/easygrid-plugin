@@ -1,5 +1,5 @@
 import { EVENTS } from "../TYPES"
-import evaluatePattern from "../util/evalute-pattern"
+import evaluatePattern from "../handlers/evalute-pattern"
 
 import merging from "../controllers/merging"
 import "../controllers/selection"

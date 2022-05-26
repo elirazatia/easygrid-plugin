@@ -34,7 +34,7 @@ const OPTIONS = {
 }
 
 
-;// CONCATENATED MODULE: ./scripts/util/expand-grid.js
+;// CONCATENATED MODULE: ./scripts/handlers/expand-grid.js
 /**
  * Expand layout string and given option into an array that includes the width (in px) for each item
  * It also returns the gap space (can change is useAppliedSize is true)
@@ -414,34 +414,31 @@ function getMergeValue(x,y) {
         Object.values(merges).map(yValue => Object.values(yValue)).flat().forEach(i => callback(i))
     }
 });
-;// CONCATENATED MODULE: ./scripts/util.js
-/* harmony default export */ const scripts_util = ({
-    releaseObject:(object) => {
-        return JSON.parse(JSON.stringify(object))
-    },
+;// CONCATENATED MODULE: ./scripts/util/calculate-xyhw.js
+/**
+ * Calculates the final x,y, width, and height based on the given properties
+ * use when merging cells for cases such as width being -1 or -2 requiring offset but without changing the starting cell
+ */
+/* harmony default export */ const calculate_xyhw = ((x,y,w,h) => {
+    if (w < 0) {
+        w = Math.abs(w)
+        x -= w
+    }
 
-    // calculates the final x,y, width, and height based on the given properties
-    // use when merging cells for cases such as width being -1 or -2 requiring offset but without changing the starting cell
-    calculateFinalXYWH:(x,y,w,h) => {
-        if (w < 0) {
-            w = Math.abs(w)
-            x -= w
-        }
+    if (h < 0) {
+        h = Math.abs(h)
+        y -= h
+    }
 
-        if (h < 0) {
-            h = Math.abs(h)
-            y -= h
-        }
+    x = x + 1
+    y = y + 1
 
-        x = x + 1
-        y = y + 1
-
-        return {
-            x:x,y:y,h:h,w:w
-        }
+    return {
+        x:x,y:y,h:h,w:w
     }
 });
 ;// CONCATENATED MODULE: ./scripts/interface/grid-preview/apply-preview.js
+// import util from "../../util"
 
 
 function applyPreviewPropertiesToNode(node,xPos,yPos,width,height) {
@@ -452,7 +449,7 @@ function applyPreviewPropertiesToNode(node,xPos,yPos,width,height) {
     width = parseInt(width)
     height = parseInt(height)
 
-    const {x,y,h,w} = scripts_util.calculateFinalXYWH(
+    const {x,y,h,w} = calculate_xyhw(
         xPos,
         yPos,
         width,
@@ -855,7 +852,7 @@ document.addEventListener(EVENTS.PreviewCellGrabEnd, () => { document.body.style
 /* harmony default export */ const grid_preview_ui = ({
     get rootGridElement() { return gridRoot },
 });
-;// CONCATENATED MODULE: ./scripts/util/evalute-pattern.js
+;// CONCATENATED MODULE: ./scripts/handlers/evalute-pattern.js
 
 
 
@@ -1072,6 +1069,9 @@ window.addEventListener('message', (message) => {
 
 
 
+
+
+
 /**
  * Pushes the layout to the figma layer selected by calculating where it should go and creating an array of the final new layers (each cell)
  * @param {{xItems:Array<Number>, yItems:Array<Number>, xGap:Number, yGap:Number}} param0 
@@ -1086,7 +1086,7 @@ window.addEventListener('message', (message) => {
     if (merging.doesIncludeMerges()) {
         /** * Loop thorugh every merger */
         merging.forEach(merge => {
-            const finalPlacement = util.calculateFinalXYWH(merge.x, merge.y, merge.w, merge.h)
+            const finalPlacement = calculate_xyhw(merge.x, merge.y, merge.w, merge.h)
             finalPlacement.x = finalPlacement.x - 1
             finalPlacement.y = finalPlacement.y - 1
         })

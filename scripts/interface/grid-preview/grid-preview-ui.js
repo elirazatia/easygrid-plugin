@@ -5,7 +5,7 @@ import selection from "../../controllers/selection"
 import merging from "../../controllers/merging"
 
 import previewGrabber from "./preview-grabber"
-import evaluatePattern from "../../util/evalute-pattern"
+import evaluatePattern from "../../handlers/evalute-pattern"
 
 import applyPreview from './apply-preview'
 import createMergeCell from './create-merge-cell'

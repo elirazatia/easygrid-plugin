@@ -1,6 +1,9 @@
 import communicator from "../util/communicator"
 import merging from "./merging"
 
+import calculateFinalXYWH from '../util/calculate-xyhw'
+
+
 /**
  * Pushes the layout to the figma layer selected by calculating where it should go and creating an array of the final new layers (each cell)
  * @param {{xItems:Array<Number>, yItems:Array<Number>, xGap:Number, yGap:Number}} param0 
@@ -15,7 +18,7 @@ export default function({xItems, yItems, xGap, yGap}, options) {
     if (merging.doesIncludeMerges()) {
         /** * Loop thorugh every merger */
         merging.forEach(merge => {
-            const finalPlacement = util.calculateFinalXYWH(merge.x, merge.y, merge.w, merge.h)
+            const finalPlacement = calculateFinalXYWH(merge.x, merge.y, merge.w, merge.h)
             finalPlacement.x = finalPlacement.x - 1
             finalPlacement.y = finalPlacement.y - 1
         })
