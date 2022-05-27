@@ -2,9 +2,9 @@
   "name": "easygrid2",
   "version": "1.0.0",
   "description": "",
-  "main": "main-export.js",
+  "main": "exporter.js",
   "scripts": {
-    "build": "npx webpack && node main-export",
+    "build": "npx webpack ./webpack.config.js && node ./exporter",
     "run": "node local-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "express": "^4.17.2",
-    "loadash": "^1.0.0"
+    "loadash": "^1.0.0",
+    "path": "^0.12.7"
   }
 }

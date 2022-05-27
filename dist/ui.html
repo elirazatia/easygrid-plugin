@@ -625,7 +625,6 @@ img, svg { width: 22px; height: 22px; }
 			<div class="grid-parent">
 				<header>
 					<img id="logo" src="https://assetbucket-a492924.s3.eu-west-2.amazonaws.com/logo.svg" alt="">
-					<!-- <img id="logo" src="https://assetbucket-a492924.s3.eu-west-2.amazonaws.com/logo.svg" alt=""> -->
 				</header>
 				<div class="help-top-section">
 					<h5 class="top-row">Help Section</h5>
@@ -688,29 +687,8 @@ img, svg { width: 22px; height: 22px; }
 				<h4>Merging Cells</h4>
 				<p>To create more complicated grids, you can build a custom layout by clicking on the cells (in the preview) that you want. Clicking on “Apply Grid To Selected” now would only import the cells that have been selected. You can deselect a cell by right clicking on it, and you can merge multiple cells together to create a larger tile by holding on a cell and dragging it the appropriate size.</p>
 				
-				<!-- <h4>Q&A</h4>
-				<p>Im not getting a…
-					Im getting an error…</p> -->
 				<h4>More Help</h4>
 				<p>For more information and help, visit our website at <a target="_blank" href="https://easygrid-app.web.app/">easygrid-app.web.app</a>. Additionally, we answer all questions posted in the figma plugin comments area.</p>
-				
-				<!-- 
-				<div class="help-row">
-					<img src="" alt="">
-					<p>This help section would discuss the basics of a grid (example by telling user what to enter and see) Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea nesciunt odit earum eum placeat magni quis qui dsdsd dwdfw efrn urviurvinimv iarciw</p>
-				</div>
-				<div class="help-row">
-					<img src="" alt="">
-					<p>Creating more complicated grids (entering px, and fractions)</p>
-				</div>
-				<div class="help-row">
-					<img src="" alt="">
-					<p>Explain how merging cells work</p>
-				</div>
-				<div class="help-row">
-					<img src="" alt="">
-					<p>Link to the website</p>
-				</div> -->
 			</div>	
 		</div>
 
@@ -722,39 +700,9 @@ img, svg { width: 22px; height: 22px; }
 <path d="M423 90L90 423" stroke="white" stroke-width="52" stroke-linecap="round"/>
 </svg>
 
-					<!-- <span>Close Help Section</span> -->
 				</div>
 			</div>
 		</div>
-
-		<!-- <div class="help-top-section">
-			<div class="l">
-				
-			</div>
-			<div class="r">
-				<img src="" alt="">
-			</div>
-		</div> -->
-
-		<!-- <div class="section">
-			<div class="l">
-				<img src="" alt="">
-			</div>
-			<div class="r">
-				<h4>How To Create A Simple Grid</h4>
-				<span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae molestiae suscipit facilis distinctio reiciendis tenetur, est ipsa excepturi nam aliquid magnam non eligendi obcaecati fugiat ipsum sint quia provident tempora.</span>
-			</div>
-		</div>
-
-		<div class="section">
-			<div class="l">
-				<img src="" alt="">
-			</div>
-			<div class="r">
-				<h4>How To Create A Simple Grid</h4>
-				<span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae molestiae suscipit facilis distinctio reiciendis tenetur, est ipsa excepturi nam aliquid magnam non eligendi obcaecati fugiat ipsum sint quia provident tempora.</span>
-			</div>
-		</div> -->
 	</div>
 	
 	<div class="body-container">
@@ -953,1659 +901,1353 @@ img, svg { width: 22px; height: 22px; }
 						<option value="current">Simple Grid</option>
 						<option value="current">4x4 Grid</option>
 					</select>
-					<!-- <span>Saved...</span> -->
 				</div>
 			</div>
 		</div>
-	
-		<!-- <div class="overlay" style="display: none;">
-			<div class="content">
-				<h2>Premade-Grids</h2>
-				<p>You can select from a range of premade grid configurations, or submit your own at https://www.easygrid.app/submit</p>
-				<ul class="premade-list">
-					<li class="premade-item">
-	
-					</li>
-				</ul>
-			</div>
-		</div> -->
 	</div>	
 
 	<script>
 		/******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-var __webpack_exports__ = {};
+/******/ 	var __webpack_modules__ = ({
 
-;// CONCATENATED MODULE: ./scripts/TYPES.js
-/**
- * Possible app events
- */
-const EVENTS = {
-    SelectionChanged:'SelectionChanged',
-    ConfigChanged:'ConfigChanged',
-    PresavedArrayChanged:'PresavedArrayChanged',
+/***/ 520:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-    PreviewCellGrabBegin:'PreviewCellGrabBegin',
-    PreviewCellGrabEnd:'PreviewCellGrabEnd',
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-    MergesCleared:'MergesCleared'
+
+
+
+var isWindows = process.platform === 'win32';
+var util = __webpack_require__(539);
+
+
+// resolves . and .. elements in a path array with directory names there
+// must be no slashes or device names (c:\) in the array
+// (so also no leading and trailing slashes - it does not distinguish
+// relative and absolute paths)
+function normalizeArray(parts, allowAboveRoot) {
+  var res = [];
+  for (var i = 0; i < parts.length; i++) {
+    var p = parts[i];
+
+    // ignore empty parts
+    if (!p || p === '.')
+      continue;
+
+    if (p === '..') {
+      if (res.length && res[res.length - 1] !== '..') {
+        res.pop();
+      } else if (allowAboveRoot) {
+        res.push('..');
+      }
+    } else {
+      res.push(p);
+    }
+  }
+
+  return res;
 }
 
-/**
- * Possible events that can be sent from the Figma code.js file
- */
-const WINDOW_EVENTS = {
-    SelectionChanged:'selectionchange',
-    FetchedPresavedFromStorage:'presaved-fetched'
+// returns an array with empty elements removed from either end of the input
+// array or the original array if no elements need to be removed
+function trimArray(arr) {
+  var lastIndex = arr.length - 1;
+  var start = 0;
+  for (; start <= lastIndex; start++) {
+    if (arr[start])
+      break;
+  }
+
+  var end = lastIndex;
+  for (; end >= 0; end--) {
+    if (arr[end])
+      break;
+  }
+
+  if (start === 0 && end === lastIndex)
+    return arr;
+  if (start > end)
+    return [];
+  return arr.slice(start, end + 1);
 }
 
-/**
- * Generic options that are used throughout the app
- */
-const OPTIONS = {
-    GridPadding:2,
-    GridCornerRadius:4
+// Regex to split a windows path into three parts: [*, device, slash,
+// tail] windows-only
+var splitDeviceRe =
+    /^([a-zA-Z]:|[\\\/]{2}[^\\\/]+[\\\/]+[^\\\/]+)?([\\\/])?([\s\S]*?)$/;
+
+// Regex to split the tail part of the above into [*, dir, basename, ext]
+var splitTailRe =
+    /^([\s\S]*?)((?:\.{1,2}|[^\\\/]+?|)(\.[^.\/\\]*|))(?:[\\\/]*)$/;
+
+var win32 = {};
+
+// Function to split a filename into [root, dir, basename, ext]
+function win32SplitPath(filename) {
+  // Separate device+slash from tail
+  var result = splitDeviceRe.exec(filename),
+      device = (result[1] || '') + (result[2] || ''),
+      tail = result[3] || '';
+  // Split the tail into dir, basename and extension
+  var result2 = splitTailRe.exec(tail),
+      dir = result2[1],
+      basename = result2[2],
+      ext = result2[3];
+  return [device, dir, basename, ext];
+}
+
+function win32StatPath(path) {
+  var result = splitDeviceRe.exec(path),
+      device = result[1] || '',
+      isUnc = !!device && device[1] !== ':';
+  return {
+    device: device,
+    isUnc: isUnc,
+    isAbsolute: isUnc || !!result[2], // UNC paths are always absolute
+    tail: result[3]
+  };
+}
+
+function normalizeUNCRoot(device) {
+  return '\\\\' + device.replace(/^[\\\/]+/, '').replace(/[\\\/]+/g, '\\');
+}
+
+// path.resolve([from ...], to)
+win32.resolve = function() {
+  var resolvedDevice = '',
+      resolvedTail = '',
+      resolvedAbsolute = false;
+
+  for (var i = arguments.length - 1; i >= -1; i--) {
+    var path;
+    if (i >= 0) {
+      path = arguments[i];
+    } else if (!resolvedDevice) {
+      path = process.cwd();
+    } else {
+      // Windows has the concept of drive-specific current working
+      // directories. If we've resolved a drive letter but not yet an
+      // absolute path, get cwd for that drive. We're sure the device is not
+      // an unc path at this points, because unc paths are always absolute.
+      path = process.env['=' + resolvedDevice];
+      // Verify that a drive-local cwd was found and that it actually points
+      // to our drive. If not, default to the drive's root.
+      if (!path || path.substr(0, 3).toLowerCase() !==
+          resolvedDevice.toLowerCase() + '\\') {
+        path = resolvedDevice + '\\';
+      }
+    }
+
+    // Skip empty and invalid entries
+    if (!util.isString(path)) {
+      throw new TypeError('Arguments to path.resolve must be strings');
+    } else if (!path) {
+      continue;
+    }
+
+    var result = win32StatPath(path),
+        device = result.device,
+        isUnc = result.isUnc,
+        isAbsolute = result.isAbsolute,
+        tail = result.tail;
+
+    if (device &&
+        resolvedDevice &&
+        device.toLowerCase() !== resolvedDevice.toLowerCase()) {
+      // This path points to another device so it is not applicable
+      continue;
+    }
+
+    if (!resolvedDevice) {
+      resolvedDevice = device;
+    }
+    if (!resolvedAbsolute) {
+      resolvedTail = tail + '\\' + resolvedTail;
+      resolvedAbsolute = isAbsolute;
+    }
+
+    if (resolvedDevice && resolvedAbsolute) {
+      break;
+    }
+  }
+
+  // Convert slashes to backslashes when `resolvedDevice` points to an UNC
+  // root. Also squash multiple slashes into a single one where appropriate.
+  if (isUnc) {
+    resolvedDevice = normalizeUNCRoot(resolvedDevice);
+  }
+
+  // At this point the path should be resolved to a full absolute path,
+  // but handle relative paths to be safe (might happen when process.cwd()
+  // fails)
+
+  // Normalize the tail path
+  resolvedTail = normalizeArray(resolvedTail.split(/[\\\/]+/),
+                                !resolvedAbsolute).join('\\');
+
+  return (resolvedDevice + (resolvedAbsolute ? '\\' : '') + resolvedTail) ||
+         '.';
+};
+
+
+win32.normalize = function(path) {
+  var result = win32StatPath(path),
+      device = result.device,
+      isUnc = result.isUnc,
+      isAbsolute = result.isAbsolute,
+      tail = result.tail,
+      trailingSlash = /[\\\/]$/.test(tail);
+
+  // Normalize the tail path
+  tail = normalizeArray(tail.split(/[\\\/]+/), !isAbsolute).join('\\');
+
+  if (!tail && !isAbsolute) {
+    tail = '.';
+  }
+  if (tail && trailingSlash) {
+    tail += '\\';
+  }
+
+  // Convert slashes to backslashes when `device` points to an UNC root.
+  // Also squash multiple slashes into a single one where appropriate.
+  if (isUnc) {
+    device = normalizeUNCRoot(device);
+  }
+
+  return device + (isAbsolute ? '\\' : '') + tail;
+};
+
+
+win32.isAbsolute = function(path) {
+  return win32StatPath(path).isAbsolute;
+};
+
+win32.join = function() {
+  var paths = [];
+  for (var i = 0; i < arguments.length; i++) {
+    var arg = arguments[i];
+    if (!util.isString(arg)) {
+      throw new TypeError('Arguments to path.join must be strings');
+    }
+    if (arg) {
+      paths.push(arg);
+    }
+  }
+
+  var joined = paths.join('\\');
+
+  // Make sure that the joined path doesn't start with two slashes, because
+  // normalize() will mistake it for an UNC path then.
+  //
+  // This step is skipped when it is very clear that the user actually
+  // intended to point at an UNC path. This is assumed when the first
+  // non-empty string arguments starts with exactly two slashes followed by
+  // at least one more non-slash character.
+  //
+  // Note that for normalize() to treat a path as an UNC path it needs to
+  // have at least 2 components, so we don't filter for that here.
+  // This means that the user can use join to construct UNC paths from
+  // a server name and a share name; for example:
+  //   path.join('//server', 'share') -> '\\\\server\\share\')
+  if (!/^[\\\/]{2}[^\\\/]/.test(paths[0])) {
+    joined = joined.replace(/^[\\\/]{2,}/, '\\');
+  }
+
+  return win32.normalize(joined);
+};
+
+
+// path.relative(from, to)
+// it will solve the relative path from 'from' to 'to', for instance:
+// from = 'C:\\orandea\\test\\aaa'
+// to = 'C:\\orandea\\impl\\bbb'
+// The output of the function should be: '..\\..\\impl\\bbb'
+win32.relative = function(from, to) {
+  from = win32.resolve(from);
+  to = win32.resolve(to);
+
+  // windows is not case sensitive
+  var lowerFrom = from.toLowerCase();
+  var lowerTo = to.toLowerCase();
+
+  var toParts = trimArray(to.split('\\'));
+
+  var lowerFromParts = trimArray(lowerFrom.split('\\'));
+  var lowerToParts = trimArray(lowerTo.split('\\'));
+
+  var length = Math.min(lowerFromParts.length, lowerToParts.length);
+  var samePartsLength = length;
+  for (var i = 0; i < length; i++) {
+    if (lowerFromParts[i] !== lowerToParts[i]) {
+      samePartsLength = i;
+      break;
+    }
+  }
+
+  if (samePartsLength == 0) {
+    return to;
+  }
+
+  var outputParts = [];
+  for (var i = samePartsLength; i < lowerFromParts.length; i++) {
+    outputParts.push('..');
+  }
+
+  outputParts = outputParts.concat(toParts.slice(samePartsLength));
+
+  return outputParts.join('\\');
+};
+
+
+win32._makeLong = function(path) {
+  // Note: this will *probably* throw somewhere.
+  if (!util.isString(path))
+    return path;
+
+  if (!path) {
+    return '';
+  }
+
+  var resolvedPath = win32.resolve(path);
+
+  if (/^[a-zA-Z]\:\\/.test(resolvedPath)) {
+    // path is local filesystem path, which needs to be converted
+    // to long UNC path.
+    return '\\\\?\\' + resolvedPath;
+  } else if (/^\\\\[^?.]/.test(resolvedPath)) {
+    // path is network UNC path, which needs to be converted
+    // to long UNC path.
+    return '\\\\?\\UNC\\' + resolvedPath.substring(2);
+  }
+
+  return path;
+};
+
+
+win32.dirname = function(path) {
+  var result = win32SplitPath(path),
+      root = result[0],
+      dir = result[1];
+
+  if (!root && !dir) {
+    // No dirname whatsoever
+    return '.';
+  }
+
+  if (dir) {
+    // It has a dirname, strip trailing slash
+    dir = dir.substr(0, dir.length - 1);
+  }
+
+  return root + dir;
+};
+
+
+win32.basename = function(path, ext) {
+  var f = win32SplitPath(path)[2];
+  // TODO: make this comparison case-insensitive on windows?
+  if (ext && f.substr(-1 * ext.length) === ext) {
+    f = f.substr(0, f.length - ext.length);
+  }
+  return f;
+};
+
+
+win32.extname = function(path) {
+  return win32SplitPath(path)[3];
+};
+
+
+win32.format = function(pathObject) {
+  if (!util.isObject(pathObject)) {
+    throw new TypeError(
+        "Parameter 'pathObject' must be an object, not " + typeof pathObject
+    );
+  }
+
+  var root = pathObject.root || '';
+
+  if (!util.isString(root)) {
+    throw new TypeError(
+        "'pathObject.root' must be a string or undefined, not " +
+        typeof pathObject.root
+    );
+  }
+
+  var dir = pathObject.dir;
+  var base = pathObject.base || '';
+  if (!dir) {
+    return base;
+  }
+  if (dir[dir.length - 1] === win32.sep) {
+    return dir + base;
+  }
+  return dir + win32.sep + base;
+};
+
+
+win32.parse = function(pathString) {
+  if (!util.isString(pathString)) {
+    throw new TypeError(
+        "Parameter 'pathString' must be a string, not " + typeof pathString
+    );
+  }
+  var allParts = win32SplitPath(pathString);
+  if (!allParts || allParts.length !== 4) {
+    throw new TypeError("Invalid path '" + pathString + "'");
+  }
+  return {
+    root: allParts[0],
+    dir: allParts[0] + allParts[1].slice(0, -1),
+    base: allParts[2],
+    ext: allParts[3],
+    name: allParts[2].slice(0, allParts[2].length - allParts[3].length)
+  };
+};
+
+
+win32.sep = '\\';
+win32.delimiter = ';';
+
+
+// Split a filename into [root, dir, basename, ext], unix version
+// 'root' is just a slash, or nothing.
+var splitPathRe =
+    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+var posix = {};
+
+
+function posixSplitPath(filename) {
+  return splitPathRe.exec(filename).slice(1);
 }
 
 
-;// CONCATENATED MODULE: ./scripts/handlers/expand-grid.js
-/**
- * Expand layout string and given option into an array that includes the width (in px) for each item
- * It also returns the gap space (can change is useAppliedSize is true)
- * @param {{ pattern:String, realSize:Number, appliedSize:Number, useAppliedSize:Boolean }}
- * @returns {{ gap:function(Boolean):Number, items:function(Boolean):Array<Number> }}
- */
- /* harmony default export */ const expand_grid = (({ pattern, gap, realSize, appliedSize }) => {
-	gap = parseInt(gap)
-	realSize = parseInt(realSize)
-	appliedSize = parseInt(appliedSize)
+// path.resolve([from ...], to)
+// posix version
+posix.resolve = function() {
+  var resolvedPath = '',
+      resolvedAbsolute = false;
 
-	const isValidElement = /^(auto|([0-9|%]+)(pt)?)(\*[0-9]+)?$/
+  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+    var path = (i >= 0) ? arguments[i] : process.cwd();
 
-	var elements = []
-	const split = pattern.split(' ')
+    // Skip empty and invalid entries
+    if (!util.isString(path)) {
+      throw new TypeError('Arguments to path.resolve must be strings');
+    } else if (!path) {
+      continue;
+    }
 
-	/**
-	 * Make sure every item in the pattern in valid and occurs as many times as needed
-	 * (Based if the item has a multiplier or not)
-	 */
-	split.forEach(item => {
-		if (!isValidElement.test(item)) return
+    resolvedPath = path + '/' + resolvedPath;
+    resolvedAbsolute = path[0] === '/';
+  }
 
-		const split = item.split('*')
+  // At this point the path should be resolved to a full absolute path, but
+  // handle relative paths to be safe (might happen when process.cwd() fails)
 
-		const value = split[0]
-		const multiplier = split[1] || 1
+  // Normalize the path
+  resolvedPath = normalizeArray(resolvedPath.split('/'),
+                                !resolvedAbsolute).join('/');
 
-		var i = 0
-		while (i < multiplier) {
-			elements.push(value)
-			i ++
-		}
-	})
+  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
+};
 
-	/**
-	 * check if items are empty, if so make a single item, if items only contain one item then use that value as the amount of columns/rows
-	 */
-	if (elements.length === 0) {
-        elements.push(1)
-    } else if (elements.length === 1) {
-        const elementZero = elements[0]
+// path.normalize(path)
+// posix version
+posix.normalize = function(path) {
+  var isAbsolute = posix.isAbsolute(path),
+      trailingSlash = path && path[path.length - 1] === '/';
 
-        const asNumber = parseInt(elementZero)
-		const isDirectPoint = elementZero.indexOf('pt')
-        if (!isNaN(asNumber) && isDirectPoint == -1) {
-			elements = []
-			var i = 0
-            while(i < asNumber) {
-                elements.push(1)
-                i ++
-            }
+  // Normalize the path
+  path = normalizeArray(path.split('/'), !isAbsolute).join('/');
+
+  if (!path && !isAbsolute) {
+    path = '.';
+  }
+  if (path && trailingSlash) {
+    path += '/';
+  }
+
+  return (isAbsolute ? '/' : '') + path;
+};
+
+// posix version
+posix.isAbsolute = function(path) {
+  return path.charAt(0) === '/';
+};
+
+// posix version
+posix.join = function() {
+  var path = '';
+  for (var i = 0; i < arguments.length; i++) {
+    var segment = arguments[i];
+    if (!util.isString(segment)) {
+      throw new TypeError('Arguments to path.join must be strings');
+    }
+    if (segment) {
+      if (!path) {
+        path += segment;
+      } else {
+        path += '/' + segment;
+      }
+    }
+  }
+  return posix.normalize(path);
+};
+
+
+// path.relative(from, to)
+// posix version
+posix.relative = function(from, to) {
+  from = posix.resolve(from).substr(1);
+  to = posix.resolve(to).substr(1);
+
+  var fromParts = trimArray(from.split('/'));
+  var toParts = trimArray(to.split('/'));
+
+  var length = Math.min(fromParts.length, toParts.length);
+  var samePartsLength = length;
+  for (var i = 0; i < length; i++) {
+    if (fromParts[i] !== toParts[i]) {
+      samePartsLength = i;
+      break;
+    }
+  }
+
+  var outputParts = [];
+  for (var i = samePartsLength; i < fromParts.length; i++) {
+    outputParts.push('..');
+  }
+
+  outputParts = outputParts.concat(toParts.slice(samePartsLength));
+
+  return outputParts.join('/');
+};
+
+
+posix._makeLong = function(path) {
+  return path;
+};
+
+
+posix.dirname = function(path) {
+  var result = posixSplitPath(path),
+      root = result[0],
+      dir = result[1];
+
+  if (!root && !dir) {
+    // No dirname whatsoever
+    return '.';
+  }
+
+  if (dir) {
+    // It has a dirname, strip trailing slash
+    dir = dir.substr(0, dir.length - 1);
+  }
+
+  return root + dir;
+};
+
+
+posix.basename = function(path, ext) {
+  var f = posixSplitPath(path)[2];
+  // TODO: make this comparison case-insensitive on windows?
+  if (ext && f.substr(-1 * ext.length) === ext) {
+    f = f.substr(0, f.length - ext.length);
+  }
+  return f;
+};
+
+
+posix.extname = function(path) {
+  return posixSplitPath(path)[3];
+};
+
+
+posix.format = function(pathObject) {
+  if (!util.isObject(pathObject)) {
+    throw new TypeError(
+        "Parameter 'pathObject' must be an object, not " + typeof pathObject
+    );
+  }
+
+  var root = pathObject.root || '';
+
+  if (!util.isString(root)) {
+    throw new TypeError(
+        "'pathObject.root' must be a string or undefined, not " +
+        typeof pathObject.root
+    );
+  }
+
+  var dir = pathObject.dir ? pathObject.dir + posix.sep : '';
+  var base = pathObject.base || '';
+  return dir + base;
+};
+
+
+posix.parse = function(pathString) {
+  if (!util.isString(pathString)) {
+    throw new TypeError(
+        "Parameter 'pathString' must be a string, not " + typeof pathString
+    );
+  }
+  var allParts = posixSplitPath(pathString);
+  if (!allParts || allParts.length !== 4) {
+    throw new TypeError("Invalid path '" + pathString + "'");
+  }
+  allParts[1] = allParts[1] || '';
+  allParts[2] = allParts[2] || '';
+  allParts[3] = allParts[3] || '';
+
+  return {
+    root: allParts[0],
+    dir: allParts[0] + allParts[1].slice(0, -1),
+    base: allParts[2],
+    ext: allParts[3],
+    name: allParts[2].slice(0, allParts[2].length - allParts[3].length)
+  };
+};
+
+
+posix.sep = '/';
+posix.delimiter = ':';
+
+
+if (isWindows)
+  module.exports = win32;
+else /* posix */
+  module.exports = posix;
+
+module.exports.posix = posix;
+module.exports.win32 = win32;
+
+
+/***/ }),
+
+/***/ 496:
+/***/ ((module) => {
+
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+
+/***/ }),
+
+/***/ 384:
+/***/ ((module) => {
+
+module.exports = function isBuffer(arg) {
+  return arg && typeof arg === 'object'
+    && typeof arg.copy === 'function'
+    && typeof arg.fill === 'function'
+    && typeof arg.readUInt8 === 'function';
+}
+
+/***/ }),
+
+/***/ 539:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var formatRegExp = /%[sdj%]/g;
+exports.format = function(f) {
+  if (!isString(f)) {
+    var objects = [];
+    for (var i = 0; i < arguments.length; i++) {
+      objects.push(inspect(arguments[i]));
+    }
+    return objects.join(' ');
+  }
+
+  var i = 1;
+  var args = arguments;
+  var len = args.length;
+  var str = String(f).replace(formatRegExp, function(x) {
+    if (x === '%%') return '%';
+    if (i >= len) return x;
+    switch (x) {
+      case '%s': return String(args[i++]);
+      case '%d': return Number(args[i++]);
+      case '%j':
+        try {
+          return JSON.stringify(args[i++]);
+        } catch (_) {
+          return '[Circular]';
         }
+      default:
+        return x;
     }
-
-
-	/** * The final array of items (in real sizes) */
-	const array = (() => {
-		var usedSpace = 0
-        var totalFractions = 0
-
-        var items = {}
-
-		/**
-		 * Checks a text value and see if it is a fraction or a direct number point, and an integrer based number value
-		 * @param {String} element a part of the config values, for example a grid_column input of 1 1 1 would result in expand being called 3 times with '1' as the element argument
-		 * @returns {{numberValue:String, isDirectPoint:Boolean}} numberValue is the real figma screen value for the passed element
-		 */
-		function expand(element) {
-			element = element.toString()
-            const replaced = element.replace('pt', '')
-            const isDirectPoint = (element !== replaced)
-
-            element = (isDirectPoint) ? element.replace('pt', '') : element
-            const numberValue = parseInt(element)
-
-            return { numberValue:numberValue, isDirectPoint:isDirectPoint }
-		}
-
-		// Evaluates the given numberValue as a whole number
-		function evaluateAsWholeNumber(i, numberValue) {
-			usedSpace += numberValue
-            items[i] = numberValue
-		}
-
-		// Evaluates the given numberValue as a franction
-		function evaluateAsFraction(i, numberValue) {
-			const availiableSpace = (realSize - usedSpace) - ((elements.length - 1) * gap)
-            const columnWidth = (availiableSpace / totalFractions)
-            items[i] = (columnWidth * numberValue)
-		}
-
-		var index = 0
-		var evaluatingAs = 0
-		while (index < elements.length) {
-			const element = elements[index]
-			const { isDirectPoint, numberValue } = expand(element)
-
-			index += 1
-			if (evaluatingAs === 0) {
-				if (isDirectPoint) evaluateAsWholeNumber((index - 1), numberValue)
-				else totalFractions += numberValue
-			} else if (!isDirectPoint && evaluatingAs === 1) {
-				evaluateAsFraction((index - 1), numberValue)
-			}
-
-			if (index === (elements.length) && evaluatingAs === 0) {
-				evaluatingAs = 1
-				index = 0
-			}
-		}
-		
-		return items
-	})()
-
-	const nearestDecimal = (val) => (Math.round(val * 100) / 100)
-	return {
-		gap:((useAppliedSize) => {
-			if (useAppliedSize) return nearestDecimal((appliedSize / realSize) * gap)
-			return gap
-		}),
-		items:((useAppliedSize) => {
-			return Object.keys(array).sort((a,b) => (a > b)).map(i => {
-				const val = array[i]
-				if (useAppliedSize) return nearestDecimal((appliedSize / realSize) * val)
-				return val
-			})
-		})
-	}
-});
-;// CONCATENATED MODULE: ./scripts/controllers/selection.js
-
-
-
-/**
- * @type {FigmaSelection}
- */
-var selection = {}
-
-/**
- * Checks if the current selection within the editing programme is empty
- * @returns {Boolean}
- */
-const isSelectionEmpty = () => (selection.width == 0 || selection.height == 0)
-
-const setSelection = (width, height, name) => {
-    selection = (!width || !height)
-        ? {width:0, height:0, name:''}
-        : {width:width, height:height, name:name}
-
-    document.dispatchEvent(new CustomEvent(EVENTS.SelectionChanged, {
-        detail:(isSelectionEmpty()) ? {empty:true} : selection
-    }))
-}
-
-window.addEventListener('message', (message) => {
-    const data = message.data.pluginMessage
-
-    /**
-     * If the data.type of the event is selection change then call the setSelection function with the new item, or with null if there is no item
-     */
-    if (data.type == WINDOW_EVENTS.SelectionChanged) {
-        console.log('NEW SELECTION', data)
-
-        if (data.item) setSelection(data.item.width, data.item.height, data.item.name)
-        else setSelection(null)
+  });
+  for (var x = args[i]; i < len; x = args[++i]) {
+    if (isNull(x) || !isObject(x)) {
+      str += ' ' + x;
+    } else {
+      str += ' ' + inspect(x);
     }
-})
-
-/* harmony default export */ const controllers_selection = ({
-    /**
-     * @type {FigmaSelection}
-     */
-    get current() { return selection },
-
-    isSelectionEmpty:isSelectionEmpty
-});
-;// CONCATENATED MODULE: ./scripts/controllers/config.js
+  }
+  return str;
+};
 
 
-/**
- * The default configuration values
- * @type {CREATE_CONFIG_TYPE}
- *  ##TODO: Create the cCREATE_COMFIG_TYPE class
- */
-const configValues = {
-    grid_columns:'5',
-    grid_columns_gap:'0',
-    grid_rows:'2',
-    grid_rows_gap:'0'
-}
+// Mark that a method should not be used.
+// Returns a modified function which warns once by default.
+// If --no-deprecation is set, then it is a no-op.
+exports.deprecate = function(fn, msg) {
+  // Allow for deprecating things in the process of starting up.
+  if (isUndefined(__webpack_require__.g.process)) {
+    return function() {
+      return exports.deprecate(fn, msg).apply(this, arguments);
+    };
+  }
 
-/**
- * Listen for changes in the user interface and change the stored values accordingly
- */
-document.addEventListener(EVENTS.ConfigChanged, (e) => {
-    let detail = e.detail
-    let detailfor = detail['for']
-    let detailNewValue = detail['newValue']
-    if (!detailfor || !detailNewValue) return
+  if (process.noDeprecation === true) {
+    return fn;
+  }
 
-    configValues[detailfor] = detailNewValue
-})
-
-/* harmony default export */ const config = ({
-    /**
-     * Get all the configuration options
-     * @returns {Object<String,String>}
-     */
-    getAll() {
-        return configValues
-    },
-
-    /**
-     * Override the configu values with new ones and dispatch and event that the config values have been changed
-     * @param {Object<String, String>} withValues 
-     */
-    setAll(withValues) {
-        Object.keys(configValues).forEach(key => {
-            configValues[key] = withValues[key] || configValues[key]
-            const value = configValues[key]
-            document.dispatchEvent(new CustomEvent(EVENTS.ConfigChanged, {
-                detail:{for:key, newValue:value}
-            }))
-        })
-    },
-    
-    /**
-     * Get the configuration option for 'key'
-     * @param {String} key 
-     * @returns {String}
-     */
-    getValue(key) { 
-        return configValues[key] || null
-    },
-
-    /**
-     * Set a configuration value manually
-     * @param {String} key 
-     * @param {String} newValue 
-     * @returns 
-     */
-    setValue(key, newValue) {
-        configValues[key] = newValue
-        return configValues[key]
+  var warned = false;
+  function deprecated() {
+    if (!warned) {
+      if (process.throwDeprecation) {
+        throw new Error(msg);
+      } else if (process.traceDeprecation) {
+        console.trace(msg);
+      } else {
+        console.error(msg);
+      }
+      warned = true;
     }
-});
-;// CONCATENATED MODULE: ./scripts/controllers/merging.js
+    return fn.apply(this, arguments);
+  }
+
+  return deprecated;
+};
 
 
-
-var merges = {}
-
-/**
- * Add value to merges in merges[x][y]
- * @param {PreviewMerger} context
- * @returns {PreviewMerger}
- */
-function addToMerge(context) {
-    const x = context.x
-    const y = context.y
-    merges[x] = merges[x] || {}
-    merges[x][y] = value
-    // console.log(`Value for ${x} - ${y} is: `, merges[x][y])
-
-    return merges[x][y]
-}
-
-/**
- * Remove value from merges in merges[x][y]
- * @param {Number} x 
- * @param {Number} y 
- * @returns {Boolean}
- */
-function removeFromMerge(x,y) {
-    if (merges[x] && merges[y])
-        delete merges[x][y]
-
-    return true
-}
-
-/**
- * Get the value at merges[x][y]
- * @param {Number} x 
- * @param {Number} y 
- * @returns 
- */
-function getMergeValue(x,y) {
-    const mergeX = merges[x]||{}
-    return mergeX[y]
-}
-
-
-/* harmony default export */ const merging = ({
-    /**
-     * Add a merger (call from the user interface when releases his mouse over the preview grid)
-     * @param {PreviewMerger} context
-     * @returns {PreviewMerger}
-     */
-    addMerge(context) {
-        return addToMerge(context)
-        // return addToMerge(x,y,{
-        //     x:x,y:y,w:w,h:h,preview:preview
-        // })
-    },
-
-    /**
-     * Override a merger preview cell when the UI is refreshed due to a new layer selection or due to a configuration change
-     * @param {Number} x 
-     * @param {Number} y 
-     * @param {HTMLElement} newPreview 
-     * @returns 
-     */
-    overridePreviewMerge(x,y,newPreview) {
-        const cell = getMergeValue(x,y)
-        if (!cell) return
-
-        if (cell.preview) cell.preview.remove()
-        merges[x][y].preview = newPreview
-
-        return merges[x][y]
-    },
-
-    /**
-     * Remove a merger from the grid and from storage
-     * @param {Number} x 
-     * @param {Number} y 
-     * @param {HTMLElement} cellNode 
-     * @returns {Boolean}
-     */
-    removeMerge(x,y,cellNode) {
-        const cell = getMergeValue(x,y)
-        if (!cell) return false
-
-        console.log(cell.preview.remove)
-        if (cell.preview) cell.preview.remove()
-
-        removeFromMerge(x,y)
-        cellNode.gridDescription.merged = null
-
-        return true
-    },
-
-    /**
-     * Get the details for the mergere at x,y (if exists)
-     * @param {Number} x 
-     * @param {Number} y 
-     * @returns {PreviewMerger}
-     */
-    detailForMerge(x,y) {
-        return getMergeValue(x,y)
-    },
-
-    /**
-     * Clear the current merges
-     */
-    clear() {
-        merges = {}
-        document.dispatchEvent(new CustomEvent(EVENTS.MergesCleared, {}))
-    },
-
-    /**
-     * Has the user merged any grid cells?
-     * @returns {Boolean} True if the user has merged cells
-     */
-    doesIncludeMerges() {
-        return (Object.keys(merges).length > 0)
-    },
-
-    /**
-     * 
-     * @param {function(Merger):void} callback 
-     * @returns 
-     */
-    forEach(callback) {
-        if (!callback.call) return
-        Object.values(merges).map(yValue => Object.values(yValue)).flat().forEach(i => callback(i))
+var debugs = {};
+var debugEnviron;
+exports.debuglog = function(set) {
+  if (isUndefined(debugEnviron))
+    debugEnviron = process.env.NODE_DEBUG || '';
+  set = set.toUpperCase();
+  if (!debugs[set]) {
+    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
+      var pid = process.pid;
+      debugs[set] = function() {
+        var msg = exports.format.apply(exports, arguments);
+        console.error('%s %d: %s', set, pid, msg);
+      };
+    } else {
+      debugs[set] = function() {};
     }
-});
-;// CONCATENATED MODULE: ./scripts/util/calculate-xyhw.js
+  }
+  return debugs[set];
+};
+
+
 /**
- * Calculates the final x,y, width, and height based on the given properties
- * use when merging cells for cases such as width being -1 or -2 requiring offset but without changing the starting cell
+ * Echos the value of a value. Trys to print the value out
+ * in the best way possible given the different types.
+ *
+ * @param {Object} obj The object to print out.
+ * @param {Object} opts Optional options object that alters the output.
  */
-/* harmony default export */ const calculate_xyhw = ((x,y,w,h) => {
-    if (w < 0) {
-        w = Math.abs(w)
-        x -= w
+/* legacy: obj, showHidden, depth, colors*/
+function inspect(obj, opts) {
+  // default options
+  var ctx = {
+    seen: [],
+    stylize: stylizeNoColor
+  };
+  // legacy...
+  if (arguments.length >= 3) ctx.depth = arguments[2];
+  if (arguments.length >= 4) ctx.colors = arguments[3];
+  if (isBoolean(opts)) {
+    // legacy...
+    ctx.showHidden = opts;
+  } else if (opts) {
+    // got an "options" object
+    exports._extend(ctx, opts);
+  }
+  // set default options
+  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
+  if (isUndefined(ctx.depth)) ctx.depth = 2;
+  if (isUndefined(ctx.colors)) ctx.colors = false;
+  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
+  if (ctx.colors) ctx.stylize = stylizeWithColor;
+  return formatValue(ctx, obj, ctx.depth);
+}
+exports.inspect = inspect;
+
+
+// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
+inspect.colors = {
+  'bold' : [1, 22],
+  'italic' : [3, 23],
+  'underline' : [4, 24],
+  'inverse' : [7, 27],
+  'white' : [37, 39],
+  'grey' : [90, 39],
+  'black' : [30, 39],
+  'blue' : [34, 39],
+  'cyan' : [36, 39],
+  'green' : [32, 39],
+  'magenta' : [35, 39],
+  'red' : [31, 39],
+  'yellow' : [33, 39]
+};
+
+// Don't use 'blue' not visible on cmd.exe
+inspect.styles = {
+  'special': 'cyan',
+  'number': 'yellow',
+  'boolean': 'yellow',
+  'undefined': 'grey',
+  'null': 'bold',
+  'string': 'green',
+  'date': 'magenta',
+  // "name": intentionally not styling
+  'regexp': 'red'
+};
+
+
+function stylizeWithColor(str, styleType) {
+  var style = inspect.styles[styleType];
+
+  if (style) {
+    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
+           '\u001b[' + inspect.colors[style][1] + 'm';
+  } else {
+    return str;
+  }
+}
+
+
+function stylizeNoColor(str, styleType) {
+  return str;
+}
+
+
+function arrayToHash(array) {
+  var hash = {};
+
+  array.forEach(function(val, idx) {
+    hash[val] = true;
+  });
+
+  return hash;
+}
+
+
+function formatValue(ctx, value, recurseTimes) {
+  // Provide a hook for user-specified inspect functions.
+  // Check that value is an object with an inspect function on it
+  if (ctx.customInspect &&
+      value &&
+      isFunction(value.inspect) &&
+      // Filter out the util module, it's inspect function is special
+      value.inspect !== exports.inspect &&
+      // Also filter out any prototype objects using the circular check.
+      !(value.constructor && value.constructor.prototype === value)) {
+    var ret = value.inspect(recurseTimes, ctx);
+    if (!isString(ret)) {
+      ret = formatValue(ctx, ret, recurseTimes);
     }
+    return ret;
+  }
 
-    if (h < 0) {
-        h = Math.abs(h)
-        y -= h
+  // Primitive types cannot have properties
+  var primitive = formatPrimitive(ctx, value);
+  if (primitive) {
+    return primitive;
+  }
+
+  // Look up the keys of the object.
+  var keys = Object.keys(value);
+  var visibleKeys = arrayToHash(keys);
+
+  if (ctx.showHidden) {
+    keys = Object.getOwnPropertyNames(value);
+  }
+
+  // IE doesn't make error fields non-enumerable
+  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
+  if (isError(value)
+      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
+    return formatError(value);
+  }
+
+  // Some type of object without properties can be shortcutted.
+  if (keys.length === 0) {
+    if (isFunction(value)) {
+      var name = value.name ? ': ' + value.name : '';
+      return ctx.stylize('[Function' + name + ']', 'special');
     }
-
-    x = x + 1
-    y = y + 1
-
-    return {
-        x:x,y:y,h:h,w:w
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
     }
-});
-;// CONCATENATED MODULE: ./scripts/interface/grid-preview/apply-preview.js
-// import util from "../../util"
-
-
-function applyPreviewPropertiesToNode(node,xPos,yPos,width,height) {
-    if (!node) return
-
-    xPos = parseInt(xPos)
-    yPos = parseInt(yPos)
-    width = parseInt(width)
-    height = parseInt(height)
-
-    const {x,y,h,w} = calculate_xyhw(
-        xPos,
-        yPos,
-        width,
-        height
-    )
-
-    node.style.gridRowStart = `${y}`
-    node.style.gridRowEnd = `${y + h + 1}`
-    node.style.gridColumnStart = `${x}`
-    node.style.gridColumnEnd = `${x + w + 1}`
-}
-
-;// CONCATENATED MODULE: ./scripts/interface/grid-preview/create-merge-cell.js
-
-
-/**
- * Generates a random colour from TYPES.PREVIEW_COLORS to be used with a preview cell node
- * @returns {String} a hex code to use as a random colour
- */
- function randomColour() {
-    const arr = [
-        '#E94E3D',
-        '#EF9A37',
-        '#F6CD46',
-        '#69C466',
-        '#5FC4BD',
-        '#5EAEC4',
-        '#387AF6',
-        '#A259D7',
-        '#E9445A',
-        '#9D8563' ]
-
-    const index = Math.floor(Math.random() * (arr.length - 1))
-    return `${arr[index]}AA`
-}
-
-/**
- * Creates a node that will be used a preview for the merge operation
- * @returns {HTMLElement}
- */
-function createPreviewMergeNode() {
-    const node = document.createElement('div')
-    node.style.backgroundColor = randomColour()
-    node.style.position = 'relative'
-    node.style.left = `${OPTIONS.GridPadding}px`
-    node.style.top = `${OPTIONS.GridPadding}px`
-    node.style.width = `calc(100% - ${OPTIONS.GridPadding*2}px)`
-    node.style.height = `calc(100% - ${OPTIONS.GridPadding*2}px)`
-    node.style.opacity = '0.85'
-    node.style.borderRadius = `${OPTIONS.GridCornerRadius}px`
-    node.style.pointerEvents = 'none'
-
-    return node
-}
-;// CONCATENATED MODULE: ./scripts/interface/grid-preview/preview-grabber.js
-
-
-
-
-
-
-
-
-var overNode;
-
-var grabbingStartNode;
-var grabbingPreviewNode;
-
-var grabbingX;
-var grabbingY;
-
-var grabbingWidth;
-var grabbingHeight;
-
-var gridCellsContainer;
-var gridMergeContainer;
-
-function preview_grabber_self() {
-    return {
-
+    if (isDate(value)) {
+      return ctx.stylize(Date.prototype.toString.call(value), 'date');
     }
+    if (isError(value)) {
+      return formatError(value);
+    }
+  }
+
+  var base = '', array = false, braces = ['{', '}'];
+
+  // Make Array say that they are Array
+  if (isArray(value)) {
+    array = true;
+    braces = ['[', ']'];
+  }
+
+  // Make functions say that they are functions
+  if (isFunction(value)) {
+    var n = value.name ? ': ' + value.name : '';
+    base = ' [Function' + n + ']';
+  }
+
+  // Make RegExps say that they are RegExps
+  if (isRegExp(value)) {
+    base = ' ' + RegExp.prototype.toString.call(value);
+  }
+
+  // Make dates with properties first say the date
+  if (isDate(value)) {
+    base = ' ' + Date.prototype.toUTCString.call(value);
+  }
+
+  // Make error with message first say the error
+  if (isError(value)) {
+    base = ' ' + formatError(value);
+  }
+
+  if (keys.length === 0 && (!array || value.length == 0)) {
+    return braces[0] + base + braces[1];
+  }
+
+  if (recurseTimes < 0) {
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    } else {
+      return ctx.stylize('[Object]', 'special');
+    }
+  }
+
+  ctx.seen.push(value);
+
+  var output;
+  if (array) {
+    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
+  } else {
+    output = keys.map(function(key) {
+      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
+    });
+  }
+
+  ctx.seen.pop();
+
+  return reduceToSingleString(output, base, braces);
 }
 
 
-
-/**
- * Applies styling (correct position and sizing) to the preview node for the merge operation
- * Called when the mouse moves to a different cell
- */
-function applyPropertiesToPreviewNode() {
-    applyPreviewPropertiesToNode(
-        grabbingPreviewNode,
-        grabbingX,
-        grabbingY,
-        grabbingWidth,
-        grabbingHeight
-    )
-}
-
-/**
- * Cancel the current merger
- * @param {Boolean} deletesPreviewNode should the preview node be deleted (merge operation cancelled) or be kept (merge operation confirmed)
- */
-function cancelMerge(deletesPreviewNode) {
-    if (grabbingPreviewNode && deletesPreviewNode)
-        grabbingPreviewNode.remove()
-
-    grabbingPreviewNode = null
-    grabbingStartNode = null
-
-    grabbingX = null
-    grabbingY = null
-    grabbingWidth = null
-    grabbingHeight = null
-
-    document.dispatchEvent(new CustomEvent(EVENTS.PreviewCellGrabEnd, {
-        detail:preview_grabber_self()
-    }))
-}
-
-/**
- * Apply the merge operation
- */
-function applyMerge() {
-    if (!grabbingPreviewNode && !grabbingStartNode)
-        return
-    
-    grabbingStartNode.gridDescription.merged = merging.addMerge({
-        x:grabbingX, y:grabbingY, width:grabbingWidth, height:grabbingHeight, preview:grabbingPreviewNode
-    })
-        // grabbingX,grabbingY,grabbingWidth,grabbingHeight,grabbingPreviewNode}) //{
-    cancelMerge(false) 
+function formatPrimitive(ctx, value) {
+  if (isUndefined(value))
+    return ctx.stylize('undefined', 'undefined');
+  if (isString(value)) {
+    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
+                                             .replace(/'/g, "\\'")
+                                             .replace(/\\"/g, '"') + '\'';
+    return ctx.stylize(simple, 'string');
+  }
+  if (isNumber(value))
+    return ctx.stylize('' + value, 'number');
+  if (isBoolean(value))
+    return ctx.stylize('' + value, 'boolean');
+  // For some reason typeof null is "object", so special case here.
+  if (isNull(value))
+    return ctx.stylize('null', 'null');
 }
 
 
-/* harmony default export */ const preview_grabber = ({
-    /**
-     * Set the cells container from the grid-preview-ui script
-     */
-    set gridCellsContainer(newValue) { gridCellsContainer = newValue },
-    /**
-     * Set the merge container form the grid-preview-ui script
-     */
-    set gridMergeContainer(newValue) { gridMergeContainer = newValue },
+function formatError(value) {
+  return '[' + Error.prototype.toString.call(value) + ']';
+}
 
 
-    /**
-     * Call when the user right clicks in the preview grid
-     * @param {MouseEvent} e 
-     */
-    contextClick:(e) => {
-        /**
-         * Check if the user is hovering over a node, if not then return
-         * Check the nodes merged status, if it is not merged then reutnr
-         * 
-         * Call the merging controller with the x and y coordinates of the node to clear
-         */
-        if (!overNode) return
-        if (overNode.gridDescription.merged == null) return
-    
-        merging.removeMerge(overNode.gridDescription.x, overNode.gridDescription.y, overNode)
-    },
+function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
+  var output = [];
+  for (var i = 0, l = value.length; i < l; ++i) {
+    if (hasOwnProperty(value, String(i))) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          String(i), true));
+    } else {
+      output.push('');
+    }
+  }
+  keys.forEach(function(key) {
+    if (!key.match(/^\d+$/)) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          key, true));
+    }
+  });
+  return output;
+}
 
-    /**
-     * Call when the user clicks down in the preview grid
-     * @param {MouseEvent} e 
-     */
-    mouseDown:(e) => {
-        if (e.which !== 1) return
-        if (!overNode) return
-        if (overNode.gridDescription.merged) return
 
-        grabbingStartNode = overNode
-
-        grabbingPreviewNode = createPreviewMergeNode()
-        grabbingX = grabbingStartNode.gridDescription.x
-        grabbingY = grabbingStartNode.gridDescription.y
-
-        grabbingWidth = 0
-        grabbingHeight = 0
-
-        gridMergeContainer.appendChild(grabbingPreviewNode)
-        applyPropertiesToPreviewNode()
-
-        document.dispatchEvent(new CustomEvent(EVENTS.PreviewCellGrabBegin, {
-            detail:preview_grabber_self()
-        }))
-    },
-
-    /**
-     * Call when the user releases a click in the preview grid
-     * @param {MouseEvent} e 
-     */
-    mouseUp:(e) => {
-        if (e.which !== 1) return
-        if (!grabbingPreviewNode && !grabbingStartNode) {
-            cancelMerge(true)
+function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
+  var name, str, desc;
+  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
+  if (desc.get) {
+    if (desc.set) {
+      str = ctx.stylize('[Getter/Setter]', 'special');
+    } else {
+      str = ctx.stylize('[Getter]', 'special');
+    }
+  } else {
+    if (desc.set) {
+      str = ctx.stylize('[Setter]', 'special');
+    }
+  }
+  if (!hasOwnProperty(visibleKeys, key)) {
+    name = '[' + key + ']';
+  }
+  if (!str) {
+    if (ctx.seen.indexOf(desc.value) < 0) {
+      if (isNull(recurseTimes)) {
+        str = formatValue(ctx, desc.value, null);
+      } else {
+        str = formatValue(ctx, desc.value, recurseTimes - 1);
+      }
+      if (str.indexOf('\n') > -1) {
+        if (array) {
+          str = str.split('\n').map(function(line) {
+            return '  ' + line;
+          }).join('\n').substr(2);
         } else {
-            applyMerge()
+          str = '\n' + str.split('\n').map(function(line) {
+            return '   ' + line;
+          }).join('\n');
         }
-    },
-
-    /**
-     * Call when the user moves the mouse within the preview grid
-     * @param {MouseEvent} e 
-     */
-    mouseMove:(e) => {
-        const newOverNode = (() => {
-            const node = e.target
-            return (node.gridDescription) ? node : null
-        })()
-
-        const _over = overNode
-        overNode = newOverNode
-
-        if (_over) _over.style.backgroundColor = 'unset'
-        if (overNode) overNode.style.backgroundColor = '#00a2ff'
-            
-
-        if (grabbingPreviewNode && overNode) {
-            grabbingWidth = (overNode.gridDescription.x) - grabbingX
-            grabbingHeight = (overNode.gridDescription.y) - grabbingY
-
-            applyPropertiesToPreviewNode()
-        }
-    }
-});
-
-;// CONCATENATED MODULE: ./scripts/interface/grid-preview/grid-preview-ui.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * Get the root grid object found in the interface and add a merge container and cells container to it
- */
-const gridRoot = document.querySelector('#grid-root')
-
-/**
- * The merge container will be used to add the merge squares in
- */
-const grid_preview_ui_gridMergeContainer = document.createElement('div')
-grid_preview_ui_gridMergeContainer.classList.add('merge-container')
-
-/**
- * The cells container will be used to show the individual squares on the grid
- */
-const grid_preview_ui_gridCellsContainer = document.createElement('div')
-grid_preview_ui_gridCellsContainer.classList.add('cells-container')
-
-/**
- * Add the newly created elements to the root grid
- */
-gridRoot.appendChild(grid_preview_ui_gridCellsContainer)
-gridRoot.appendChild(grid_preview_ui_gridMergeContainer)
-
-/**
- * Assign the newly created containers to the preview grabber utility helper
- */
-preview_grabber.gridCellsContainer = grid_preview_ui_gridCellsContainer
-preview_grabber.gridMergeContainer = grid_preview_ui_gridMergeContainer
-
-
-/**
- * 
- * @param {*} node 
- * @param {*} param1 
- */
-const applyGridPatternToNode = (node, {xItems, yItems, xGap, yGap}) => {
-    node.style.display = 'grid'
-    node.style.gridTemplateColumns = xItems.map(i => `${i}px`).join(' ')
-    node.style.gridTemplateRows = yItems.map(i => `${i}px`).join(' ')
-    node.style.columnGap = `${xGap}px` 
-    node.style.rowGap = `${yGap}px` 
-    node.style.justifyContent = 'center'
-}
-
-function refreshLayout() {
-    // let currentSelection = selection.current
-    // let configValues = config.getAll()
-
-    Array.from(grid_preview_ui_gridMergeContainer.children).forEach(child => child.remove())
-    Array.from(grid_preview_ui_gridCellsContainer.children).forEach(child => child.remove())
-
-    /**
-     * If nothing is selected than set the height of the grid preview to 20px
-     */
-    if (controllers_selection.isSelectionEmpty()) {
-        const emptyPatternOptions = { xItems:[0], yItems:[0], xGap:0, yGap:0 }
-        applyGridPatternToNode(grid_preview_ui_gridMergeContainer, emptyPatternOptions)
-        applyGridPatternToNode(grid_preview_ui_gridCellsContainer, emptyPatternOptions)
-        return
-    }
-
-    /**
-     * If a layer is selected than automatically assign the height using unset
-     */
-    grid_preview_ui_gridMergeContainer.style.height = 'unset'
-    grid_preview_ui_gridCellsContainer.style.height = 'unset'
-    grid_preview_ui_gridMergeContainer.style.backgroundColor = 'unset'
-
-
-    /**
-     * Evalute the pattern using the given options to create the grid and cell merge previews
-     */
-    const pattern = evaluatePattern()
-
-    const patternOptions = {
-        xItems:pattern.column.items(true), yItems:pattern.row.items(true),
-        xGap:pattern.column.gap(true), yGap:pattern.row.gap(true)
-    }
-
-    /**
-     * Loop through each pattern row and create the preview node and the merged node (if cell is merged)
-     */
-    // var items = {}
-    var y = 0
-    while (y < patternOptions.yItems.length) {
-        var x = 0
-
-        /**
-         * For each cell (run through y and x lengths) create a new preview cell
-         * assign a border
-         * check if cell is the origin of a merge
-         * assigns a cellDescription variable (so that the grid preview knows what cell is being hovered on)
-         * appends the child to the gridCellsContainer element
-         */
-        while (x < patternOptions.xItems.length) {
-            const newCellNode = document.createElement('div')
-            newCellNode.style.border = `1px solid #00000026`
-
-            /**
-             * Call the merging controller and fetch if cell at x,y has been merged
-             * if so then create a new preview cell and call the merge controllers overridePreviewMerge function
-             *     then append the new merge cell to the gridMergeContainer element
-             */
-            const existingMerge = merging.detailForMerge(x, y)
-            if (existingMerge) {
-                const newMergeCell = createPreviewMergeNode()
-                merging.overridePreviewMerge(x,y,newMergeCell)
-
-                applyPreviewPropertiesToNode(newMergeCell, x,y,existingMerge.w,existingMerge.h)
-                grid_preview_ui_gridMergeContainer.appendChild(newMergeCell)
-            }
-
-            newCellNode.gridDescription = {
-                id:(Math.random().toString()),
-                x:x, y:y,
-                merged:existingMerge||null
-            }
-            
-            grid_preview_ui_gridCellsContainer.appendChild(newCellNode)
-
-            // items[x] = items[x] || []
-            // items[x][y] = newCellNode
-
-            x += 1
-        }
-
-        y += 1
-    }
-
-    applyGridPatternToNode(grid_preview_ui_gridMergeContainer, patternOptions)
-    applyGridPatternToNode(grid_preview_ui_gridCellsContainer, patternOptions)
-}
-
-/**
- * Listen for selection chagnes or configuration changes so that the layout can be refreshed
- */
-document.addEventListener(EVENTS.SelectionChanged, () => refreshLayout())
-document.addEventListener(EVENTS.ConfigChanged, () => refreshLayout())
-document.addEventListener(EVENTS.MergesCleared, () => refreshLayout())
-
-
-/**
- * Assign default events for the correlating preview grabber utility functions
- * (Required to make the cells draggab le)
- */
-document.body.addEventListener('contextmenu', (e) => preview_grabber.contextClick(e))
-document.body.addEventListener('mousedown', (e) => preview_grabber.mouseDown(e))
-document.body.addEventListener('mouseup', (e) => preview_grabber.mouseUp(e))
-document.body.addEventListener('mousemove', (e) => preview_grabber.mouseMove(e))
-
-/**
- * Add PreviewCellGrabBegin/End events to change the cursor to a grabber
- */
-document.addEventListener(EVENTS.PreviewCellGrabBegin, () => { document.body.style.cursor = 'grabbing' })
-document.addEventListener(EVENTS.PreviewCellGrabEnd, () => { document.body.style.cursor = 'auto' })
-
-
-/* harmony default export */ const grid_preview_ui = ({
-    get rootGridElement() { return gridRoot },
-});
-;// CONCATENATED MODULE: ./scripts/handlers/evalute-pattern.js
-
-
-
-
-
-
-
-/**
- * Converts the Figma layer selection, the configuration (rows, columns, and gap inputs) and the container that previews the grid to return an array of every cell and their respective size
- * @param {FigmaSelection} selection 
- */
-function evaluatePattern() {
-    var w = controllers_selection.current.width
-    var h = controllers_selection.current.height
-
-    const configValues = config.getAll()
-    const patternContainer = grid_preview_ui.rootGridElement
-
-    /**
-     * Get the ratio of the selected element by dividing its width by its height
-     * If the ratio is smaller than one (is portrait) then set the height to 300 points and calculate the new width based on the aspect ratio
-     * If the ratio is larger than one (is horizontal) then set the width to the maximum width for the grid preview element and then set the height based on the aspect ratio
-     */
-    const ratio = w / h
-    if (ratio < 1) {
-        h = 300
-        w = h * ratio
+      }
     } else {
-        w = patternContainer.getBoundingClientRect().width
-        h = w / ratio
+      str = ctx.stylize('[Circular]', 'special');
     }
-
-    return {
-        column:expand_grid({
-            pattern:configValues.grid_columns,
-            gap:configValues.grid_columns_gap,
-            realSize:controllers_selection.current.width,
-            appliedSize:w
-        }),
-        row:expand_grid({
-            pattern:configValues.grid_rows,
-            gap:configValues.grid_rows_gap,
-            realSize:controllers_selection.current.height,
-            appliedSize:h
-        })
+  }
+  if (isUndefined(name)) {
+    if (array && key.match(/^\d+$/)) {
+      return str;
     }
-}
-;// CONCATENATED MODULE: ./scripts/util/communicator.js
-/**
- * @typedef {'create-cells'|'undo'| 'save-grid'|'delete-grid'} PostType
- * @typedef {'selection'} ListenType
- */
-
-/* harmony default export */ const communicator = ({
-    /**
-     * 
-     * @param {PostType} type 
-     * @param {Object} data 
-     */
-    postToFigma:(type, data) => {
-        // console.log('SHOULD POST', type, data)
-        parent.postMessage({
-            pluginMessage:{
-                type:type,
-                ...data,
-            }
-        }, '*')
-    }
-});
-;// CONCATENATED MODULE: ./scripts/controllers/save-grid.js
-
-
-
-
-
-/**
- * The layouts made by the user that have been fetched using the window.onmessage event
- * @type {Array<SavedGrid>}
- */
-var customLayouts = []
-
-/**
- * Default premade layouts that are always availiable
- * @type {Array<SavedGrid>}
- */
-const premadeLayouts = [
-    {
-        name: "Golden Ratio",
-        id: "golden-ratio",
-        inputs: {grid_columns: "13", grid_rows: "8", grid_columns_gap: "0", grid_rows_gap: "0"},
-        mergedCells: [
-            {x: 0, y: 0, w: 7, h: 7},
-            {x: 8, y: 0, w: 4, h: 4},
-            {x: 8, y: 5, w: 0, h: 0},
-            {x: 8, y: 6, w: 1, h: 1},
-            {x: 9, y: 5, w: 0, h: 0},
-            {x: 12, y: 5, w: -2, h: 2}
-        ]
-    },
-    {
-        name: "Column Grid (12 Column)",
-        id: "ipad-split",
-        inputs: {grid_columns: "12", grid_rows: "1", grid_columns_gap: "6", grid_rows_gap: "0"}
-    },
-    {
-        name: "iPad App With Sidebar",
-        id: "ipad-with-sidebar",
-        inputs: {grid_columns: "220pt 1", grid_rows: "1", grid_columns_gap: "0", grid_rows_gap: "0"}
-    },
-    {
-        name: "Notch iPhone App Layout",
-        id: "ios-app-layout",
-        inputs: {grid_columns: "1", grid_rows: "140pt 1 83pt", grid_columns_gap: "0", grid_rows_gap: "0"}
-    },
-    {
-        name: "Rule Of Threes",
-        id: "rule-of-threes",
-        inputs: {grid_columns: "3", grid_rows: "3", grid_columns_gap: "0", grid_rows_gap: "0"}
-    }
-]
-
-/**
- * Listen for the FetchedPresavedFromStorage event that gets called when the localStorage is read to fetch what the user has saved
- * @param {Event} message 
- * @returns 
- */
-window.addEventListener('message', (message) => {
-    const data = message.data.pluginMessage
-
-    if (data.type === WINDOW_EVENTS.FetchedPresavedFromStorage) {
-        if (!data.items || !Array.isArray(data.items)) return
-
-        customLayouts = data.items
-        document.dispatchEvent(new CustomEvent(EVENTS.PresavedArrayChanged, {
-            detail:[
-                ...customLayouts,//premadeLayouts,
-                ...premadeLayouts
-            ]
-        }))
-    }
-})
-
-/* harmony default export */ const save_grid = ({
-    /**
-     * Gets an array with all the premade grids that are availiable, both custom and default ones
-     * @returns {Array<SavedGrid>}
-     */
-    getPresavedGrids() {
-        return [
-            ...customLayouts,
-            ...premadeLayouts
-        ]
-    },
-
-    /**
-     * Gets a presaved grid using a passed ID
-     * @param {String} id 
-     * @returns {SavedGrid}
-     */
-    getPresavedGridsWithID(id) {
-        const items = [
-            ...customLayouts,
-            ...premadeLayouts
-        ]
-
-        var i = 0
-        var found;
-        while (i < items.length && found == null) {
-            const cur = items[i]
-            if (cur.id === id) found = cur
-
-            i ++ 
-        }
-
-        return found || null
-    },
-
-    /**
-     * Calls for the grid with the given ID to be from storage
-     * @param {String} id 
-     */
-    removePresavedGrid(id) {
-        communicator.postToFigma('delete-grid', { id:id })
-    },
-
-    /**
-     * Adds the current grid layout and passed config 
-     * @param {String} withName 
-     * @param {Object} configOptions
-     */
-    addPresavedGrid(withName, configOptions) {
-        var mergedArray = []
-        merging.forEach(merge => {
-            var duplicate = JSON.stringify(
-                JSON.parse(merge)
-            )
-
-            delete duplicate.preview
-            mergedArray.push(duplicate)
-        })
-
-        const newID = Math.random().toString().slice(3)
-        const currentInput = configOptions
-        communicator.postToFigma('save-grid', {
-            id:newID,
-            name:withName,
-            inputs:currentInput,
-            mergedCells:mergedArray
-        })
-    },
-
-});
-;// CONCATENATED MODULE: ./scripts/controllers/to-element.js
-
-
-
-
-
-
-/**
- * Pushes the layout to the figma layer selected by calculating where it should go and creating an array of the final new layers (each cell)
- * @param {{xItems:Array<Number>, yItems:Array<Number>, xGap:Number, yGap:Number}} param0 
- * @param {{ colour:String, replaceSelected:Boolean }} options 
- */
-/* harmony default export */ function to_element({xItems, yItems, xGap, yGap}, options) {
-    var finalItems = []
-    var currentXPosition = 0
-    var currentYPosition = 0
-
-    /** * Check if the user has merged, if so then create the grid differently */
-    if (merging.doesIncludeMerges()) {
-        /** * Loop thorugh every merger */
-        merging.forEach(merge => {
-            const finalPlacement = calculate_xyhw(merge.x, merge.y, merge.w, merge.h)
-            finalPlacement.x = finalPlacement.x - 1
-            finalPlacement.y = finalPlacement.y - 1
-        })
-
-        function getPoint(arr, gap, index, inclusive) {
-            var current = 0
-            var i = 0
-            var hasFinished = false
-
-            while (!hasFinished) {
-                if (i === index) {
-                    if (inclusive) current += arr[i]
-                    hasFinished = true
-                } else { current += arr[i] + gap }
-                i ++ 
-            }
-
-            return current
-        }
-
-        const startX = getPoint(xItems, xGap, finalPlacement.x, false)
-        const startY = getPoint(yItems, yGap, finalPlacement.y, false)
-        const endX = getPoint(xItems, xGap, finalPlacement.x + finalPlacement.w, true)
-        const endY = getPoint(yItems, yGap, finalPlacement.y + finalPlacement.h, true)
-        const width = endX - startX
-        const height = endY - startY
-        finalItems.push({
-            x:startX, y:startY,
-            width:width, height:height,
-        })
+    name = JSON.stringify('' + key);
+    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+      name = name.substr(1, name.length - 2);
+      name = ctx.stylize(name, 'name');
     } else {
-        var yIndex = 0
-        while (yIndex < yItems.length) {
-            var xIndex = 0
-            currentXPosition = 0
-            const currentYItem = yItems[yIndex]
-            while (xIndex < xItems.length) {
-                const currentXItem = xItems[xIndex]
-                finalItems.push({
-                    x:currentXPosition, y:currentYPosition,
-                    width:currentXItem, height:currentYItem,
-                })
-
-                currentXPosition += (currentXItem + xGap)
-                xIndex ++
-            }
-
-            currentYPosition += (currentYItem + xGap)
-            yIndex ++
-        }
+      name = name.replace(/'/g, "\\'")
+                 .replace(/\\"/g, '"')
+                 .replace(/(^"|"$)/g, "'");
+      name = ctx.stylize(name, 'string');
     }
+  }
 
-    communicator.postToFigma('create-cells', {
-        id:Math.random().toString().slice(4),
-        items:finalItems,
-
-        ...options
-    })
-}
-;// CONCATENATED MODULE: ./scripts/interface/config-ui.js
-
-
-
-/**
- * Get the inputs for the configuration panel
- */
-const inputs = {
-    grid_columns:document.querySelector('#grid-columns'),
-    grid_columns_gap:document.querySelector('#grid-columns-gap'),
-    grid_rows:document.querySelector('#grid-rows'),
-    grid_rows_gap:document.querySelector('#grid-rows-gap')
-}
-
-/**
- * For each input set its value to the value set as default from the config controller
- */
-Object.keys(inputs).forEach(key => 
-    inputs[key].value = config.getValue(key)
-)
-
-/**
- * Listen for input changes within the document
- */
-document.addEventListener('change', (e) => {
-    /**
-     * If the events target has an attribute of config then call an EVENTS.ConfigChanged event that will post to the config controller
-     */
-    const configAttribute = e.target.getAttribute('config')
-    if (configAttribute == null) return
-
-    document.dispatchEvent(new CustomEvent(EVENTS.ConfigChanged, {
-        detail:{
-            for:configAttribute,
-            newValue:e.target.value
-        }
-    }))
-})
-
-/**
- * Listen for EVENTS.ConfigChanged to keep both the UI and config controller in sync
- */
-document.addEventListener(EVENTS.ConfigChanged, (e) => {
-    let detail = e.detail
-    let detailfor = detail['for']
-    let detailNewValue = detail['newValue']
-    if (!detailfor || !detailNewValue) return
-    // if (detail == null || detailfor === null || detailNewValue === null || !(detailfor instanceof String)) return
-
-    inputs[detailfor].value = detailNewValue
-})
-;// CONCATENATED MODULE: ./scripts/interface/help-button.js
-/**
- * Configures the help menu
- */
- const helpSection = document.querySelector('.help-screen')
- const helpSectionOpenButton = document.querySelector('.help-button')
- const helpSectionCloseButton = document.querySelector('.help-screen .button')
- 
- /** * Listen for click on the help button to open the helpSection */
- helpSectionOpenButton.addEventListener('click', () => {
-     helpSection.classList.add('opening')
- })
- 
- /** * Listen for a click on the close button to close the help section */
- helpSectionCloseButton.addEventListener('click', () => {
-     /** * Called on the animationend event, removes the class that sets the closing animation and remove the listener */
-     function e() {
-         helpSection.classList.remove('closing')
-         helpSection.removeEventListener('animationend', e)
-     }
- 
-     helpSection.classList.remove('opening')
-     helpSection.classList.add('closing')
- 
-     helpSection.addEventListener('animationend', e)
- })
-
- 
-;// CONCATENATED MODULE: ./scripts/interface/overlay-ui.js
-/**
- * A function to close and send a reject Promise to the open overlay
- * @type {function():void}
- */
-var currentOverlay = null
-
-/**
- * The SVG path to create a trsah icon SVG for the itemArrayOverlay
- */
-const trashIcon = `<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M155.148 482H356.626C369.59 482 379.917 478.387 387.605 471.161C395.293 463.935 399.439 453.925 400.042 441.129L414.061 126.129H447.302C451.372 126.129 454.839 124.699 457.704 121.839C460.568 118.978 462 115.516 462 111.452C462 107.387 460.568 103.925 457.704 101.065C454.839 98.2043 451.372 96.7742 447.302 96.7742H64.472C60.5525 96.7742 57.1606 98.2043 54.2964 101.065C51.4321 103.925 50 107.387 50 111.452C50 115.516 51.4321 118.978 54.2964 121.839C57.1606 124.699 60.5525 126.129 64.472 126.129H97.9385L112.184 441.129C112.787 453.925 116.858 463.935 124.395 471.161C132.083 478.387 142.334 482 155.148 482ZM188.615 420.806C185.147 420.806 182.283 419.753 180.022 417.645C177.761 415.538 176.555 412.753 176.404 409.29L169.846 174.226C169.696 170.763 170.751 167.978 173.012 165.871C175.273 163.613 178.288 162.484 182.057 162.484C185.524 162.484 188.389 163.538 190.65 165.645C192.911 167.753 194.117 170.613 194.268 174.226L200.825 409.065C200.976 412.527 199.921 415.387 197.66 417.645C195.398 419.753 192.383 420.806 188.615 420.806ZM256 420.806C252.231 420.806 249.141 419.753 246.729 417.645C244.468 415.387 243.337 412.527 243.337 409.065V174.226C243.337 170.763 244.468 167.978 246.729 165.871C249.141 163.613 252.231 162.484 256 162.484C259.769 162.484 262.784 163.613 265.045 165.871C267.457 167.978 268.663 170.763 268.663 174.226V409.065C268.663 412.527 267.457 415.387 265.045 417.645C262.784 419.753 259.769 420.806 256 420.806ZM323.159 420.806C319.39 420.806 316.375 419.753 314.114 417.645C312.004 415.387 310.948 412.602 310.948 409.29L317.732 174.226C317.883 170.613 319.089 167.753 321.35 165.645C323.611 163.538 326.476 162.484 329.943 162.484C333.712 162.484 336.727 163.613 338.988 165.871C341.249 167.978 342.304 170.763 342.154 174.226L335.37 409.516C335.37 412.828 334.239 415.538 331.978 417.645C329.717 419.753 326.777 420.806 323.159 420.806ZM161.027 103.323H196.077V65.1613C196.077 59.2903 197.886 54.6237 201.504 51.1613C205.273 47.6989 210.323 45.9677 216.654 45.9677H294.894C301.225 45.9677 306.2 47.6989 309.818 51.1613C313.587 54.6237 315.471 59.2903 315.471 65.1613V103.323H350.52V63.3548C350.52 47.6989 345.696 35.4301 336.048 26.5484C326.551 17.5161 313.436 13 296.703 13H214.619C198.037 13 184.921 17.5161 175.273 26.5484C165.776 35.4301 161.027 47.6989 161.027 63.3548V103.323Z" fill="#EF453B"/>
-</svg>`
-
-
-/**
- * Define a type for the input options that the openOverlay function takes
- * use when creating overlay UI items or when calling the openOverlay function
- * @typedef {{ title:String, classList:Array<String>, includeCancelButton:Boolean, includeCancelButton:Boolean, body:function():Array<HTMLElement>, onConfirm:function(HTMLElement):any }} OverlayOptions
- */
-
-
-/**
- * An overlay option that provides the user with an ability to enter a text and confirm
- * used when saving grids
- * @returns {OverlayOptions}
- */
-function inputOverlay() {
-    return {
-        title:'Save Grid As...',
-        classList:['equally-divided'],
-        includeConfirmButton:true,
-        includeCancelButton:true,
-        body:() => {
-            const input = document.createElement('input')
-            input.placeholder = 'Enter value...'
-            
-            return [input]
-        },
-        onConfirm:(body) => {
-            const input = body.querySelector('input')
-            const val = input.value
-            if (val.trim() === '') return null
-            return val
-        }
-    }
-}
-
-/**
- * An overlay option that provides the user the ability to edit and delete items in a list
- * used when editing previuly saved grids
- * @param {Array<{id:String, name:String}>} items
- * @param {function(string):void} remove
- * @returns {OverlayOptions}
- */
- function itemArrayOverlay(items, remove) {
-    return {
-        title:'Edit Saved Items',
-        classList:['flex'],
-        includeCancelButton:true,
-        onConfirm:(body) => { return null },
-        body:() => {
-            const list = document.createElement('ul')
-            list.style = 'list-style: none; width: 100%; height: 100%; padding: 0 12px 12px 12px; margin: 0; box-sizing: border-box'
-                
-            items.forEach(item => {
-                const view = document.createElement('li')
-                view.style = 'display:flex; padding: 16px; border-bottom: 1px solid black; align-items: center; background-color: #ffffff3b; border-radius: 6px; margin-bottom: 6px'
-    
-                const label = document.createElement('span')
-                label.innerText = item.name//'View Name'
-                label.style = 'flex-grow: 100; color: white'
-    
-                const deleteButton = document.createElement('svg')
-                deleteButton.style = 'width: 22px; height: 22px; cursur: pointer'
-                deleteButton.innerHTML = trashIcon
-    
-                const rightContainer = document.createElement('div')
-                rightContainer.appendChild(deleteButton)
-    
-                view.appendChild(label)
-                view.appendChild(rightContainer)
-                list.appendChild(view)
-    
-                deleteButton.addEventListener('click', () => {
-                    view.remove()
-                    remove(item.id)
-                })
-            })    
-
-            return [list]
-        }
-    }
+  return name + ': ' + str;
 }
 
 
-/**
- * Closes the current overlay (if open)
- */
-function closeOverlay() {
-    if (currentOverlay) { currentOverlay() }
+function reduceToSingleString(output, base, braces) {
+  var numLinesEst = 0;
+  var length = output.reduce(function(prev, cur) {
+    numLinesEst++;
+    if (cur.indexOf('\n') >= 0) numLinesEst++;
+    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
+  }, 0);
+
+  if (length > 60) {
+    return braces[0] +
+           (base === '' ? '' : base + '\n ') +
+           ' ' +
+           output.join(',\n  ') +
+           ' ' +
+           braces[1];
+  }
+
+  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
 }
 
-/**
- * Creates an overlay that the user can enter an input into.
- * @param {OverlayOptions} data 
- * @returns {Promise<String>} The input provided by the user
- */
-function openOverlay(data) {
-    /**
-     * The part below constructs the overlay elements
-     * Check out the Elements part of the Figma console to see what is going on here
-     */
-    const overlay = document.createElement('div')
-    overlay.classList.add('input-overlay')
-    overlay.classList.add('opening')
-    data.classList.forEach(item => overlay.classList.add(item))
 
-    const title = document.createElement('span')
-    title.innerText = data.title
-    title.classList.add('title')
+// NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
+function isArray(ar) {
+  return Array.isArray(ar);
+}
+exports.isArray = isArray;
 
-    const topContainer = document.createElement('div')
-    topContainer.classList.add('top-container')
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+exports.isBoolean = isBoolean;
 
-    const bottomContainer = document.createElement('div')
-    bottomContainer.classList.add('bottom-container')
+function isNull(arg) {
+  return arg === null;
+}
+exports.isNull = isNull;
 
-    const confirmButton = document.createElement('span')
-    confirmButton.id = 'confirm-button'
-    confirmButton.innerText = 'Save Grid'
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
 
-    const cancelButton = document.createElement('span')
-    cancelButton.id = 'cancel-button'
-    cancelButton.innerText = 'Cancel'
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+exports.isNumber = isNumber;
 
-    overlay.appendChild(topContainer)
-    overlay.appendChild(bottomContainer)
+function isString(arg) {
+  return typeof arg === 'string';
+}
+exports.isString = isString;
 
-    topContainer.appendChild(title)
-    document.body.appendChild(overlay)
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+exports.isSymbol = isSymbol;
 
-    if (data.includeConfirmButton) bottomContainer.appendChild(confirmButton)
-    if (data.includeCancelButton) bottomContainer.appendChild(cancelButton)
+function isUndefined(arg) {
+  return arg === void 0;
+}
+exports.isUndefined = isUndefined;
 
-    const body = data.body()
-    body.forEach(element => topContainer.appendChild(element))
+function isRegExp(re) {
+  return isObject(re) && objectToString(re) === '[object RegExp]';
+}
+exports.isRegExp = isRegExp;
 
-    /** * Return a promise that is resolved when the user selects a value */
-    return new Promise((resolve, reject) => {
-        currentOverlay = (() => reject())
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+exports.isObject = isObject;
 
-        cancelButton.addEventListener('click', () => reject())
-        confirmButton.addEventListener('click', () => {
-            const res = data.onConfirm(topContainer) //valueGetter()
-            if (res) resolve(res)
-        })
-    }).finally(() => {
-        overlay.classList.remove('opening')
-        overlay.classList.add('closing')
-        setTimeout(() => overlay.remove(), 290)
-    })
+function isDate(d) {
+  return isObject(d) && objectToString(d) === '[object Date]';
+}
+exports.isDate = isDate;
+
+function isError(e) {
+  return isObject(e) &&
+      (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null ||
+         typeof arg === 'boolean' ||
+         typeof arg === 'number' ||
+         typeof arg === 'string' ||
+         typeof arg === 'symbol' ||  // ES6 symbol
+         typeof arg === 'undefined';
+}
+exports.isPrimitive = isPrimitive;
+
+exports.isBuffer = __webpack_require__(384);
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
 }
 
-/* harmony default export */ const overlay_ui = ({
-    openOverlay: openOverlay,
-    closeOverlay: closeOverlay
-});
+
+function pad(n) {
+  return n < 10 ? '0' + n.toString(10) : n.toString(10);
+}
 
 
-;// CONCATENATED MODULE: ./scripts/interface/save-dropdown.js
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+              'Oct', 'Nov', 'Dec'];
+
+// 26 Feb 16:19:34
+function timestamp() {
+  var d = new Date();
+  var time = [pad(d.getHours()),
+              pad(d.getMinutes()),
+              pad(d.getSeconds())].join(':');
+  return [d.getDate(), months[d.getMonth()], time].join(' ');
+}
 
 
-
-
-
-
-/**
- * Configure the buttons and dropdown that let the user select premade grids
- */
-const selectSavedButton = document.querySelector('#select-saved')
-const selectSavedDropdown = document.querySelector('#select-saved select')
-
-/** * Simulate a click on the dropdown item if clicked on the dropdown button */
-selectSavedButton.addEventListener('click', () => (selectSavedDropdown.click()))
-
-/**
- * Listen for a change in the selection option in the dropdown (menu) and determain what should happen based on the ID of the option selected
- */
-selectSavedDropdown.addEventListener('change', (e) => {
-    const val = selectSavedDropdown.value
-    
-    if (val === 'save') {
-        /** * If selection option == save then open an overlay with an input option that when confirmed, saves a new grid to local storage */
-        overlay_ui.openOverlay(
-            inputOverlay()
-        ).then(value => save_grid.addPresavedGrid(value, config.getAll()))
-    } else if (val === 'edit') {
-        /** * If selection option == edit then open an overlay with the presaved grids that can be removed and renamed */
-        overlay_ui.openOverlay(
-            itemArrayOverlay(
-                save_grid.getPresavedGrids().filter(i => {
-                    console.log('SAVE ITEM', i)
-                    return (i.isCustomMade)
-                }),
-
-                (id) => save_grid.removePresavedGrid(id)
-            )
-        ).finally(() => {})
-    } else if (val != 'empty' && val != '----') {
-        /**
-         * If selection is any other value then attempt to get the grid with the given ID,
-         * and if successful set merges and configuration to the ones from the grid
-         */
-        const found = save_grid.getPresavedGridsWithID(val)
-        if (found) {
-            config.setAll(found.inputs)
-        }
-    }
-
-    /** * Revert dropdown to the placeholder element (no action selected) */
-    selectSavedDropdown.selectedIndex = 0
-})
-
-/** * Listens for when the array of saved grids has changed (removed, updated) to refresh the selectors dropdown options */
-document.addEventListener(EVENTS.PresavedArrayChanged, (e) => {
-    const newArray = Array.from(e.detail)
-    if (newArray == null || !Array.isArray(newArray)) return
-
-    /**
-     * Adds a dropdown item to the given option group to create the new dropdown children
-     * @param {String} value The identifier for the dropdown option
-     * @param {String} label The label for the dropdown item
-     * @param {HTMLOptGroupElement} childOf The optgroup parent of the new item
-     * @returns 
-     */
-    function createDropdownItem(value, label, childOf) {
-        const item = document.createElement('option')
-        item.innerText = label
-        item.setAttribute('value', value)
-        childOf.appendChild(item)
-
-        return item
-    }
-
-    /** * Clear the contents of the dropdown */
-    selectSavedDropdown.innerHTML = ''
-
-    /** * The group that contains the actions availiable (edit, save current, ...) */
-    const mainOptionGroup = document.createElement('optgroup')
-    mainOptionGroup.setAttribute('label', 'Actions')
-
-    /** * The group that contains the preexisting grid options (created in scripts/controllers/save-grid.js) */
-    const preExistingOptionGroup = document.createElement('optgroup')
-    preExistingOptionGroup.setAttribute('label', 'Pre-Made Layouts')
-
-    /** * The group that contains the custom grid (made and saved by the user) */
-    const suboptionsOptionGroup = document.createElement('optgroup')
-    suboptionsOptionGroup.setAttribute('label', (newArray.length === 0) ? 'Nothing Saved Yet' : 'Saved History')
-
-    /** * Create action items */
-    createDropdownItem('empty', 'Saved...', mainOptionGroup)
-    createDropdownItem('save', 'Save Current Layout', mainOptionGroup)
-    createDropdownItem('edit', 'Edit Saved', mainOptionGroup)
-
-    /** * Add sub groups to the dropdown */
-    selectSavedDropdown.appendChild(mainOptionGroup)
-    selectSavedDropdown.appendChild(suboptionsOptionGroup)
-    selectSavedDropdown.appendChild(preExistingOptionGroup)
-
-    /** * Loop thorugh the list of custom grids availiable and add them to the appropiate group */
-    newArray.filter(i => (i.isCustomMade)).forEach(item =>
-        createDropdownItem(item.id, item.name, suboptionsOptionGroup))
-
-        /** * Loop thorugh the list of custom grids availiable and add them to the appropiate group */
-    newArray.filter(i => (!i.isCustomMade)).forEach(item =>
-        createDropdownItem(item.id, item.name, preExistingOptionGroup))
-})
-
-
-
-;// CONCATENATED MODULE: ./scripts/root/root.js
-
-
-
-
-
-
-
-
-// import overlay, { inputOverlay, itemArrayOverlay } from '../interface/overlay-ui'
-
-
-
-
-
-// import saveGrid from "../controllers/save-grid"
-// import config from "../controllers/config"
-
-
-
+// log is just a thin wrapper to console.log that prepends a timestamp
+exports.log = function() {
+  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
+};
 
 
 /**
- * Array of actions that should occur when the selection is changed
+ * Inherit the prototype methods from one constructor into another.
+ *
+ * The Function.prototype.inherits from lang.js rewritten as a standalone
+ * function (not on Function.prototype). NOTE: If this file is to be loaded
+ * during bootstrapping this function needs to be rewritten using some native
+ * functions as prototype setup using normal JavaScript does not work as
+ * expected during bootstrapping (see mirror.js in r114903).
+ *
+ * @param {function} ctor Constructor function which needs to inherit the
+ *     prototype.
+ * @param {function} superCtor Constructor function to inherit prototype from.
  */
-var selectionActions = []
-document.addEventListener(EVENTS.SelectionChanged, (e) => {
-    const newSelection = e.detail
-    if (newSelection.empty === true) selectionActions.forEach(i => (i.call) ? i(null) : ({}))
-    else selectionActions.forEach(i => (i.call) ? i(newSelection) : ({}))
-})
+exports.inherits = __webpack_require__(496);
+
+exports._extend = function(origin, add) {
+  // Don't do anything if add isn't an object
+  if (!add || !isObject(add)) return origin;
+
+  var keys = Object.keys(add);
+  var i = keys.length;
+  while (i--) {
+    origin[keys[i]] = add[keys[i]];
+  }
+  return origin;
+};
+
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
 
 
-/**
- * Configure button that clears the merges
- */
-const clearMergeButton = document.querySelector('#clear-merge')
-clearMergeButton.addEventListener('click', () => merging.clear())
-selectionActions.push(selection => {
-    if (selection) clearMergeButton.style.opacity = '1'
-    else clearMergeButton.style.opacity = '0.3'
-})
+/***/ }),
 
+/***/ 822:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-/**
- * Configure the label that shows the name of the layer selected
- */
-const selectedElementLabel = document.querySelector('#current-frame-name span')
-selectionActions.push(selection => {
-    if (selection) {
-        selectedElementLabel.parentElement.style.opacity = '1'
-        selectedElementLabel.innerText = selection.name
-        selectedElementLabel.style.textDecoraction = ''
-        selectedElementLabel.style.fontWeight = 400
-    } else {
-        selectedElementLabel.parentElement.style.opacity = '0.4'
-        selectedElementLabel.innerText = 'Select Element...'
-        selectedElementLabel.style.fontWeight = 600
-        selectedElementLabel.style.textDecoraction = 'underline'
-    }
-})
+var __dirname = "/";
+const path = __webpack_require__(520);
 
+module.exports = {
+    entry: './index.js',
+    optimization:{
+      minimize:false
+    },
+    output: {
+      filename: 'index.js',
+      path: path.resolve(__dirname, 'dist'),
+    },
+  };
+  
 
-/**
- * Configure the buttons at the bottom of the interface that applies the created grid to the figma element
- */
-const applyToElementButton = document.querySelector('#apply-to-element')
-const applyToElementIcon = document.querySelector('#apply-to-element svg')
-const applyToElementLabel = document.querySelector('#apply-to-element span')
+/***/ })
 
-const defaultApplyToElementText = applyToElementLabel.innerText
-const noneSelectedApplyToElementText = 'Must Select Atleast One Layer'
-
-applyToElementButton.addEventListener('click', () => {
-    /**
-     * Listen for clicks on the apply to element button
-     * If clicked calculate the final grid and send that to the figma.post function
-     */
-
-    /** * Evalute the pattern using the given options to create the grid and cell merge previews */
-    const pattern = evaluatePattern()
-
-    /** * Call a function that sends the pattern over to the Figma layer using the correct sizing relative to the layer */
-    to_element({
-        xItems:pattern.column.items(false), yItems:pattern.row.items(false),
-        xGap:pattern.column.gap(false), yGap:pattern.row.gap(false)
-    }, {
-        colour:document.querySelector('#cell-fill').value,
-        replaceSelected:document.querySelector('#replace-selected').checked
-    })
-})
-
-selectionActions.push(selection => {
-    if (selection) {
-        applyToElementButton.style.color = ''
-        applyToElementButton.style.cursor = ''
-        applyToElementButton.style.backgroundColor = ''
-
-        applyToElementIcon.style.display = 'unset'
-        applyToElementLabel.innerText = defaultApplyToElementText
-    } else {
-        applyToElementButton.style.color = '#848b92'
-        applyToElementButton.style.cursor = 'not-allowed'
-        applyToElementButton.style.backgroundColor = 'rgb(218 220 222)'
-
-        applyToElementIcon.style.display = 'none'
-        applyToElementLabel.innerText = noneSelectedApplyToElementText
-    }
-})
-
-
-
-/**
- * Configure the buttons and dropdown that let the user select premade grids
- */
-selectionActions.push(selection => {
-    if (selection) selectSavedButton.style.display = ''
-    else selectSavedButton.style.display = 'none'
-})
-;// CONCATENATED MODULE: ./index.js
-/**
- * Import the UI element
- */
-
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__(822);
+/******/ 	
 /******/ })()
 ;
 	</script>
-	<!-- <script src="http://881c-94-5-65-255.ngrok.io/dist/index.js"></script> -->
 </body>
