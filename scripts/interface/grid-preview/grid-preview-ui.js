@@ -1,6 +1,6 @@
 import { EVENTS } from "../../TYPES"
 
-import config from "../../controllers/config"
+// import config from "../../controllers/config"
 import selection from "../../controllers/selection"
 import merging from "../../controllers/merging"
 
