@@ -15,7 +15,7 @@ Learn More @ [(easy)grid Website]()
 - Help section included
 
 ### 📸 Screenshots
-![Screenshot of app](https://github.com/eliraz003/figma-plugin/raw/main/preview-screenshot.png?raw=true)
+![Screenshot of app](https://github.com/eliraz003/easygrid-plugin/blob/main/preview-screenshot.png?raw=true)
 
 ---
 
