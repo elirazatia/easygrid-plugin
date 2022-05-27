@@ -15,9 +15,9 @@ Learn More @ [(easy)grid Website]()
 - Help section included
 
 ### 📸 Screenshots
-![Screenshot of app](https://github.com/eliraz003/figma-plugin/raw/main/screenshots/screenshot-a.png?raw=true)
-![Screenshot of app](https://github.com/eliraz003/figma-plugin/raw/main/screenshots/screenshot-b.png?raw=true)
-![Screenshot of app](https://github.com/eliraz003/figma-plugin/raw/main/screenshots/screenshot-c.png?raw=true)
+![Screenshot of app](https://github.com/eliraz003/figma-plugin/raw/main/preview-screenshot.png?raw=true)
+
+---
 
 ### 🏃️ Getting Starting / Prequisits 
 > After downloading the project, open Figma and open a project
@@ -45,6 +45,8 @@ After making changes call `npm run build`
 - The `scripts/interface/grid-preview/grid-preview-ui` script handles the grid preview interface, it does so by creating two layers, one that has cells and one that has the merges and styles it using CSS in a way that represents the grid confugration entered by the user, so if the user has entered columns to be 1*5 than the grid-column-style will be 1fr 1fr 1fr 1fr 1fr
     - Size of each cell in both the preview and the rendering is calculated in the `evaluatePattern` function which returns the size of each cell.
 - `toElement` handles using the configuration and the merges created by the user to calculate each new element which should be created in Figma, it loops through each cell and adds it to an array which is posted to `dist/code.js`
+
+---
 
 ### Contributions
 
