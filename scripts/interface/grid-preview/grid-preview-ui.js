@@ -1,6 +1,6 @@
 import { EVENTS } from "../../TYPES"
 
-// import config from "../../controllers/config"
+import "../../controllers/config"
 import selection from "../../controllers/selection"
 import merging from "../../controllers/merging"
 
@@ -56,8 +56,6 @@ const applyGridPatternToNode = (node, {xItems, yItems, xGap, yGap}) => {
 }
 
 function refreshLayout() {
-    // let currentSelection = selection.current
-    // let configValues = config.getAll()
 
     Array.from(gridMergeContainer.children).forEach(child => child.remove())
     Array.from(gridCellsContainer.children).forEach(child => child.remove())

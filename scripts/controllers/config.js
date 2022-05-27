@@ -21,6 +21,7 @@ document.addEventListener(EVENTS.ConfigChanged, (e) => {
     let detailNewValue = detail['newValue']
     if (!detailfor || !detailNewValue) return
 
+    console.log('NEW VALUE FROM CONFIG SCRIPT', detailfor, detailNewValue)
     configValues[detailfor] = detailNewValue
 })
 

@@ -21,33 +21,34 @@ export default function({xItems, yItems, xGap, yGap}, options) {
             const finalPlacement = calculateFinalXYWH(merge.x, merge.y, merge.w, merge.h)
             finalPlacement.x = finalPlacement.x - 1
             finalPlacement.y = finalPlacement.y - 1
-        })
 
-        function getPoint(arr, gap, index, inclusive) {
-            var current = 0
-            var i = 0
-            var hasFinished = false
-
-            while (!hasFinished) {
-                if (i === index) {
-                    if (inclusive) current += arr[i]
-                    hasFinished = true
-                } else { current += arr[i] + gap }
-                i ++ 
+            function getPoint(arr, gap, index, inclusive) {
+                var current = 0
+                var i = 0
+                var hasFinished = false
+    
+                while (!hasFinished) {
+                    if (i === index) {
+                        if (inclusive) current += arr[i]
+                        hasFinished = true
+                    } else { current += arr[i] + gap }
+                    i ++ 
+                }
+    
+                return current
             }
 
-            return current
-        }
-
-        const startX = getPoint(xItems, xGap, finalPlacement.x, false)
-        const startY = getPoint(yItems, yGap, finalPlacement.y, false)
-        const endX = getPoint(xItems, xGap, finalPlacement.x + finalPlacement.w, true)
-        const endY = getPoint(yItems, yGap, finalPlacement.y + finalPlacement.h, true)
-        const width = endX - startX
-        const height = endY - startY
-        finalItems.push({
-            x:startX, y:startY,
-            width:width, height:height,
+            const startX = getPoint(xItems, xGap, finalPlacement.x, false)
+            const startY = getPoint(yItems, yGap, finalPlacement.y, false)
+            const endX = getPoint(xItems, xGap, finalPlacement.x + finalPlacement.w, true)
+            const endY = getPoint(yItems, yGap, finalPlacement.y + finalPlacement.h, true)
+            const width = endX - startX
+            const height = endY - startY
+            
+            finalItems.push({
+                x:startX, y:startY,
+                width:width, height:height,
+            })    
         })
     } else {
         var yIndex = 0

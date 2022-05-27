@@ -12,7 +12,7 @@ function addToMerge(context) {
     const x = context.x
     const y = context.y
     merges[x] = merges[x] || {}
-    merges[x][y] = value
+    merges[x][y] = context
     // console.log(`Value for ${x} - ${y} is: `, merges[x][y])
 
     return merges[x][y]
@@ -28,6 +28,9 @@ function removeFromMerge(x,y) {
     if (merges[x] && merges[y])
         delete merges[x][y]
 
+    if (Object.keys(merges[x]).length === 0)
+        delete merges[x]
+        
     return true
 }
 

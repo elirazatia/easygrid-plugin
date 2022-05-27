@@ -212,6 +212,77 @@ window.addEventListener('message', (message) => {
 
     isSelectionEmpty:isSelectionEmpty
 });
+;// CONCATENATED MODULE: ./scripts/controllers/config.js
+
+
+/**
+ * The default configuration values
+ * @type {CREATE_CONFIG_TYPE}
+ *  ##TODO: Create the cCREATE_COMFIG_TYPE class
+ */
+const configValues = {
+    grid_columns:'5',
+    grid_columns_gap:'0',
+    grid_rows:'2',
+    grid_rows_gap:'0'
+}
+
+/**
+ * Listen for changes in the user interface and change the stored values accordingly
+ */
+document.addEventListener(EVENTS.ConfigChanged, (e) => {
+    let detail = e.detail
+    let detailfor = detail['for']
+    let detailNewValue = detail['newValue']
+    if (!detailfor || !detailNewValue) return
+
+    console.log('NEW VALUE FROM CONFIG SCRIPT', detailfor, detailNewValue)
+    configValues[detailfor] = detailNewValue
+})
+
+/* harmony default export */ const config = ({
+    /**
+     * Get all the configuration options
+     * @returns {Object<String,String>}
+     */
+    getAll() {
+        return configValues
+    },
+
+    /**
+     * Override the configu values with new ones and dispatch and event that the config values have been changed
+     * @param {Object<String, String>} withValues 
+     */
+    setAll(withValues) {
+        Object.keys(configValues).forEach(key => {
+            configValues[key] = withValues[key] || configValues[key]
+            const value = configValues[key]
+            document.dispatchEvent(new CustomEvent(EVENTS.ConfigChanged, {
+                detail:{for:key, newValue:value}
+            }))
+        })
+    },
+    
+    /**
+     * Get the configuration option for 'key'
+     * @param {String} key 
+     * @returns {String}
+     */
+    getValue(key) { 
+        return configValues[key] || null
+    },
+
+    /**
+     * Set a configuration value manually
+     * @param {String} key 
+     * @param {String} newValue 
+     * @returns 
+     */
+    setValue(key, newValue) {
+        configValues[key] = newValue
+        return configValues[key]
+    }
+});
 ;// CONCATENATED MODULE: ./scripts/controllers/merging.js
 
 
@@ -227,7 +298,7 @@ function addToMerge(context) {
     const x = context.x
     const y = context.y
     merges[x] = merges[x] || {}
-    merges[x][y] = value
+    merges[x][y] = context
     // console.log(`Value for ${x} - ${y} is: `, merges[x][y])
 
     return merges[x][y]
@@ -243,6 +314,9 @@ function removeFromMerge(x,y) {
     if (merges[x] && merges[y])
         delete merges[x][y]
 
+    if (Object.keys(merges[x]).length === 0)
+        delete merges[x]
+        
     return true
 }
 
@@ -611,7 +685,7 @@ function applyMerge() {
 ;// CONCATENATED MODULE: ./scripts/interface/grid-preview/grid-preview-ui.js
 
 
-// import config from "../../controllers/config"
+
 
 
 
@@ -667,8 +741,6 @@ const applyGridPatternToNode = (node, {xItems, yItems, xGap, yGap}) => {
 }
 
 function refreshLayout() {
-    // let currentSelection = selection.current
-    // let configValues = config.getAll()
 
     Array.from(grid_preview_ui_gridMergeContainer.children).forEach(child => child.remove())
     Array.from(grid_preview_ui_gridCellsContainer.children).forEach(child => child.remove())
@@ -781,76 +853,6 @@ document.addEventListener(EVENTS.PreviewCellGrabEnd, () => { document.body.style
 
 /* harmony default export */ const grid_preview_ui = ({
     get rootGridElement() { return gridRoot },
-});
-;// CONCATENATED MODULE: ./scripts/controllers/config.js
-
-
-/**
- * The default configuration values
- * @type {CREATE_CONFIG_TYPE}
- *  ##TODO: Create the cCREATE_COMFIG_TYPE class
- */
-const configValues = {
-    grid_columns:'5',
-    grid_columns_gap:'0',
-    grid_rows:'2',
-    grid_rows_gap:'0'
-}
-
-/**
- * Listen for changes in the user interface and change the stored values accordingly
- */
-document.addEventListener(EVENTS.ConfigChanged, (e) => {
-    let detail = e.detail
-    let detailfor = detail['for']
-    let detailNewValue = detail['newValue']
-    if (!detailfor || !detailNewValue) return
-
-    configValues[detailfor] = detailNewValue
-})
-
-/* harmony default export */ const config = ({
-    /**
-     * Get all the configuration options
-     * @returns {Object<String,String>}
-     */
-    getAll() {
-        return configValues
-    },
-
-    /**
-     * Override the configu values with new ones and dispatch and event that the config values have been changed
-     * @param {Object<String, String>} withValues 
-     */
-    setAll(withValues) {
-        Object.keys(configValues).forEach(key => {
-            configValues[key] = withValues[key] || configValues[key]
-            const value = configValues[key]
-            document.dispatchEvent(new CustomEvent(EVENTS.ConfigChanged, {
-                detail:{for:key, newValue:value}
-            }))
-        })
-    },
-    
-    /**
-     * Get the configuration option for 'key'
-     * @param {String} key 
-     * @returns {String}
-     */
-    getValue(key) { 
-        return configValues[key] || null
-    },
-
-    /**
-     * Set a configuration value manually
-     * @param {String} key 
-     * @param {String} newValue 
-     * @returns 
-     */
-    setValue(key, newValue) {
-        configValues[key] = newValue
-        return configValues[key]
-    }
 });
 ;// CONCATENATED MODULE: ./scripts/handlers/evalute-pattern.js
 
@@ -1089,33 +1091,34 @@ window.addEventListener('message', (message) => {
             const finalPlacement = calculate_xyhw(merge.x, merge.y, merge.w, merge.h)
             finalPlacement.x = finalPlacement.x - 1
             finalPlacement.y = finalPlacement.y - 1
-        })
 
-        function getPoint(arr, gap, index, inclusive) {
-            var current = 0
-            var i = 0
-            var hasFinished = false
-
-            while (!hasFinished) {
-                if (i === index) {
-                    if (inclusive) current += arr[i]
-                    hasFinished = true
-                } else { current += arr[i] + gap }
-                i ++ 
+            function getPoint(arr, gap, index, inclusive) {
+                var current = 0
+                var i = 0
+                var hasFinished = false
+    
+                while (!hasFinished) {
+                    if (i === index) {
+                        if (inclusive) current += arr[i]
+                        hasFinished = true
+                    } else { current += arr[i] + gap }
+                    i ++ 
+                }
+    
+                return current
             }
 
-            return current
-        }
-
-        const startX = getPoint(xItems, xGap, finalPlacement.x, false)
-        const startY = getPoint(yItems, yGap, finalPlacement.y, false)
-        const endX = getPoint(xItems, xGap, finalPlacement.x + finalPlacement.w, true)
-        const endY = getPoint(yItems, yGap, finalPlacement.y + finalPlacement.h, true)
-        const width = endX - startX
-        const height = endY - startY
-        finalItems.push({
-            x:startX, y:startY,
-            width:width, height:height,
+            const startX = getPoint(xItems, xGap, finalPlacement.x, false)
+            const startY = getPoint(yItems, yGap, finalPlacement.y, false)
+            const endX = getPoint(xItems, xGap, finalPlacement.x + finalPlacement.w, true)
+            const endY = getPoint(yItems, yGap, finalPlacement.y + finalPlacement.h, true)
+            const width = endX - startX
+            const height = endY - startY
+            
+            finalItems.push({
+                x:startX, y:startY,
+                width:width, height:height,
+            })    
         })
     } else {
         var yIndex = 0
@@ -1177,6 +1180,7 @@ document.addEventListener('change', (e) => {
     const configAttribute = e.target.getAttribute('config')
     if (configAttribute == null) return
 
+    console.log('NEW VALUE FROM INPUT', e.target.value)
     document.dispatchEvent(new CustomEvent(EVENTS.ConfigChanged, {
         detail:{
             for:configAttribute,
@@ -1195,6 +1199,7 @@ document.addEventListener(EVENTS.ConfigChanged, (e) => {
     if (!detailfor || !detailNewValue) return
     // if (detail == null || detailfor === null || detailNewValue === null || !(detailfor instanceof String)) return
 
+    console.log('FOUND NEW VALUE FROM INPUT LISTENER', e.detail)
     inputs[detailfor].value = detailNewValue
 })
 ;// CONCATENATED MODULE: ./scripts/interface/help-button.js

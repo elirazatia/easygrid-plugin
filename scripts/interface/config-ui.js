@@ -28,6 +28,7 @@ document.addEventListener('change', (e) => {
     const configAttribute = e.target.getAttribute('config')
     if (configAttribute == null) return
 
+    console.log('NEW VALUE FROM INPUT', e.target.value)
     document.dispatchEvent(new CustomEvent(EVENTS.ConfigChanged, {
         detail:{
             for:configAttribute,
@@ -46,5 +47,6 @@ document.addEventListener(EVENTS.ConfigChanged, (e) => {
     if (!detailfor || !detailNewValue) return
     // if (detail == null || detailfor === null || detailNewValue === null || !(detailfor instanceof String)) return
 
+    console.log('FOUND NEW VALUE FROM INPUT LISTENER', e.detail)
     inputs[detailfor].value = detailNewValue
 })
