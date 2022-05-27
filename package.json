@@ -4,19 +4,21 @@
   "description": "",
   "main": "exporter.js",
   "scripts": {
-    "build": "npx webpack ./webpack.config.js && node ./exporter",
+    "build": "npx webpack && node ./exporter",
     "run": "node local-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "dotenv": "^16.0.1",
     "webpack": "^5.65.0",
+    "path": "^0.12.7",
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
     "express": "^4.17.2",
     "loadash": "^1.0.0",
-    "path": "^0.12.7"
+    "process": "^0.11.10"
   }
 }
