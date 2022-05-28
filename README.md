@@ -1,6 +1,6 @@
 # ✨ Open-source layout creation plugin for Figma ✨
 
-> A plugin built for the Figma design software that allowes the user to select a layer and configure a layout (by selecting columns, rows, and spacing) and then applying it to the layer with a click on a button. This plugin makes creating layouts much faster and can allow for complicated / unique layouts thanks to the merger functionallity (drag multiple cells in preview togehte)
+> A plugin built for the Figma design software that allowes the user to select a layer and configure a layout (by selecting columns, rows, and spacing) and then applying it to the layer with a click on a button. This plugin makes creating layouts much faster and can allow for complicated / unique layouts thanks to the merger functionallity (drag multiple cells in preview together)
 
 > Download on Figma @ [Figma Community]()
 Learn More @ [(easy)grid Website]()
