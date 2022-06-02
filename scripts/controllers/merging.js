@@ -129,6 +129,8 @@ export default {
      */
     forEach(callback) {
         if (!callback.call) return
-        Object.values(merges).map(yValue => Object.values(yValue)).flat().forEach(i => callback(i))
+        Object.values(merges).map(yValue => Object.values(yValue)).flat().forEach(i => callback({
+            x:i.x, y:i.y, w:i.width, h:i.height
+        }))
     }
 }

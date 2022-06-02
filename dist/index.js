@@ -415,7 +415,9 @@ function getMergeValue(x,y) {
      */
     forEach(callback) {
         if (!callback.call) return
-        Object.values(merges).map(yValue => Object.values(yValue)).flat().forEach(i => callback(i))
+        Object.values(merges).map(yValue => Object.values(yValue)).flat().forEach(i => callback({
+            x:i.x, y:i.y, w:i.width, h:i.height
+        }))
     }
 });
 ;// CONCATENATED MODULE: ./scripts/util/calculate-xyhw.js
@@ -1102,7 +1104,7 @@ window.addEventListener('message', (message) => {
                         if (inclusive) current += arr[i]
                         hasFinished = true
                     } else { current += arr[i] + gap }
-                    i ++ 
+                    i ++
                 }
     
                 return current

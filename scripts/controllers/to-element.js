@@ -32,7 +32,7 @@ export default function({xItems, yItems, xGap, yGap}, options) {
                         if (inclusive) current += arr[i]
                         hasFinished = true
                     } else { current += arr[i] + gap }
-                    i ++ 
+                    i ++
                 }
     
                 return current
