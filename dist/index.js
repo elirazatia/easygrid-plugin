@@ -192,6 +192,7 @@ const setSelection = (width, height, name) => {
 
 window.addEventListener('message', (message) => {
     const data = message.data.pluginMessage
+    alert('rECEIVED MESSAGE', data)
 
     /**
      * If the data.type of the event is selection change then call the setSelection function with the new item, or with null if there is no item
