@@ -36,8 +36,26 @@ describe('spec.cy.js', () => {
         cy.get('#grid-columns').clear().type('4').blur()
         cy.get('#grid-rows').clear().type('6').blur()
       })
+
     expect(true).to.equal(true)
   })
 
 
 })
+
+
+/**
+ * TEST PLAN:
+ * 
+ * SECTIONS:
+ * 
+ * GRID PREVIEW
+ *  - MERGING
+ *  - DISPLAYING CORRECT ELEMENTS
+ * 
+ * INPUTS
+ *  - SYNC WHEN SELECTING PREMADE
+ * 
+ * BUTTON
+ *  - TEST THE RESULTS TO BE SENT TO THE FIGMA API WHEN THE MAIN BUTTON IS PRESSED 
+ */
