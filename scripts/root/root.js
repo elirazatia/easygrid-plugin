@@ -37,7 +37,7 @@ const clearMergeButton = document.querySelector('#clear-merge')
 clearMergeButton.addEventListener('click', () => merging.clear())
 selectionActions.push(selection => {
     if (selection) clearMergeButton.style.opacity = '1'
-    else clearMergeButton.style.opacity = '0.3'
+    else clearMergeButton.style.opacity = '0.5'
 })
 
 
