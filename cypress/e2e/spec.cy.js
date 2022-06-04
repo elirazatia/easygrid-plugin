@@ -91,6 +91,10 @@ describe('spec.cy.js', () => {
 		setInputFor('grid-columns', 5, true)
 		setInputFor('grid-rows', 2, true)
 
+		/**
+		 * ##BUG WHERE DRAG AND DROP DOES NOT WORK DUE TO FAULT WITH CYRPRESS EVENT HANDLING??
+		 */
+		
 		// cy.get('.cells-container')
 			// .trigger('mousemove', { which:1, clientX: 70, clientY: 20 })
 			// .trigger('mousedown')
