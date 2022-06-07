@@ -1,3 +1,5 @@
+require('cypress-xpath')
+
 const dispatchSelection = (name, width, height) => {
 	cy.window().then(win => {
 		win.postMessage({
@@ -14,7 +16,7 @@ const setInputFor = (id, newValue, blurAfter) => {
 	if (blurAfter) i.blur()
 }
 
-describe('spec.cy.js', () => {
+describe('spec.cy.js', {scrollBehavior: false}, () => {
 	it('should visit', () => {
 		cy.visit('localhost:2888')
 	})
@@ -80,34 +82,58 @@ describe('spec.cy.js', () => {
 
 		setInputFor('grid-columns', '-1 3', true)
 		setInputFor('grid-rows', '-2', true)
-		// cy.get('.cells-container').find('div').should('have.length', 0)
 	})
 
-	it ('should succesfully clear merge grids', () => {
-
+	it ('should successfully style when hovered over', () => {
+		cy.get('.cells-container').find('div').eq(0)
+			.trigger('mousemove',{force:true, bubbles:true})
+			// .should('have.css', 'background-color').and('eq', 'rgb(0,162,255)')
 	})
 
-	it ('should succesfully merge grids', () => {
+	it('should successfully merge a single cell', () => {
 		setInputFor('grid-columns', 5, true)
 		setInputFor('grid-rows', 2, true)
 
-		/**
-		 * ##BUG WHERE DRAG AND DROP DOES NOT WORK DUE TO FAULT WITH CYRPRESS EVENT HANDLING??
-		 */
-		
-		// cy.get('.cells-container')
-			// .trigger('mousemove', { which:1, clientX: 70, clientY: 20 })
-			// .trigger('mousedown')
-			// .trigger('mousemove', { which:1, clientX:100, clientY:100 })
-			// .trigger('mouseup', {force:true})
+		cy.get('.cells-container').find('div').eq(0)
+			.trigger('mousemove',{force:true, bubbles:true})
+			.trigger('mousedown',{force:true, bubbles:true, which:1 })
+			.trigger('mouseup',{force:true, bubbles:true, which:1 })
+			// .should('have.css', 'background-color').and('eq', 'rgb(0,162,255)')
 
-		// cy.get('.cells-container :nth-child(3)')
-		// 	.trigger('mouseup', {force:true})
-
+		cy.get('.merge-container').find('div').should('have.length', 1)
 	})
 
-	return
+	it('should successfully merge 3 cells horizontally', () => {
+		cy.get('.cells-container').find('div').eq(1)
+			.trigger('mousemove',{force:true, bubbles:true})
+			.trigger('mousedown',{force:true, bubbles:true, which:1 })
+			.parent().find('div').eq(2)
+			.trigger('mousemove',{force:true, bubbles:true})
+			.parent().find('div').eq(3)
+			.trigger('mousemove',{force:true, bubbles:true})
+			.trigger('mouseup',{force:true, bubbles:true, which:1 })
+			// .should('have.css', 'background-color').and('eq', 'rgb(0,162,255)')
 
+		cy.get('.merge-container').find('div').should('have.length', 2)
+	})
+
+	it('should successfully merge 3 cells vertically', () => {
+		cy.get('.cells-container').find('div').eq(3)
+			.trigger('mousemove',{force:true, bubbles:true})
+			.trigger('mousedown',{force:true, bubbles:true, which:1 })
+			.parent().find('div').eq(7)
+			.trigger('mousemove',{force:true, bubbles:true})
+			.trigger('mouseup',{force:true, bubbles:true, which:1 })
+
+		cy.get('.merge-container').find('div').should('have.length', 3)
+	})
+
+	it('should successfully clear merges', () => {
+		cy.get('#clear-merge')
+			.trigger('click')
+
+		cy.get('.merge-container').find('div').should('have.length', 0)
+	})
 })
 
 

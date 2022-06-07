@@ -111,6 +111,7 @@ export default {
      * @param {MouseEvent} e 
      */
     mouseDown:(e) => {
+        console.log('MOUSE DOWN', e.target)
         if (e.which !== 1) return
         if (!overNode) return
         if (overNode.gridDescription.merged) return
@@ -137,6 +138,7 @@ export default {
      * @param {MouseEvent} e 
      */
     mouseUp:(e) => {
+        console.log('MOUSE UP', e.target)
         if (e.which !== 1) return
         if (!grabbingPreviewNode && !grabbingStartNode) {
             cancelMerge(true)
@@ -150,6 +152,7 @@ export default {
      * @param {MouseEvent} e 
      */
     mouseMove:(e) => {
+        console.log('MOUSE MOVE', e.target)
         const newOverNode = (() => {
             const node = e.target
             return (node.gridDescription) ? node : null

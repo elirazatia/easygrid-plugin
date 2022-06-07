@@ -624,6 +624,7 @@ function applyMerge() {
      * @param {MouseEvent} e 
      */
     mouseDown:(e) => {
+        console.log('MOUSE DOWN', e.target)
         if (e.which !== 1) return
         if (!overNode) return
         if (overNode.gridDescription.merged) return
@@ -650,6 +651,7 @@ function applyMerge() {
      * @param {MouseEvent} e 
      */
     mouseUp:(e) => {
+        console.log('MOUSE UP', e.target)
         if (e.which !== 1) return
         if (!grabbingPreviewNode && !grabbingStartNode) {
             cancelMerge(true)
@@ -663,6 +665,7 @@ function applyMerge() {
      * @param {MouseEvent} e 
      */
     mouseMove:(e) => {
+        console.log('MOUSE MOVE', e.target)
         const newOverNode = (() => {
             const node = e.target
             return (node.gridDescription) ? node : null
@@ -815,9 +818,6 @@ function refreshLayout() {
             }
             
             grid_preview_ui_gridCellsContainer.appendChild(newCellNode)
-
-            // items[x] = items[x] || []
-            // items[x][y] = newCellNode
 
             x += 1
         }

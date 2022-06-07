@@ -129,9 +129,6 @@ function refreshLayout() {
             
             gridCellsContainer.appendChild(newCellNode)
 
-            // items[x] = items[x] || []
-            // items[x][y] = newCellNode
-
             x += 1
         }
 
