@@ -98,7 +98,6 @@ describe('spec.cy.js', {scrollBehavior: false}, () => {
 			.trigger('mousemove',{force:true, bubbles:true})
 			.trigger('mousedown',{force:true, bubbles:true, which:1 })
 			.trigger('mouseup',{force:true, bubbles:true, which:1 })
-			// .should('have.css', 'background-color').and('eq', 'rgb(0,162,255)')
 
 		cy.get('.merge-container').find('div').should('have.length', 1)
 	})
@@ -112,7 +111,6 @@ describe('spec.cy.js', {scrollBehavior: false}, () => {
 			.parent().find('div').eq(3)
 			.trigger('mousemove',{force:true, bubbles:true})
 			.trigger('mouseup',{force:true, bubbles:true, which:1 })
-			// .should('have.css', 'background-color').and('eq', 'rgb(0,162,255)')
 
 		cy.get('.merge-container').find('div').should('have.length', 2)
 	})
@@ -135,20 +133,3 @@ describe('spec.cy.js', {scrollBehavior: false}, () => {
 		cy.get('.merge-container').find('div').should('have.length', 0)
 	})
 })
-
-
-/**
- * TEST PLAN:
- * 
- * SECTIONS:
- * 
- * GRID PREVIEW
- *  - MERGING
- *  - DISPLAYING CORRECT ELEMENTS
- * 
- * INPUTS
- *  - SYNC WHEN SELECTING PREMADE
- * 
- * BUTTON
- *  - TEST THE RESULTS TO BE SENT TO THE FIGMA API WHEN THE MAIN BUTTON IS PRESSED 
- */

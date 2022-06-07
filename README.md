@@ -20,9 +20,14 @@ Learn More @ [(easy)grid Website]()
 ---
 
 ### 🏃️ Getting Starting / Prequisits 
-> After downloading the project, open Figma and open a project
+<!-- > After downloading the project, open Figma and open a project
 Navigate to Plugins > Development > Import Plugin For Manifest
-You can find the manifest at dist/manifest.json
+You can find the manifest at dist/manifest.json -->
+
+After downloading the codebase there are 2 steps you need to take to begin working on the project, they are as following:<br>
+1. Navigate to Plugins > Development > Import Plugin For Manifest
+> You can find the manifest at dist/manifest.json <br>
+2. Run `npm install` in the terminal to install any missing node modules<br>
 
 When editing code, make sure you are not editing the code in the /dist/ folder as that gets automatically generated, 
 except for the code.js file which is the embeded script that can communicate with the Figma API
@@ -34,12 +39,12 @@ After making changes call `npm run build`
 
 ### 🧐 Understanding The Code
 
-> The main scripts include:
-/scripts/root/root.js
-/scripts/interface/grid-preview/grid-preview-ui.js
-/scripts/controllers/save-grid.js
-/scripts/controllers/to-element.js
-/scripts/controllers/save-grid.js
+> The main scripts include:<br>
+/scripts/root/root.js<br>
+/scripts/interface/grid-preview/grid-preview-ui.js<br>
+/scripts/controllers/save-grid.js<br>
+/scripts/controllers/to-element.js<br>
+/scripts/controllers/save-grid.js<br>
 
 - The `scripts/root/root` script handles the main confugration for the app, including importing every nessasery file and adding events to UI elements for interactivity
 - The `scripts/interface/grid-preview/grid-preview-ui` script handles the grid preview interface, it does so by creating two layers, one that has cells and one that has the merges and styles it using CSS in a way that represents the grid confugration entered by the user, so if the user has entered columns to be 1*5 than the grid-column-style will be 1fr 1fr 1fr 1fr 1fr
@@ -47,6 +52,15 @@ After making changes call `npm run build`
 - `toElement` handles using the configuration and the merges created by the user to calculate each new element which should be created in Figma, it loops through each cell and adds it to an array which is posted to `dist/code.js`
 
 ---
+### 🧐 Testing
+
+This project uses testing Cypress for testing, the test covers the following<br>
+1. Layer selected/unselected state<br>
+2. Changing config inputs<br>
+3. Merging layers<br>
+4. Clearing layer merges<br>
+
+To test, run `npm run cypress` and select the spec.cy.js file in E2E testing
 
 ### Contributions
 
