@@ -51,8 +51,7 @@ After making changes call `npm run build`
     - Size of each cell in both the preview and the rendering is calculated in the `evaluatePattern` function which returns the size of each cell.
 - `toElement` handles using the configuration and the merges created by the user to calculate each new element which should be created in Figma, it loops through each cell and adds it to an array which is posted to `dist/code.js`
 
----
-### 🧐 Testing
+### 👨‍🔧 Testing
 
 This project uses testing Cypress for testing, the test covers the following<br>
 1. Layer selected/unselected state<br>
@@ -62,14 +61,14 @@ This project uses testing Cypress for testing, the test covers the following<br>
 
 To test, run `npm run cypress` and select the spec.cy.js file in E2E testing
 
+---
 ### Contributions
 
 Contributions, issues and feature requests are welcome. Feel free to check issues page if you want to contribute or simply add an idea that you have to the project. You can also send me an email at [elirazatia003@gmail.com]() if you need furthur help and I will try to update this file with the information.
 
-
 ---
 
-### LICENCE
+👨‍🔧### LICENCE
 
 > MIT License
 
