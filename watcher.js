@@ -1,7 +1,4 @@
-// const express = require('express')
-// const app = express()
-
-const fs = require('chokidar')
+const chokidar = require('chokidar')
 const { exec } = require("child_process");
 
 function updated() {
@@ -13,15 +10,5 @@ function updated() {
     });
 }
 
-fs.watch('scripts', {})
+chokidar.watch('scripts', {})
     .on('change', updated)
-
-// fs.watch('scripts', (cur, prev) => {
-//     console.log('')
-// })
-
-// app.get('/', (req, res) => {
-//     res.sendFile(__dirname + '/dist/ui.html')
-// })
-
-// app.listen(2888, () => console.log('LISTENING ON PORT 2888'))
