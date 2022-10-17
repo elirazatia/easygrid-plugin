@@ -1,4 +1,3 @@
-// import util from "../../util"
 import calculateFinalXYWH from '../../util/calculate-xyhw'
 
 export default function applyPreviewPropertiesToNode(node,xPos,yPos,width,height) {

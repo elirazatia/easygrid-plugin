@@ -3,7 +3,6 @@ import { EVENTS } from "../TYPES"
 /**
  * The default configuration values
  * @type {CREATE_CONFIG_TYPE}
- *  ##TODO: Create the cCREATE_COMFIG_TYPE class
  */
 const configValues = {
     grid_columns:'5',
@@ -38,7 +37,6 @@ export default {
      * @param {Object<String, String>} withValues 
      */
     setAll(withValues) {
-        console.log('Should update config values with...', withValues)
         Object.keys(configValues).forEach(key => {
             configValues[key] = withValues[key] || configValues[key]
             const value = configValues[key]

@@ -2,19 +2,13 @@ import { EVENTS } from "../TYPES"
 import evaluatePattern from "../handlers/evalute-pattern"
 
 import merging from "../controllers/merging"
+import toElement from "../controllers/to-element"
 import "../controllers/selection"
 import "../controllers/save-grid"
-import toElement from "../controllers/to-element"
-
-// import overlay, { inputOverlay, itemArrayOverlay } from '../interface/overlay-ui'
 
 import '../interface/config-ui'
 import '../interface/help-button'
 import { selectSavedButton } from "../interface/save-dropdown"
-
-// import saveGrid from "../controllers/save-grid"
-// import config from "../controllers/config"
-
 
 
 

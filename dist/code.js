@@ -9,9 +9,6 @@ figma.showUI(__html__, {
     height: 614
 })
 
-// var lastCreatedGroup = null
-// var deletableItems = []
-
 /**
  * Clones an object
  * @param {Object} val 
@@ -22,24 +19,10 @@ function clone(val) {
 }
 
 /**
- * Deletes all the created rectangle item
+ * Variable to hold the root layer currently selected in figma
+ * When listening to layer changes check if the new layer array has this layer, if so then do nothing
+ * If not then this means the root layer has been changed and the selected layer within the plugin should be updated
  */
-// function closeDeletable() {
-//     deletableItems.forEach(item => {
-//         if (!item.removed)
-//             item.remove()
-//     })
-// }
-
-
-// var previousSelection = null
-
-
-
-// VARIABLE FOR ID OF LAYER THAT IS THE ROOT SELECTED
-// WHEN LISTENING TO LAYER CHANGES CHECK IF THE NEW LAYER ARRAY HAS THAT LAYER, IF SO THEN DO NOTHING
-// IF NOT THEN SELECT THE FIRST LAYER IN THE ARRAY AS THE ROOT SELECTED AND DISPATCH EVENT
-
 var rootLayer = null
 
 function getReplacementItems() {
@@ -97,26 +80,17 @@ function evaluateCurrentSelection() {
 
     if (selection.length === 0) {
         rootLayer = null
-        // postChange = true
     } else if (selection.length > 0 && rootLayer == null) {
         rootLayer = selection[0]
-        // postChange = true
     } else if (selection.length > 0 && rootLayer != null) {
-        // console.log('selection is not empty & root layer is selected')
-        // console.log('root layer before', rootLayer)
         var doesExist = false
         selection.forEach(e => {
             if (e.id === rootLayer.id) doesExist = true
         })
-        // console.log('does exist', doesExist)
 
         if (doesExist == false) {
             rootLayer = selection[0]
-            // postChange = true
         }
-
-        // console.log('root layer after', rootLayer)
-        // check if rootLayer ID exists in selection
     }
 
     if ((previousAppliedSelection && selection.length === previousAppliedSelection.length) && !(previousSelection.length === 1 && selection.length >= 2)) {
@@ -131,55 +105,33 @@ function evaluateCurrentSelection() {
             rootLayer = previousAppliedSelection.rootLayer
         }
     }
-    // if previousSelection length is not zero && currentSelection is greater then 
 
+    /* if previousSelection length is not zero && currentSelection is greater then */
     if (selection.length >= 2) {
         previousAppliedSelection = {
             selection:selection,
             length:selection.length,
             rootLayer:rootLayer
         }
-        // previousAppliedSelection.rootLayer = rootLayer
     }
 
     previousSelection = selection
     dispatchCurrentSelection()
 }
 
-// figma.on("selectionchange", () => {
-    
-// })
-
-
-
 
 const latestVersion = 0
-// /({
-//     version_id:0,
-//     heading:'',
-//     body:[
-//         {
-//             icon:'',
-//             label:''
-//         }
-//     ]
-// }
 
 function clearReleaseNotes() {
     figma.clientStorage.setAsync('@version', '')
 }
 
-// clearReleaseNotes()
 
 function checkForReleaseNotes() {
     // USE FOR FUTURE VERSIONS
-    // console.log('CHECKING FOR RELEASE NOTES')
     figma.clientStorage.getAsync('@version').then(value => {
         var showNote = false
-        // console.log('FOUND VALUE', value)
         value = (typeof(value) === 'number') ? value : -1
-        // console.log('FOUND VALUE [after]', value)
-        // console.log('is smaller then latest', latestVersion, (value < latestVersion))
         if (value < latestVersion) {
             showNote = true
             figma.clientStorage.setAsync('@version', latestVersion).catch(error => { console.error('error', error) })
@@ -188,26 +140,8 @@ function checkForReleaseNotes() {
         if (showNote) {
             figma.ui.postMessage({ type: 'fetch-release-notes', note:true })
         }
-        // if (value && typeof(value) === 'number') {
-        // console.log('value', value)
-        // if (value && typeof(value) === 'number') {
-        //     latestNotes.forEach(note => {
-        //         if (value > note.version_id)
-        //             notes.push(note)
-        //     })
-
-        //     figma.clientStorage.setAsync('@version', latestNotes[0].version_id).catch(error => { console.error('error', error) })
-        // } else {
-        //     notes = latestNotes
-        //     figma.clientStorage.setAsync('@version', latestNotes[0].version_id).catch(error => { console.error('error', error) })
-
-        // console.log('notes', notes)
-        // if (notes.length > 0)
-        //     figma.ui.postMessage({ type: 'fetch-release-notes', notes:notes })
     })
 }
-
-
 
 /**
  * Called when a selecion change event occurs
@@ -220,12 +154,10 @@ function postSelection() {
 
     const w = selection.width;
     const h = selection.height;
-    // const proportions = w / h;
 
     figma.ui.postMessage({ type: 'selectionchange', item: {
         width:w,
         height:h,
-        // proportions:proportions,
         name:selection.name
     } })
 }
@@ -244,19 +176,17 @@ function hexToRGB(hex) {
     } : null
 }
 
-// function clearStorage() {
-    // figma.clientStorage.setAsync('@presaved', [])
-// }
-
+/**
+ * Gets the grids saved by the user
+ */
 function getSavedGrids() {
     figma.clientStorage.getAsync('@presaved').then(val => {
-        console.log('SAVED GRIDS IS', val)
         figma.ui.postMessage({ type: 'presaved-fetched', items:val||[] })
     })
 }
 
-// clearStorage()
 getSavedGrids()
+
 
 /**
  * Call on a UI message and evaluate the message
@@ -265,12 +195,6 @@ figma.ui.onmessage = (message => {
     if (!rootLayer)
         return
 
-    // if (message.type === 'undo') {
-    //     if (!lastCreatedGroup || lastCreatedGroup.removed)
-    //         return
-
-    //     lastCreatedGroup.remove()
-    // } else 
     if (message.type === 'save-grid') {
         const id = message.id
         const name = message.name
@@ -279,7 +203,6 @@ figma.ui.onmessage = (message => {
 
         figma.clientStorage.getAsync('@presaved').then(val => {
             const valueForSave = { id:id, name:name, inputs:inputs, mergedCells:mergedCells, isCustomMade:true }
-            // console.log('value to save [DEBUG MODE]', valueForSave)
             if (val && Array.isArray(val)) val.push(valueForSave)
             else val = [valueForSave]
 
@@ -299,7 +222,6 @@ figma.ui.onmessage = (message => {
     } else if (message.type === 'create-cells') {
         var items = []
 
-        console.log('SHOUDL CREATE LAYERS', message)
         const colour = hexToRGB(message.colour)
         const shouldReplace = message.replaceSelected
 
@@ -355,58 +277,10 @@ figma.ui.onmessage = (message => {
 
         const group = figma.group(items, parent)
 
-        // lastCreatedGroup = group
-
         if (shouldReplace) {
             if (rootLayer && rootLayer.remove)
                 rootLayer.remove()
         }
-
-        /** OLD VERSION (BEFORE MULTISELECT ABILITY)  */
-        // var items = []
-
-        // const colour = hexToRGB(message.colour)
-        // const shouldReplace = message.replaceSelected
-
-        // var offsetX = 0
-        // var offsetY = 0
-        // var parent = selection
-        // while (parent && !parent.appendChild) {
-        //     offsetX += parent.x
-        //     offsetY += parent.y
-        //     parent = parent.parent
-        // }
-
-        // message.items.forEach(item => {
-        //     const r = figma.createRectangle()
-        //     parent.appendChild(r)
-
-        //     const fills = clone(r.fills)
-        //     fills[0].color.r = (colour.r / 255)
-        //     fills[0].color.g = (colour.g / 255)
-        //     fills[0].color.b = (colour.b / 255)
-        //     fills[0].opacity = 0.6
-
-        //     r.fills = fills
-
-        //     r.x = item.x + offsetX
-        //     r.y = item.y + offsetY
-        //     r.resize(
-        //         item.width,
-        //         item.height
-        //     )
-
-        //     items.push(r)
-        // })
-
-        // const group = figma.group(items, parent)
-
-        // lastCreatedGroup = group
-
-        // if (shouldReplace) {
-        //     const selection = figma.currentPage.selection[0]
-        //     if (selection && selection.remove) selection.remove()
-        // }
     }
 })
 

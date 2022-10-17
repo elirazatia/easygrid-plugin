@@ -52,11 +52,7 @@ export default {
      * @returns {PreviewMerger}
      */
     addMerge(context) {
-        console.log('Adding to merge', context)
         return addToMerge(context)
-        // return addToMerge(x,y,{
-        //     x:x,y:y,w:w,h:h,preview:preview
-        // })
     },
 
     /**
