@@ -29,8 +29,6 @@ window.addEventListener('message', (message) => {
      * If the data.type of the event is selection change then call the setSelection function with the new item, or with null if there is no item
      */
     if (data.type == WINDOW_EVENTS.SelectionChanged) {
-        console.log('NEW SELECTION', data)
-
         if (data.item) setSelection(data.item.width, data.item.height, data.item.name)
         else setSelection(null)
     }

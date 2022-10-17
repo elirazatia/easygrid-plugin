@@ -197,8 +197,6 @@ window.addEventListener('message', (message) => {
      * If the data.type of the event is selection change then call the setSelection function with the new item, or with null if there is no item
      */
     if (data.type == WINDOW_EVENTS.SelectionChanged) {
-        console.log('NEW SELECTION', data)
-
         if (data.item) setSelection(data.item.width, data.item.height, data.item.name)
         else setSelection(null)
     }
@@ -236,7 +234,6 @@ document.addEventListener(EVENTS.ConfigChanged, (e) => {
     let detailNewValue = detail['newValue']
     if (!detailfor || !detailNewValue) return
 
-    console.log('NEW VALUE FROM CONFIG SCRIPT', detailfor, detailNewValue)
     configValues[detailfor] = detailNewValue
 })
 
@@ -299,7 +296,6 @@ function addToMerge(context) {
     const y = context.y
     merges[x] = merges[x] || {}
     merges[x][y] = context
-    // console.log(`Value for ${x} - ${y} is: `, merges[x][y])
 
     return merges[x][y]
 }
@@ -373,7 +369,6 @@ function getMergeValue(x,y) {
         const cell = getMergeValue(x,y)
         if (!cell) return false
 
-        console.log(cell.preview.remove)
         if (cell.preview) cell.preview.remove()
 
         removeFromMerge(x,y)
@@ -624,7 +619,6 @@ function applyMerge() {
      * @param {MouseEvent} e 
      */
     mouseDown:(e) => {
-        console.log('MOUSE DOWN', e.target)
         if (e.which !== 1) return
         if (!overNode) return
         if (overNode.gridDescription.merged) return
@@ -651,7 +645,6 @@ function applyMerge() {
      * @param {MouseEvent} e 
      */
     mouseUp:(e) => {
-        console.log('MOUSE UP', e.target)
         if (e.which !== 1) return
         if (!grabbingPreviewNode && !grabbingStartNode) {
             cancelMerge(true)
@@ -665,7 +658,6 @@ function applyMerge() {
      * @param {MouseEvent} e 
      */
     mouseMove:(e) => {
-        console.log('MOUSE MOVE', e.target)
         const newOverNode = (() => {
             const node = e.target
             return (node.gridDescription) ? node : null
@@ -917,7 +909,6 @@ function evaluatePattern() {
      * @param {Object} data 
      */
     postToFigma:(type, data) => {
-        // console.log('SHOULD POST', type, data)
         parent.postMessage({
             pluginMessage:{
                 type:type,
@@ -1182,7 +1173,6 @@ document.addEventListener('change', (e) => {
     const configAttribute = e.target.getAttribute('config')
     if (configAttribute == null) return
 
-    console.log('NEW VALUE FROM INPUT', e.target.value)
     document.dispatchEvent(new CustomEvent(EVENTS.ConfigChanged, {
         detail:{
             for:configAttribute,
@@ -1199,9 +1189,7 @@ document.addEventListener(EVENTS.ConfigChanged, (e) => {
     let detailfor = detail['for']
     let detailNewValue = detail['newValue']
     if (!detailfor || !detailNewValue) return
-    // if (detail == null || detailfor === null || detailNewValue === null || !(detailfor instanceof String)) return
 
-    console.log('FOUND NEW VALUE FROM INPUT LISTENER', e.detail)
     inputs[detailfor].value = detailNewValue
 })
 ;// CONCATENATED MODULE: ./scripts/interface/help-button.js
@@ -1434,7 +1422,6 @@ selectSavedDropdown.addEventListener('change', (e) => {
         overlay_ui.openOverlay(
             itemArrayOverlay(
                 save_grid.getPresavedGrids().filter(i => {
-                    console.log('SAVE ITEM', i)
                     return (i.isCustomMade)
                 }),
 
@@ -1471,6 +1458,7 @@ document.addEventListener(EVENTS.PresavedArrayChanged, (e) => {
     function createDropdownItem(value, label, childOf) {
         const item = document.createElement('option')
         item.innerText = label
+        console.log('creating dropdown item', value, label, childOf)
         item.setAttribute('value', value)
         childOf.appendChild(item)
 
@@ -1554,7 +1542,7 @@ clearMergeButton.addEventListener('click', () => merging.clear())
 selectionActions.push(selection => {
     if (selection) clearMergeButton.style.opacity = '1'
     else clearMergeButton.style.opacity = '0.3'
-})
+}) 
 
 
 /**
@@ -1572,8 +1560,8 @@ selectionActions.push(selection => {
         selectedElementLabel.innerText = 'Select Element...'
         selectedElementLabel.style.fontWeight = 600
         selectedElementLabel.style.textDecoraction = 'underline'
-    }
-})
+    } 
+}) 
 
 
 /**
@@ -1604,7 +1592,7 @@ applyToElementButton.addEventListener('click', () => {
         replaceSelected:document.querySelector('#replace-selected').checked
     })
 })
-
+ 
 selectionActions.push(selection => {
     if (selection) {
         applyToElementButton.style.color = ''

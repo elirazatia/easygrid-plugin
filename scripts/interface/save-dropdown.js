@@ -29,7 +29,6 @@ selectSavedDropdown.addEventListener('change', (e) => {
         overlay.openOverlay(
             itemArrayOverlay(
                 saveGrid.getPresavedGrids().filter(i => {
-                    console.log('SAVE ITEM', i)
                     return (i.isCustomMade)
                 }),
 
@@ -66,6 +65,7 @@ document.addEventListener(EVENTS.PresavedArrayChanged, (e) => {
     function createDropdownItem(value, label, childOf) {
         const item = document.createElement('option')
         item.innerText = label
+        console.log('creating dropdown item', value, label, childOf)
         item.setAttribute('value', value)
         childOf.appendChild(item)
 

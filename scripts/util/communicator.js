@@ -10,7 +10,6 @@ export default {
      * @param {Object} data 
      */
     postToFigma:(type, data) => {
-        // console.log('SHOULD POST', type, data)
         parent.postMessage({
             pluginMessage:{
                 type:type,

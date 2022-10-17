@@ -13,7 +13,6 @@ function addToMerge(context) {
     const y = context.y
     merges[x] = merges[x] || {}
     merges[x][y] = context
-    // console.log(`Value for ${x} - ${y} is: `, merges[x][y])
 
     return merges[x][y]
 }
@@ -87,7 +86,6 @@ export default {
         const cell = getMergeValue(x,y)
         if (!cell) return false
 
-        console.log(cell.preview.remove)
         if (cell.preview) cell.preview.remove()
 
         removeFromMerge(x,y)

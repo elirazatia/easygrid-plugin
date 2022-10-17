@@ -38,7 +38,7 @@ clearMergeButton.addEventListener('click', () => merging.clear())
 selectionActions.push(selection => {
     if (selection) clearMergeButton.style.opacity = '1'
     else clearMergeButton.style.opacity = '0.3'
-})
+}) 
 
 
 /**
@@ -56,8 +56,8 @@ selectionActions.push(selection => {
         selectedElementLabel.innerText = 'Select Element...'
         selectedElementLabel.style.fontWeight = 600
         selectedElementLabel.style.textDecoraction = 'underline'
-    }
-})
+    } 
+}) 
 
 
 /**
@@ -88,7 +88,7 @@ applyToElementButton.addEventListener('click', () => {
         replaceSelected:document.querySelector('#replace-selected').checked
     })
 })
-
+ 
 selectionActions.push(selection => {
     if (selection) {
         applyToElementButton.style.color = ''
