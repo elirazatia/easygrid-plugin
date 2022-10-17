@@ -14,7 +14,8 @@ const EVENTS = {
     PreviewCellGrabBegin:'PreviewCellGrabBegin',
     PreviewCellGrabEnd:'PreviewCellGrabEnd',
 
-    MergesCleared:'MergesCleared'
+    MergesCleared:'MergesCleared',
+    MergesUpdated:'MergesUpdated'
 }
 
 /**
@@ -251,6 +252,7 @@ document.addEventListener(EVENTS.ConfigChanged, (e) => {
      * @param {Object<String, String>} withValues 
      */
     setAll(withValues) {
+        console.log('Should update config values with...', withValues)
         Object.keys(configValues).forEach(key => {
             configValues[key] = withValues[key] || configValues[key]
             const value = configValues[key]
@@ -335,6 +337,7 @@ function getMergeValue(x,y) {
      * @returns {PreviewMerger}
      */
     addMerge(context) {
+        console.log('Adding to merge', context)
         return addToMerge(context)
         // return addToMerge(x,y,{
         //     x:x,y:y,w:w,h:h,preview:preview
@@ -668,7 +671,6 @@ function applyMerge() {
 
         if (_over) _over.style.backgroundColor = 'unset'
         if (overNode) overNode.style.backgroundColor = '#00a2ff'
-            
 
         if (grabbingPreviewNode && overNode) {
             grabbingWidth = (overNode.gridDescription.x) - grabbingX
@@ -827,6 +829,8 @@ function refreshLayout() {
 document.addEventListener(EVENTS.SelectionChanged, () => refreshLayout())
 document.addEventListener(EVENTS.ConfigChanged, () => refreshLayout())
 document.addEventListener(EVENTS.MergesCleared, () => refreshLayout())
+document.addEventListener(EVENTS.MergesUpdated, () => refreshLayout())
+
 
 
 /**
@@ -1397,6 +1401,7 @@ function openOverlay(data) {
 
 
 
+
 /**
  * Configure the buttons and dropdown that let the user select premade grids
  */
@@ -1434,8 +1439,19 @@ selectSavedDropdown.addEventListener('change', (e) => {
          * and if successful set merges and configuration to the ones from the grid
          */
         const found = save_grid.getPresavedGridsWithID(val)
+
         if (found) {
+            // Set the config
             config.setAll(found.inputs)
+            
+            merging.clear()
+
+            // Apply all merged cells in presaved grid
+            Array.from(found.mergedCells || []).forEach(merged =>
+                merging.addMerge(merged))
+
+            // Update the merges preview
+            document.dispatchEvent(new CustomEvent(EVENTS.MergesUpdated))
         }
     }
 

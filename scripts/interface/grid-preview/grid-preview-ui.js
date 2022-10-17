@@ -145,6 +145,8 @@ function refreshLayout() {
 document.addEventListener(EVENTS.SelectionChanged, () => refreshLayout())
 document.addEventListener(EVENTS.ConfigChanged, () => refreshLayout())
 document.addEventListener(EVENTS.MergesCleared, () => refreshLayout())
+document.addEventListener(EVENTS.MergesUpdated, () => refreshLayout())
+
 
 
 /**

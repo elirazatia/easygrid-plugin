@@ -9,7 +9,8 @@ const EVENTS = {
     PreviewCellGrabBegin:'PreviewCellGrabBegin',
     PreviewCellGrabEnd:'PreviewCellGrabEnd',
 
-    MergesCleared:'MergesCleared'
+    MergesCleared:'MergesCleared',
+    MergesUpdated:'MergesUpdated'
 }
 
 /**

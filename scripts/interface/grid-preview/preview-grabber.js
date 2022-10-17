@@ -160,7 +160,6 @@ export default {
 
         if (_over) _over.style.backgroundColor = 'unset'
         if (overNode) overNode.style.backgroundColor = '#00a2ff'
-            
 
         if (grabbingPreviewNode && overNode) {
             grabbingWidth = (overNode.gridDescription.x) - grabbingX

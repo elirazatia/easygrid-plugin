@@ -38,6 +38,7 @@ export default {
      * @param {Object<String, String>} withValues 
      */
     setAll(withValues) {
+        console.log('Should update config values with...', withValues)
         Object.keys(configValues).forEach(key => {
             configValues[key] = withValues[key] || configValues[key]
             const value = configValues[key]

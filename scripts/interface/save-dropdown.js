@@ -1,6 +1,7 @@
 import { EVENTS } from "../TYPES"
 import saveGrid from "../controllers/save-grid"
 import config from "../controllers/config"
+import merging from "../controllers/merging"
 
 import overlay, { inputOverlay, itemArrayOverlay } from "./overlay-ui"
 
@@ -41,8 +42,19 @@ selectSavedDropdown.addEventListener('change', (e) => {
          * and if successful set merges and configuration to the ones from the grid
          */
         const found = saveGrid.getPresavedGridsWithID(val)
+
         if (found) {
+            // Set the config
             config.setAll(found.inputs)
+            
+            merging.clear()
+
+            // Apply all merged cells in presaved grid
+            Array.from(found.mergedCells || []).forEach(merged =>
+                merging.addMerge(merged))
+
+            // Update the merges preview
+            document.dispatchEvent(new CustomEvent(EVENTS.MergesUpdated))
         }
     }
 
