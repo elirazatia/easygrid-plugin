@@ -27,7 +27,8 @@ You can find the manifest at dist/manifest.json -->
 After downloading the codebase there are 2 steps you need to take to begin working on the project, they are as following:<br>
 1. Navigate to Plugins > Development > Import Plugin For Manifest
 > You can find the manifest at dist/manifest.json <br>
-2. Run `npm install` in the terminal to install any missing node modules<br>
+2. Run `npm ci` in the terminal to install any missing node modules<br>
+3. Call `node watcher` to begin watching for changes in the scripts/ folder which automatically calls `npm run build`<br>
 
 When editing code, make sure you are not editing the code in the /dist/ folder as that gets automatically generated, 
 except for the code.js file which is the embeded script that can communicate with the Figma API
