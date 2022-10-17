@@ -121,8 +121,8 @@ export default {
     addPresavedGrid(withName, configOptions) {
         var mergedArray = []
         merging.forEach(merge => {
-            var duplicate = JSON.stringify(
-                JSON.parse(merge)
+            var duplicate = JSON.parse(
+                JSON.stringify(merge)
             )
 
             delete duplicate.preview

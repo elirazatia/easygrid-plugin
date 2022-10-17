@@ -1041,8 +1041,8 @@ window.addEventListener('message', (message) => {
     addPresavedGrid(withName, configOptions) {
         var mergedArray = []
         merging.forEach(merge => {
-            var duplicate = JSON.stringify(
-                JSON.parse(merge)
+            var duplicate = JSON.parse(
+                JSON.stringify(merge)
             )
 
             delete duplicate.preview
@@ -1441,7 +1441,7 @@ selectSavedDropdown.addEventListener('change', (e) => {
 
     /** * Revert dropdown to the placeholder element (no action selected) */
     selectSavedDropdown.selectedIndex = 0
-})
+}) 
 
 /** * Listens for when the array of saved grids has changed (removed, updated) to refresh the selectors dropdown options */
 document.addEventListener(EVENTS.PresavedArrayChanged, (e) => {

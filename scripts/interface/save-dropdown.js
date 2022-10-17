@@ -48,7 +48,7 @@ selectSavedDropdown.addEventListener('change', (e) => {
 
     /** * Revert dropdown to the placeholder element (no action selected) */
     selectSavedDropdown.selectedIndex = 0
-})
+}) 
 
 /** * Listens for when the array of saved grids has changed (removed, updated) to refresh the selectors dropdown options */
 document.addEventListener(EVENTS.PresavedArrayChanged, (e) => {

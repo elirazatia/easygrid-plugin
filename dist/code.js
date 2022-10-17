@@ -251,7 +251,7 @@ function hexToRGB(hex) {
 function getSavedGrids() {
     figma.clientStorage.getAsync('@presaved').then(val => {
         console.log('SAVED GRIDS IS', val)
-        figma.ui.postMessage({ type: 'presaved-fetched', items:val })
+        figma.ui.postMessage({ type: 'presaved-fetched', items:val||[] })
     })
 }
 
