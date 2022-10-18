@@ -9,6 +9,7 @@ import evaluatePattern from "../../handlers/evalute-pattern"
 
 import applyPreview from './apply-preview'
 import createMergeCell from './create-merge-cell'
+import mergingStartingPointIndicator from './merging-starting-point-indicator';
 
 
 /**
@@ -56,7 +57,6 @@ const applyGridPatternToNode = (node, {xItems, yItems, xGap, yGap}) => {
 }
 
 function refreshLayout() {
-
     Array.from(gridMergeContainer.children).forEach(child => child.remove())
     Array.from(gridCellsContainer.children).forEach(child => child.remove())
 
@@ -119,6 +119,8 @@ function refreshLayout() {
 
                 applyPreview(newMergeCell, x,y,existingMerge.w,existingMerge.h)
                 gridMergeContainer.appendChild(newMergeCell)
+
+                mergingStartingPointIndicator.add(gridMergeContainer, x, y)
             }
 
             newCellNode.gridDescription = {
@@ -142,10 +144,10 @@ function refreshLayout() {
 /**
  * Listen for selection chagnes or configuration changes so that the layout can be refreshed
  */
-document.addEventListener(EVENTS.SelectionChanged, () => refreshLayout())
-document.addEventListener(EVENTS.ConfigChanged, () => refreshLayout())
-document.addEventListener(EVENTS.MergesCleared, () => refreshLayout())
-document.addEventListener(EVENTS.MergesUpdated, () => refreshLayout())
+document.addEventListener(EVENTS.SelectionChanged, refreshLayout)
+document.addEventListener(EVENTS.ConfigChanged, refreshLayout)
+document.addEventListener(EVENTS.MergesCleared, refreshLayout)
+document.addEventListener(EVENTS.MergesUpdated, refreshLayout)
 
 
 

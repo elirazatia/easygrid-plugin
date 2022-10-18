@@ -1,5 +1,6 @@
 import merging from '../../controllers/merging'
 import {EVENTS} from '../../TYPES'
+import mergingStartingPointIndicator from './merging-starting-point-indicator';
 
 import applyPreview from './apply-preview'
 import createMergeCell from './create-merge-cell'
@@ -49,7 +50,7 @@ function applyPropertiesToPreviewNode() {
 function cancelMerge(deletesPreviewNode) {
     if (grabbingPreviewNode && deletesPreviewNode)
         grabbingPreviewNode.remove()
-
+    
     grabbingPreviewNode = null
     grabbingStartNode = null
 
@@ -70,11 +71,13 @@ function applyMerge() {
     if (!grabbingPreviewNode && !grabbingStartNode)
         return
     
+    mergingStartingPointIndicator.add(gridMergeContainer, grabbingX, grabbingY)
+
     grabbingStartNode.gridDescription.merged = merging.addMerge({
         x:grabbingX, y:grabbingY, width:grabbingWidth, height:grabbingHeight, preview:grabbingPreviewNode
     })
-        // grabbingX,grabbingY,grabbingWidth,grabbingHeight,grabbingPreviewNode}) //{
-    cancelMerge(false) 
+
+    cancelMerge(false)
 }
 
 
@@ -104,6 +107,7 @@ export default {
         if (overNode.gridDescription.merged == null) return
     
         merging.removeMerge(overNode.gridDescription.x, overNode.gridDescription.y, overNode)
+        mergingStartingPointIndicator.remove(overNode.gridDescription.x, overNode.gridDescription.y)
     },
 
     /**
@@ -158,8 +162,33 @@ export default {
         const _over = overNode
         overNode = newOverNode
 
-        if (_over) _over.style.backgroundColor = 'unset'
-        if (overNode) overNode.style.backgroundColor = '#00a2ff'
+        if (_over) {
+            const mergeForCell = merging.detailForMerge(
+                _over.gridDescription.x,
+                _over.gridDescription.y
+            )
+
+            if (mergeForCell && mergeForCell.preview) {
+                mergeForCell.preview.style.filter = ''
+                mergeForCell.preview.style.zIndex = ''
+            }
+
+            _over.style.backgroundColor = 'unset'
+        }
+        
+        if (overNode) {
+            const mergeForCell = merging.detailForMerge(
+                overNode.gridDescription.x,
+                overNode.gridDescription.y
+            )
+
+            if (mergeForCell && mergeForCell.preview) {
+                mergeForCell.preview.style.filter = 'brightness(2)'
+                mergeForCell.preview.style.zIndex = '55'
+            }
+            
+            overNode.style.backgroundColor = '#00a2ff'
+        }
 
         if (grabbingPreviewNode && overNode) {
             grabbingWidth = (overNode.gridDescription.x) - grabbingX

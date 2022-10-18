@@ -412,6 +412,51 @@ function getMergeValue(x,y) {
         }))
     }
 });
+;// CONCATENATED MODULE: ./scripts/interface/grid-preview/merging-starting-point-indicator.js
+const applied = {}
+
+/**
+ * Add a starting point indicator to the grid
+ * @param {HTMLElement} gridMergeContainer 
+ * @param {Number} x 
+ * @param {Number} y 
+ */
+function add(gridMergeContainer, x, y) {
+    const node = document.createElement('div')
+    node.style.width = '8px'
+    node.style.height = '8px'
+    node.style.borderRadius = '4px'
+    node.style.backgroundColor = '#F0AA45'
+    node.style.border = '1px solid black'
+    node.style.position = 'absolute'
+
+    node.style.gridRowStart = `${y + 1}`
+    node.style.gridRowEnd = `${y + 1}`
+    node.style.gridColumnStart = `${x + 1}`
+    node.style.gridColumnEnd = `${x + 1}`
+
+    node.style.transform = `translate(-50%, -50%)`
+    node.style.left = '50%'
+    node.style.top = '50%'
+
+    gridMergeContainer.appendChild(node)
+
+    applied[x] = applied[x] || {}
+    applied[x][y] = node
+}
+
+/**
+ * Remove a merge starting point indicator from the grid
+ * @param {Number} x 
+ * @param {Number} y 
+ */
+function remove(x, y) {
+    const toRemove = (applied[x]||{})[y]
+    if (toRemove)
+        toRemove.remove()
+}
+
+/* harmony default export */ const merging_starting_point_indicator = ({ add, remove });
 ;// CONCATENATED MODULE: ./scripts/util/calculate-xyhw.js
 /**
  * Calculates the final x,y, width, and height based on the given properties
@@ -498,10 +543,12 @@ function createPreviewMergeNode() {
     node.style.opacity = '0.85'
     node.style.borderRadius = `${OPTIONS.GridCornerRadius}px`
     node.style.pointerEvents = 'none'
+    node.style.transition = 'filter 0.1s'
 
     return node
 }
 ;// CONCATENATED MODULE: ./scripts/interface/grid-preview/preview-grabber.js
+
 
 
 
@@ -553,7 +600,7 @@ function applyPropertiesToPreviewNode() {
 function cancelMerge(deletesPreviewNode) {
     if (grabbingPreviewNode && deletesPreviewNode)
         grabbingPreviewNode.remove()
-
+    
     grabbingPreviewNode = null
     grabbingStartNode = null
 
@@ -574,11 +621,13 @@ function applyMerge() {
     if (!grabbingPreviewNode && !grabbingStartNode)
         return
     
+    merging_starting_point_indicator.add(gridMergeContainer, grabbingX, grabbingY)
+
     grabbingStartNode.gridDescription.merged = merging.addMerge({
         x:grabbingX, y:grabbingY, width:grabbingWidth, height:grabbingHeight, preview:grabbingPreviewNode
     })
-        // grabbingX,grabbingY,grabbingWidth,grabbingHeight,grabbingPreviewNode}) //{
-    cancelMerge(false) 
+
+    cancelMerge(false)
 }
 
 
@@ -608,6 +657,7 @@ function applyMerge() {
         if (overNode.gridDescription.merged == null) return
     
         merging.removeMerge(overNode.gridDescription.x, overNode.gridDescription.y, overNode)
+        merging_starting_point_indicator.remove(overNode.gridDescription.x, overNode.gridDescription.y)
     },
 
     /**
@@ -662,8 +712,33 @@ function applyMerge() {
         const _over = overNode
         overNode = newOverNode
 
-        if (_over) _over.style.backgroundColor = 'unset'
-        if (overNode) overNode.style.backgroundColor = '#00a2ff'
+        if (_over) {
+            const mergeForCell = merging.detailForMerge(
+                _over.gridDescription.x,
+                _over.gridDescription.y
+            )
+
+            if (mergeForCell && mergeForCell.preview) {
+                mergeForCell.preview.style.filter = ''
+                mergeForCell.preview.style.zIndex = ''
+            }
+
+            _over.style.backgroundColor = 'unset'
+        }
+        
+        if (overNode) {
+            const mergeForCell = merging.detailForMerge(
+                overNode.gridDescription.x,
+                overNode.gridDescription.y
+            )
+
+            if (mergeForCell && mergeForCell.preview) {
+                mergeForCell.preview.style.filter = 'brightness(2)'
+                mergeForCell.preview.style.zIndex = '55'
+            }
+            
+            overNode.style.backgroundColor = '#00a2ff'
+        }
 
         if (grabbingPreviewNode && overNode) {
             grabbingWidth = (overNode.gridDescription.x) - grabbingX
@@ -675,6 +750,7 @@ function applyMerge() {
 });
 
 ;// CONCATENATED MODULE: ./scripts/interface/grid-preview/grid-preview-ui.js
+
 
 
 
@@ -733,7 +809,6 @@ const applyGridPatternToNode = (node, {xItems, yItems, xGap, yGap}) => {
 }
 
 function refreshLayout() {
-
     Array.from(grid_preview_ui_gridMergeContainer.children).forEach(child => child.remove())
     Array.from(grid_preview_ui_gridCellsContainer.children).forEach(child => child.remove())
 
@@ -796,6 +871,8 @@ function refreshLayout() {
 
                 applyPreviewPropertiesToNode(newMergeCell, x,y,existingMerge.w,existingMerge.h)
                 grid_preview_ui_gridMergeContainer.appendChild(newMergeCell)
+
+                merging_starting_point_indicator.add(grid_preview_ui_gridMergeContainer, x, y)
             }
 
             newCellNode.gridDescription = {
@@ -819,10 +896,10 @@ function refreshLayout() {
 /**
  * Listen for selection chagnes or configuration changes so that the layout can be refreshed
  */
-document.addEventListener(EVENTS.SelectionChanged, () => refreshLayout())
-document.addEventListener(EVENTS.ConfigChanged, () => refreshLayout())
-document.addEventListener(EVENTS.MergesCleared, () => refreshLayout())
-document.addEventListener(EVENTS.MergesUpdated, () => refreshLayout())
+document.addEventListener(EVENTS.SelectionChanged, refreshLayout)
+document.addEventListener(EVENTS.ConfigChanged, refreshLayout)
+document.addEventListener(EVENTS.MergesCleared, refreshLayout)
+document.addEventListener(EVENTS.MergesUpdated, refreshLayout)
 
 
 

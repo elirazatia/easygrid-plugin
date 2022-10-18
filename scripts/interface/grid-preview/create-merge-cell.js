@@ -36,6 +36,7 @@ export default function createPreviewMergeNode() {
     node.style.opacity = '0.85'
     node.style.borderRadius = `${OPTIONS.GridCornerRadius}px`
     node.style.pointerEvents = 'none'
+    node.style.transition = 'filter 0.1s'
 
     return node
 }
